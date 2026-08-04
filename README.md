@@ -1,157 +1,102 @@
-# Turborepo starter
+# TA Evidence
 
-This Turborepo starter is maintained by the Turborepo core team.
+Open-source economic research and free APIs for economic data, released under the [MIT License](LICENSE).
 
-## Using this example
+This repository publishes research focused on financial markets—especially equities—and provides developer-friendly APIs so anyone can build on the same data we use in our work.
 
-Run the following command:
+## What we do
 
-```sh
-npx create-turbo@latest
+- **Economic research** — Open, reproducible analysis of markets and the broader economy
+- **Free data APIs** — MIT-licensed endpoints for economic and market data
+- **Developer access** — Register for an API key and use the APIs freely within published rate limits
+
+## Products
+
+### market-data
+
+The first API product in this repository. `market-data` provides **historical** US stock market data—not live or real-time quotes.
+
+Data is sourced from providers whose terms allow redistribution through a free, open API. Our goal is to make high-quality historical market data accessible to researchers, students, and developers without paywalls or proprietary lock-in.
+
+**Planned capabilities:**
+
+- Historical prices and related market data for US equities
+- REST API with API key authentication
+- Free tier with rate limits for registered developers
+- Open documentation and client examples
+
+## API access
+
+1. Register for a developer account
+2. Create an API key
+3. Call the API within your rate limit
+
+API documentation and registration will be available as `market-data` launches. All API code and data pipelines in this repository are MIT licensed.
+
+## Repository structure
+
+### Apps and packages
+
+| Path | Description |
+| --- | --- |
+| `apps/web` | Main web application |
+| `apps/docs` | Documentation site |
+| `apps/market-data/api` | REST API for historical US stock market data |
+| `apps/market-data/docs` | API documentation site |
+| `apps/market-data/portal` | Developer portal — register, manage API keys, and access data |
+| `packages/ui` (`@ta/ui`) | Shared React component library |
+| `packages/typescript-config` (`@ta/typescript-config`) | Shared TypeScript configuration |
+
+`market-data` is the first product under `apps/`. Each subfolder is a separate deployable app:
+
+```
+apps/market-data/
+├── api/      # REST API
+├── docs/     # API documentation
+└── portal/   # Developer portal
 ```
 
-## What's inside?
+## Development
 
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@ta/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@ta/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [Biome](https://biomejs.dev/) for linting and formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+Install dependencies:
 
 ```sh
-cd my-turborepo
-turbo build
+pnpm install
 ```
 
-Without global `turbo`, use your package manager:
+Run all apps in development:
 
 ```sh
-cd my-turborepo
-npx turbo build
-pnpm dlx turbo build
-pnpm exec turbo build
+pnpm dev
 ```
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+Build everything:
 
 ```sh
-turbo build --filter=docs
+pnpm build
 ```
 
-Without global `turbo`:
+Lint and format:
 
 ```sh
-npx turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
+pnpm lint
+pnpm format
 ```
 
-### Develop
-
-To develop all apps and packages, run the following command:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+Run a specific app:
 
 ```sh
-cd my-turborepo
-turbo dev
-```
-
-Without global `turbo`, use your package manager:
-
-```sh
-cd my-turborepo
-npx turbo dev
-pnpm exec turbo dev
-pnpm exec turbo dev
-```
-
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo dev --filter=web
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo dev --filter=web
 pnpm exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
+pnpm exec turbo dev --filter=docs
+pnpm exec turbo dev --filter=./apps/market-data/api
+pnpm exec turbo dev --filter=./apps/market-data/docs
+pnpm exec turbo dev --filter=./apps/market-data/portal
 ```
 
-### Remote Caching
+## Contributing
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+Contributions are welcome. Research, data pipelines, API improvements, and documentation all help make open economic data more accessible.
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+## License
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo login
-```
-
-Without global `turbo`, use your package manager:
-
-```sh
-cd my-turborepo
-npx turbo login
-pnpm exec turbo login
-pnpm exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo link
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo link
-pnpm exec turbo link
-pnpm exec turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+MIT — see [LICENSE](LICENSE) for details.
