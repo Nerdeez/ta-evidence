@@ -45,7 +45,7 @@ API documentation and registration will be available as `market-data` launches. 
 | `apps/market-data/docs` | API documentation site |
 | `apps/market-data/portal` | Developer portal — register, manage API keys, and access data |
 | `packages/ui` (`@ta/ui`) | Shared React component library |
-| `packages/typescript-config` (`@ta/typescript-config`) | Shared TypeScript configuration |
+| `packages/tsconfig` (`@ta/tsconfig`) | Shared TypeScript configuration |
 
 `market-data` is the first product under `apps/`. Each subfolder is a separate deployable app:
 
