@@ -39,12 +39,9 @@ API documentation and registration will be available as `market-data` launches. 
 
 | Path | Description |
 | --- | --- |
-| `apps/web` | Main web application |
-| `apps/docs` | Documentation site |
 | `apps/market-data/api` | REST API for historical US stock market data |
 | `apps/market-data/docs` | API documentation site |
 | `apps/market-data/portal` | Developer portal — register, manage API keys, and access data |
-| `packages/ui` (`@ta/ui`) | Shared React component library |
 | `packages/tsconfig` (`@ta/tsconfig`) | Shared TypeScript configuration |
 
 `market-data` is the first product under `apps/`. Each subfolder is a separate deployable app:
@@ -86,8 +83,6 @@ pnpm format
 Run a specific app:
 
 ```sh
-pnpm exec turbo dev --filter=web
-pnpm exec turbo dev --filter=docs
 pnpm exec turbo dev --filter=./apps/market-data/api
 pnpm exec turbo dev --filter=./apps/market-data/docs
 pnpm exec turbo dev --filter=./apps/market-data/portal
