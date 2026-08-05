@@ -1,5 +1,8 @@
 packages:
   - "apps/*"
+  - "apps/market-data/*"
   - "packages/*"
 allowBuilds:
-  sharp: false
+  esbuild: true
+minimumReleaseAgeExclude:
+  - tsx@4.23.7
