@@ -1,0 +1,22 @@
+services:
+  postgres:
+    image: postgres:18-alpine
+    ports:
+      # 15432 avoids clashing with cloud-sql-proxy (5432) and other local Postgres instances
+      - "15432:5432"
+    environment:
+      POSTGRES_USER: ta_evidence
+      POSTGRES_PASSWORD: ta_evidence
+      POSTGRES_DB: ta_evidence
+    volumes:
+      # Postgres 18+ expects the mount at /var/lib/postgresql (data in a subdirectory)
+      - ta-evidence-postgres-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ta_evidence -d ta_evidence"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  ta-evidence-postgres-data:

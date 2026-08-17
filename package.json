@@ -6,7 +6,15 @@
     "dev": "turbo run dev",
     "lint": "biome check .",
     "format": "biome check --write .",
-    "check-types": "turbo run check-types"
+    "check-types": "turbo run check-types",
+    "db:up": "docker compose up -d --wait",
+    "db:down": "docker compose down",
+    "db:reset": "docker compose down -v && docker compose up -d --wait",
+    "db:setup": "pnpm db:up",
+    "db:migrate": "pnpm --filter @ta/db db:migrate",
+    "db:generate": "pnpm --filter @ta/db db:generate",
+    "db:studio": "pnpm --filter @ta/db db:studio",
+    "db:seed": "pnpm --filter @ta/db db:seed"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.6",

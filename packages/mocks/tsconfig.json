@@ -1,0 +1,9 @@
+{
+  "extends": "@ta/tsconfig/tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "noEmit": true
+  },
+  "include": ["src", "scripts"],
+  "exclude": ["node_modules"]
+}
