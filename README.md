@@ -42,6 +42,8 @@ API documentation and registration will be available as `market-data` launches. 
 | `apps/market-data/api` | REST API for historical US stock market data |
 | `apps/market-data/docs` | API documentation site |
 | `apps/market-data/portal` | Developer portal — register, manage API keys, and access data |
+| `packages/db` (`@ta/db`) | Database schema, migrations, and client |
+| `packages/mocks` (`@ta/mocks`) | Fixture market data for dev and E2E |
 | `packages/tsconfig` (`@ta/tsconfig`) | Shared TypeScript configuration |
 
 `market-data` is the first product under `apps/`. Each subfolder is a separate deployable app:
@@ -59,7 +61,16 @@ Install dependencies:
 
 ```sh
 pnpm install
+cp .env.example .env
 ```
+
+Local PostgreSQL for development (Docker, port 15432):
+
+```sh
+pnpm db:setup   # start Postgres (run db:migrate after db:generate)
+```
+
+See [`packages/db/README.md`](packages/db/README.md) for schema and migration workflows.
 
 Run all apps in development:
 
@@ -87,6 +98,12 @@ pnpm exec turbo dev --filter=./apps/market-data/api
 pnpm exec turbo dev --filter=./apps/market-data/docs
 pnpm exec turbo dev --filter=./apps/market-data/portal
 ```
+
+## Data origin
+
+Our goal is to create an open source MIT license data for stocks.
+To achieve that we have to make sure that the source of our data arrives from a location that allows to take 
+that data and distribute it in an open license
 
 ## Contributing
 

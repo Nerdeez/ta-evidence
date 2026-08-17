@@ -1,13 +1,12 @@
 {
-  "name": "@ta/market-data-api",
+  "name": "@ta/mocks",
   "version": "0.0.1",
   "type": "module",
-  "scripts": {
-    "dev": "tsx watch src/main.ts",
-    "build": "tsc"
+  "exports": {
+    ".": "./src/index.ts"
   },
-  "dependencies": {
-    "fastify": "5.11.2"
+  "scripts": {
+    "generate": "tsx scripts/generate-fixtures.ts"
   },
   "devDependencies": {
     "@ta/tsconfig": "workspace:*",
