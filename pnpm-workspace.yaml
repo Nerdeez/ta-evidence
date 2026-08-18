@@ -1,6 +1,7 @@
 packages:
   - "apps/*"
   - "apps/market-data/*"
+  - "apps/research/*"
   - "packages/*"
 allowBuilds:
   esbuild: true
