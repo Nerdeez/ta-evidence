@@ -14,6 +14,7 @@
       "!**/.turbo",
       "!**/node_modules",
       "!**/routeTree.gen.ts",
+      "!**/next-env.d.ts",
       "!**/drizzle",
       "!**/packages/mocks/data",
       "!**/*.tsbuildinfo",
@@ -55,6 +56,11 @@
       "quoteStyle": "single",
       "trailingCommas": "all",
       "semicolons": "always"
+    }
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
     }
   }
 }

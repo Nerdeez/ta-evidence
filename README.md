@@ -39,6 +39,7 @@ API documentation and registration will be available as `market-data` launches. 
 
 | Path | Description |
 | --- | --- |
+| `apps/research/web` | Public research site — publish conclusions and findings |
 | `apps/market-data/api` | REST API for historical US stock market data |
 | `apps/market-data/docs` | API documentation site |
 | `apps/market-data/portal` | Developer portal — register, manage API keys, and access data |
@@ -46,13 +47,16 @@ API documentation and registration will be available as `market-data` launches. 
 | `packages/mocks` (`@ta/mocks`) | Fixture market data for dev and E2E |
 | `packages/tsconfig` (`@ta/tsconfig`) | Shared TypeScript configuration |
 
-`market-data` is the first product under `apps/`. Each subfolder is a separate deployable app:
+Each product under `apps/` groups related deployable apps:
 
 ```
-apps/market-data/
-├── api/      # REST API
-├── docs/     # API documentation
-└── portal/   # Developer portal
+apps/
+├── research/
+│   └── web/  # Research conclusions site (Next.js)
+└── market-data/
+    ├── api/      # REST API
+    ├── docs/     # API documentation
+    └── portal/   # Developer portal
 ```
 
 ## Development
@@ -94,6 +98,7 @@ pnpm format
 Run a specific app:
 
 ```sh
+pnpm exec turbo dev --filter=./apps/research/web
 pnpm exec turbo dev --filter=./apps/market-data/api
 pnpm exec turbo dev --filter=./apps/market-data/docs
 pnpm exec turbo dev --filter=./apps/market-data/portal
