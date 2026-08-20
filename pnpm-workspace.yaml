@@ -3,5 +3,17 @@ packages:
   - "apps/market-data/*"
   - "apps/research/*"
   - "packages/*"
+catalog:
+  typescript: 7.0.2
+  "@types/node": 26.2.0
+  "@types/react": 19.2.18
+  "@types/react-dom": 19.2.4
+  tsx: 4.23.12
+  fastify: 5.11.2
+  next: 16.3.1
+  react: 19.2.8
+  react-dom: 19.2.8
+  "@tailwindcss/postcss": 4.3.3
+  tailwindcss: 4.3.3
 allowBuilds:
   esbuild: true
