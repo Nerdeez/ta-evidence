@@ -7,12 +7,12 @@
     "build": "tsc"
   },
   "dependencies": {
-    "fastify": "5.11.2"
+    "fastify": "catalog:"
   },
   "devDependencies": {
     "@ta/tsconfig": "workspace:*",
-    "@types/node": "26.2.0",
-    "tsx": "4.23.12",
-    "typescript": "5.9.2"
+    "@types/node": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:"
   }
 }
