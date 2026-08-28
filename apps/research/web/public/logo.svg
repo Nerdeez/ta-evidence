@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 124 26" width="124" height="26" role="img" aria-label="TA Evidence">
+  <rect x="0" y="0" width="28" height="26" rx="3" fill="#1d4ed8" />
+  <text
+    x="14"
+    y="20"
+    text-anchor="middle"
+    font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+    font-size="20"
+    font-weight="700"
+    fill="#ffffff"
+  >
+    TA
+  </text>
+  <text
+    x="32"
+    y="20"
+    font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+    font-size="20"
+    font-weight="600"
+    fill="#1e3a8a"
+  >
+    Evidence
+  </text>
+</svg>
