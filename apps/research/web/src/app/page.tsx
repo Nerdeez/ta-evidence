@@ -5,9 +5,7 @@ export default function Home() {
         <p className="text-sm font-medium uppercase tracking-widest text-muted-foreground">
           Research
         </p>
-        <h1 className="text-4xl font-semibold tracking-tight text-foreground">
-          TA Evidence
-        </h1>
+        <h1 className="text-4xl font-semibold tracking-tight text-foreground">TA Evidence</h1>
         <p className="text-lg leading-8 text-muted-foreground">
           Open, reproducible conclusions from financial markets research. This site will publish our
           findings as they are ready.
