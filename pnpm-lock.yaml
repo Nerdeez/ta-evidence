@@ -75,6 +75,9 @@ importers:
 
   apps/research/web:
     dependencies:
+      '@ta/theme':
+        specifier: workspace:*
+        version: link:../../../packages/theme
       next:
         specifier: 'catalog:'
         version: 16.3.1(@types/node@26.2.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -155,6 +158,8 @@ importers:
       typescript:
         specifier: 'catalog:'
         version: 7.0.2
+
+  packages/theme: {}
 
   packages/tsconfig: {}
 
