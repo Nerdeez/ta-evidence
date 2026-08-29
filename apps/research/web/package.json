@@ -10,6 +10,7 @@
     "check-types": "next typegen && tsc --noEmit"
   },
   "dependencies": {
+    "@ta/theme": "workspace:*",
     "next": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:"
