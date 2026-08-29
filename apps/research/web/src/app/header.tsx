@@ -19,7 +19,7 @@ function GitHubIcon({ className }: { className?: string }) {
 
 export function Header() {
   return (
-    <header className="border-b border-zinc-200 bg-white">
+    <header className="border-b border-border bg-card">
       <div className="mx-auto flex h-12 max-w-7xl items-center justify-between px-6">
         <Link href="/" className="inline-flex shrink-0 leading-none">
           <Image
@@ -37,7 +37,7 @@ export function Header() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="View TA Evidence on GitHub"
-          className="inline-flex items-center justify-center rounded-md p-1.5 text-zinc-700 transition-colors hover:bg-zinc-100 hover:text-zinc-900"
+          className="inline-flex items-center justify-center rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
         >
           <GitHubIcon className="size-5" />
         </a>

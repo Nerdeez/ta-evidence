@@ -1,0 +1,168 @@
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-verdict-weak: var(--verdict-weak);
+  --color-verdict-weak-foreground: var(--verdict-weak-foreground);
+  --color-verdict-inconclusive: var(--verdict-inconclusive);
+  --color-verdict-inconclusive-foreground: var(--verdict-inconclusive-foreground);
+  --color-verdict-negative: var(--verdict-negative);
+  --color-verdict-negative-foreground: var(--verdict-negative-foreground);
+  --color-verdict-positive: var(--verdict-positive);
+  --color-verdict-positive-foreground: var(--verdict-positive-foreground);
+  --color-gain: var(--gain);
+  --color-gain-foreground: var(--gain-foreground);
+  --color-loss: var(--loss);
+  --color-loss-foreground: var(--loss-foreground);
+  --color-baseline: var(--baseline);
+  --color-tag-pattern: var(--tag-pattern);
+  --color-tag-pattern-foreground: var(--tag-pattern-foreground);
+  --color-tag-indicator: var(--tag-indicator);
+  --color-tag-indicator-foreground: var(--tag-indicator-foreground);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  --radius: 0.5rem;
+
+  /* Surfaces */
+  --background: oklch(0.985 0.002 247.839);
+  --foreground: oklch(0.208 0.042 265.755);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.208 0.042 265.755);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.208 0.042 265.755);
+
+  /* Brand */
+  --primary: oklch(0.546 0.245 262.881);
+  --primary-foreground: oklch(0.985 0.002 247.839);
+
+  /* UI chrome */
+  --secondary: oklch(0.968 0.007 247.896);
+  --secondary-foreground: oklch(0.208 0.042 265.755);
+  --muted: oklch(0.968 0.007 247.896);
+  --muted-foreground: oklch(0.554 0.046 257.417);
+  --accent: oklch(0.968 0.007 247.896);
+  --accent-foreground: oklch(0.208 0.042 265.755);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.928 0.006 264.531);
+  --input: oklch(0.928 0.006 264.531);
+  --ring: oklch(0.546 0.245 262.881);
+
+  /* Charts */
+  --chart-1: oklch(0.546 0.245 262.881);
+  --chart-2: oklch(0.708 0 0);
+  --chart-3: oklch(0.6 0.118 184.704);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+
+  /* Verdict badges */
+  --verdict-weak: oklch(0.962 0.059 95.617);
+  --verdict-weak-foreground: oklch(0.473 0.137 46.201);
+  --verdict-inconclusive: oklch(0.953 0.051 180.801);
+  --verdict-inconclusive-foreground: oklch(0.511 0.096 186.391);
+  --verdict-negative: oklch(0.936 0.032 17.717);
+  --verdict-negative-foreground: oklch(0.444 0.177 26.899);
+  --verdict-positive: oklch(0.962 0.044 156.743);
+  --verdict-positive-foreground: oklch(0.448 0.119 151.328);
+
+  /* Market data */
+  --gain: oklch(0.527 0.154 150.069);
+  --gain-foreground: oklch(0.985 0.002 247.839);
+  --loss: oklch(0.577 0.245 27.325);
+  --loss-foreground: oklch(0.985 0.002 247.839);
+  --baseline: oklch(0.708 0 0);
+
+  /* Content type tags */
+  --tag-pattern: oklch(0.932 0.032 255.585);
+  --tag-pattern-foreground: oklch(0.424 0.199 265.638);
+  --tag-indicator: oklch(0.962 0.044 156.743);
+  --tag-indicator-foreground: oklch(0.448 0.119 151.328);
+}
+
+.dark {
+  --background: oklch(0.145 0.02 265.755);
+  --foreground: oklch(0.985 0.002 247.839);
+  --card: oklch(0.208 0.025 265.755);
+  --card-foreground: oklch(0.985 0.002 247.839);
+  --popover: oklch(0.208 0.025 265.755);
+  --popover-foreground: oklch(0.985 0.002 247.839);
+
+  --primary: oklch(0.623 0.214 259.815);
+  --primary-foreground: oklch(0.985 0.002 247.839);
+
+  --secondary: oklch(0.269 0.025 265.755);
+  --secondary-foreground: oklch(0.985 0.002 247.839);
+  --muted: oklch(0.269 0.025 265.755);
+  --muted-foreground: oklch(0.704 0.04 256.788);
+  --accent: oklch(0.269 0.025 265.755);
+  --accent-foreground: oklch(0.985 0.002 247.839);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.623 0.214 259.815);
+
+  --chart-1: oklch(0.623 0.214 259.815);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.696 0.17 162.48);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+
+  --verdict-weak: oklch(0.35 0.08 75);
+  --verdict-weak-foreground: oklch(0.9 0.08 95);
+  --verdict-inconclusive: oklch(0.32 0.06 185);
+  --verdict-inconclusive-foreground: oklch(0.88 0.06 180);
+  --verdict-negative: oklch(0.35 0.1 25);
+  --verdict-negative-foreground: oklch(0.9 0.05 20);
+  --verdict-positive: oklch(0.32 0.07 155);
+  --verdict-positive-foreground: oklch(0.88 0.06 150);
+
+  --gain: oklch(0.696 0.17 162.48);
+  --gain-foreground: oklch(0.145 0.02 265.755);
+  --loss: oklch(0.704 0.191 22.216);
+  --loss-foreground: oklch(0.145 0.02 265.755);
+  --baseline: oklch(0.556 0 0);
+
+  --tag-pattern: oklch(0.32 0.06 265);
+  --tag-pattern-foreground: oklch(0.88 0.04 265);
+  --tag-indicator: oklch(0.32 0.07 155);
+  --tag-indicator-foreground: oklch(0.88 0.06 150);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
