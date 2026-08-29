@@ -45,6 +45,7 @@ API documentation and registration will be available as `market-data` launches. 
 | `apps/market-data/portal` | Developer portal — register, manage API keys, and access data |
 | `packages/db` (`@ta/db`) | Database schema, migrations, and client |
 | `packages/mocks` (`@ta/mocks`) | Fixture market data for dev and E2E |
+| `packages/theme` (`@ta/theme`) | Shared design tokens and Tailwind theme CSS |
 | `packages/tsconfig` (`@ta/tsconfig`) | Shared TypeScript configuration |
 
 Each product under `apps/` groups related deployable apps:
