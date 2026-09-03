@@ -14,14 +14,23 @@
     "db:migrate": "pnpm --filter @ta/db db:migrate",
     "db:generate": "pnpm --filter @ta/db db:generate",
     "db:studio": "pnpm --filter @ta/db db:studio",
-    "db:seed": "pnpm --filter @ta/db db:seed"
+    "db:seed": "pnpm --filter @ta/db db:seed",
+    "postinstall": "playwright install --with-deps chromium"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.6",
+    "playwright": "catalog:",
     "turbo": "2.10.7",
     "typescript": "catalog:"
   },
   "packageManager": "pnpm@11.18.0+sha512.33d83c77da82f49fba836925c6f1b841181ec3132b670639bd012f7075f5c7cf634c5f870147c19aae7478fac01df09d8892e880454896edd23ee9b33757563c",
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "24.18.0",
+      "onFail": "download"
+    }
+  },
   "engines": {
     "node": "24.18.0"
   }
