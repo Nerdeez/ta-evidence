@@ -1,0 +1,35 @@
+{
+  "name": "@ta/test",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./vitest/ui": {
+      "types": "./dist/vitest/ui.d.ts",
+      "import": "./dist/vitest/ui.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "check-types": "tsc --noEmit",
+    "setup-browsers": "playwright install chromium",
+    "setup-browsers:ci": "playwright install --with-deps chromium"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "@vitest/browser-playwright": "catalog:",
+    "playwright": "catalog:"
+  },
+  "peerDependencies": {
+    "vitest": "catalog:"
+  },
+  "devDependencies": {
+    "@ta/tsconfig": "workspace:*",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
