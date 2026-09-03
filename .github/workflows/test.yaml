@@ -1,0 +1,26 @@
+name: Test
+
+on:
+  pull_request:
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/setup@v2.1.0
+        with:
+          cache: true
+          require-lockfile: true
+
+      - name: Install Playwright browsers
+        run: pnpm --filter @ta/test run setup-browsers:ci
+
+      - name: Test affected packages
+        run: pnpm turbo run test --affected
