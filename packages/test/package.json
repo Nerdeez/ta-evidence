@@ -1,0 +1,32 @@
+{
+  "name": "@ta/test",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./vitest/ui": {
+      "types": "./dist/vitest/ui.d.ts",
+      "import": "./dist/vitest/ui.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "@vitest/browser-playwright": "catalog:"
+  },
+  "peerDependencies": {
+    "vitest": "catalog:"
+  },
+  "devDependencies": {
+    "@ta/tsconfig": "workspace:*",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
