@@ -7,7 +7,9 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "check-types": "next typegen && tsc --noEmit"
+    "check-types": "next typegen && tsc --noEmit",
+    "test": "vitest run",
+    "test:browser": "vitest --browser.headless=false"
   },
   "dependencies": {
     "@ta/theme": "workspace:*",
@@ -16,12 +18,16 @@
     "react-dom": "catalog:"
   },
   "devDependencies": {
+    "@ta/test": "workspace:*",
     "@ta/tsconfig": "workspace:*",
     "@tailwindcss/postcss": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
+    "playwright": "catalog:",
     "tailwindcss": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "vitest-browser-react": "catalog:"
   }
 }
