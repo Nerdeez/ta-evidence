@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { render } from 'vitest-browser-react';
 
-import { Card, CardHeader, CardTitle } from './card';
+import { Card, CardHeader, CardTitle } from './card.js';
 
 describe('Card', () => {
   it('renders the card title', async () => {
