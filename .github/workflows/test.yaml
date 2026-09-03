@@ -19,5 +19,8 @@ jobs:
           cache: true
           require-lockfile: true
 
+      - name: Install Playwright browsers
+        run: pnpm --filter @ta/test run setup-browsers:ci
+
       - name: Test affected packages
         run: pnpm turbo run test --affected

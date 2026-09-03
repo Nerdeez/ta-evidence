@@ -15,11 +15,10 @@
     "db:generate": "pnpm --filter @ta/db db:generate",
     "db:studio": "pnpm --filter @ta/db db:studio",
     "db:seed": "pnpm --filter @ta/db db:seed",
-    "postinstall": "playwright install --with-deps chromium"
+    "setup-browsers": "pnpm --filter @ta/test run setup-browsers"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.6",
-    "playwright": "catalog:",
     "turbo": "2.10.7",
     "typescript": "catalog:"
   },

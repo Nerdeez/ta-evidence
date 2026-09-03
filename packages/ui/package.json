@@ -6,8 +6,7 @@
   "imports": {
     "#lib/utils": "./src/lib/utils.ts",
     "#lib/*": "./src/lib/*",
-    "#lib/*/*": "./src/lib/*/*",
-    "#hooks/*": "./src/hooks/*.ts"
+    "#lib/*/*": "./src/lib/*/*"
   },
   "exports": {
     "./globals.css": "./dist/styles/globals.css",
@@ -18,10 +17,6 @@
     "./lib/*/*": {
       "types": "./dist/lib/*/*.d.ts",
       "import": "./dist/lib/*/*.js"
-    },
-    "./hooks/*": {
-      "types": "./dist/hooks/*.d.ts",
-      "import": "./dist/hooks/*.js"
     }
   },
   "files": [
@@ -47,7 +42,6 @@
     "@ta/tsconfig": "workspace:*",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "playwright": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
     "tailwindcss": "catalog:",
