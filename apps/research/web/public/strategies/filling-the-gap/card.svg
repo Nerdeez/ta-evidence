@@ -1,0 +1,149 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 225" role="img" aria-hidden="true">
+  <style>
+    .bg {
+      fill: oklch(0.968 0.007 247.896);
+    }
+    .grid {
+      stroke: oklch(0.928 0.006 264.531);
+    }
+    .bull {
+      stroke: oklch(0.546 0.245 262.881);
+      fill: oklch(0.546 0.245 262.881);
+    }
+    .bear {
+      stroke: oklch(0.577 0.245 27.325);
+      fill: oklch(0.577 0.245 27.325);
+    }
+    .ring {
+      stroke: oklch(0.546 0.245 262.881);
+    }
+    .label {
+      fill: oklch(0.208 0.042 265.755);
+    }
+    .gap-zone {
+      fill: oklch(0.546 0.245 262.881);
+      fill-opacity: 0.08;
+    }
+    .gap-line {
+      stroke: oklch(0.546 0.245 262.881);
+      stroke-opacity: 0.45;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .bg {
+        fill: oklch(0.22 0.02 265.755);
+      }
+      .grid {
+        stroke: oklch(0.32 0.02 265.755);
+      }
+      .bull {
+        stroke: oklch(0.623 0.214 259.815);
+        fill: oklch(0.623 0.214 259.815);
+      }
+      .bear {
+        stroke: oklch(0.65 0.2 27.325);
+        fill: oklch(0.65 0.2 27.325);
+      }
+      .ring {
+        stroke: oklch(0.623 0.214 259.815);
+      }
+      .label {
+        fill: oklch(0.985 0.002 247.839);
+      }
+      .gap-zone {
+        fill: oklch(0.623 0.214 259.815);
+        fill-opacity: 0.12;
+      }
+      .gap-line {
+        stroke: oklch(0.623 0.214 259.815);
+        stroke-opacity: 0.5;
+      }
+    }
+  </style>
+
+  <rect width="400" height="225" class="bg" />
+
+  <g class="grid" stroke-width="1" fill="none">
+    <line x1="24" y1="44" x2="376" y2="44" />
+    <line x1="24" y1="84" x2="376" y2="84" />
+    <line x1="24" y1="124" x2="376" y2="124" />
+    <line x1="24" y1="164" x2="376" y2="164" />
+    <line x1="24" y1="204" x2="376" y2="204" />
+    <line x1="72" y1="28" x2="72" y2="208" />
+    <line x1="144" y1="28" x2="144" y2="208" />
+    <line x1="216" y1="28" x2="216" y2="208" />
+    <line x1="288" y1="28" x2="288" y2="208" />
+    <line x1="360" y1="28" x2="360" y2="208" />
+  </g>
+
+  <!-- bearish -->
+  <g class="bear" stroke-width="2" stroke-linecap="round">
+    <line x1="48" y1="188" x2="48" y2="156" />
+    <rect x="42" y="164" width="12" height="18" rx="1.5" stroke="none" />
+  </g>
+
+  <!-- bullish run into the gap -->
+  <g class="bull" stroke-width="2" stroke-linecap="round">
+    <line x1="76" y1="176" x2="76" y2="148" />
+    <rect x="70" y="152" width="12" height="18" rx="1.5" stroke="none" />
+
+    <line x1="104" y1="168" x2="104" y2="136" />
+    <rect x="98" y="140" width="12" height="20" rx="1.5" stroke="none" />
+
+    <line x1="132" y1="158" x2="132" y2="124" />
+    <rect x="126" y="128" width="12" height="22" rx="1.5" stroke="none" />
+  </g>
+
+  <!-- gap close / gap open markers -->
+  <g class="gap-line" stroke-width="1.5" stroke-dasharray="4 4" fill="none">
+    <line x1="150" y1="128" x2="198" y2="128" />
+    <line x1="150" y1="88" x2="198" y2="88" />
+  </g>
+  <rect x="150" y="88" width="48" height="40" class="gap-zone" />
+
+  <!-- candle before gap (close at bottom of gap) -->
+  <g class="bull" stroke-width="2" stroke-linecap="round">
+    <line x1="160" y1="142" x2="160" y2="118" />
+    <rect x="154" y="122" width="12" height="16" rx="1.5" stroke="none" />
+  </g>
+
+  <!-- candle after gap (open at top of gap) -->
+  <g class="bull" stroke-width="2" stroke-linecap="round">
+    <line x1="188" y1="104" x2="188" y2="72" />
+    <rect x="182" y="76" width="12" height="22" rx="1.5" stroke="none" />
+  </g>
+
+  <!-- continuation after gap -->
+  <g class="bull" stroke-width="2" stroke-linecap="round">
+    <line x1="224" y1="96" x2="224" y2="64" />
+    <rect x="218" y="68" width="12" height="22" rx="1.5" stroke="none" />
+
+    <line x1="256" y1="88" x2="256" y2="58" />
+    <rect x="250" y="62" width="12" height="20" rx="1.5" stroke="none" />
+
+    <line x1="288" y1="82" x2="288" y2="54" />
+    <rect x="282" y="58" width="12" height="18" rx="1.5" stroke="none" />
+  </g>
+
+  <g class="bear" stroke-width="2" stroke-linecap="round">
+    <line x1="320" y1="78" x2="320" y2="104" />
+    <rect x="314" y="78" width="12" height="16" rx="1.5" stroke="none" />
+
+    <line x1="348" y1="86" x2="348" y2="118" />
+    <rect x="342" y="86" width="12" height="20" rx="1.5" stroke="none" />
+  </g>
+
+  <circle cx="174" cy="108" r="44" fill="none" class="ring" stroke-width="2.5" stroke-opacity="0.9" />
+
+  <text
+    x="228"
+    y="113"
+    class="label"
+    font-family="system-ui, -apple-system, sans-serif"
+    font-size="15"
+    font-weight="600"
+    letter-spacing="0.02em"
+  >
+    gap
+  </text>
+</svg>

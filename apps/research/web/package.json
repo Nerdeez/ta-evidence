@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@ta/theme": "workspace:*",
+    "@ta/ui": "workspace:*",
     "next": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:"
