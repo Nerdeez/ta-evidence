@@ -1,7 +1,13 @@
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import { playwright } from '@vitest/browser-playwright';
 import { defineConfig } from 'vitest/config';
+
+const dirname = path.dirname(fileURLToPath(import.meta.url));
+const nextImageStubPath = path.resolve(dirname, 'next-image.js');
 
 export type UiVitestConfigOptions = {
   setupFiles: string[];
@@ -16,7 +22,13 @@ export function createUiVitestConfig(options: UiVitestConfigOptions) {
   return defineConfig({
     ...(options.publicDir ? { publicDir: options.publicDir } : {}),
     ...(options.define ? { define: options.define } : {}),
-    ...(options.resolve ? { resolve: options.resolve } : {}),
+    resolve: {
+      ...options.resolve,
+      alias: {
+        'next/image': nextImageStubPath,
+        ...options.resolve?.alias,
+      },
+    },
     plugins: [react(), tailwindcss()],
     test: {
       setupFiles: options.setupFiles,

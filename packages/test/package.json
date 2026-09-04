@@ -29,6 +29,8 @@
   },
   "devDependencies": {
     "@ta/tsconfig": "workspace:*",
+    "@types/react": "catalog:",
+    "react": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
   }
