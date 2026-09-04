@@ -10,6 +10,11 @@
   },
   "exports": {
     "./globals.css": "./dist/styles/globals.css",
+    "./css": "./dist/styles/css.css",
+    "./card": {
+      "types": "./dist/lib/card/card.d.ts",
+      "import": "./dist/lib/card/card.js"
+    },
     "./lib/*": {
       "types": "./dist/lib/*.d.ts",
       "import": "./dist/lib/*.js"
@@ -23,7 +28,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.build.json && mkdir -p dist/styles && cp src/styles/globals.css dist/styles/globals.css",
+    "build": "tsc -p tsconfig.build.json && mkdir -p dist/styles && cp src/styles/globals.css dist/styles/globals.css && cp src/styles/css.css dist/styles/css.css",
     "check-types": "tsc --noEmit",
     "test": "vitest run",
     "test:browser": "vitest --browser.headless=false"
