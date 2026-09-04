@@ -13,6 +13,6 @@ describe('Card', () => {
       </Card>,
     );
 
-    await expect.element(screen.getByText('Head and Shoulders')).toBeVisible();
+    await expect.element(screen.getByRole('heading', { level: 3, name: 'Head and Shoulders' })).toBeVisible();
   });
 });
