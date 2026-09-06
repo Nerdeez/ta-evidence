@@ -11,6 +11,10 @@
   "exports": {
     "./globals.css": "./dist/styles/globals.css",
     "./css": "./dist/styles/css.css",
+    "./breadcrumb": {
+      "types": "./dist/lib/breadcrumb/breadcrumb.d.ts",
+      "import": "./dist/lib/breadcrumb/breadcrumb.js"
+    },
     "./card": {
       "types": "./dist/lib/card/card.d.ts",
       "import": "./dist/lib/card/card.js"
@@ -34,8 +38,10 @@
     "test:browser": "vitest --browser.headless=false"
   },
   "dependencies": {
+    "@base-ui/react": "^1.8.0",
     "@ta/theme": "workspace:*",
     "clsx": "2.1.1",
+    "lucide-react": "catalog:",
     "tailwind-merge": "3.6.0"
   },
   "peerDependencies": {

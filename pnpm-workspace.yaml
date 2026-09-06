@@ -21,5 +21,6 @@ catalog:
   tailwindcss: 4.3.3
   vitest: 4.1.11
   vitest-browser-react: 2.2.0
+  lucide-react: 1.41.0
 allowBuilds:
   esbuild: true
