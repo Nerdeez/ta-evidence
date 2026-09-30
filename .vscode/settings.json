@@ -1,5 +1,6 @@
 {
-  "editor.defaultFormatter": "biomejs.biome",
+  "js/ts.tsdk.path": "node_modules/typescript/lib",
+  "js/ts.tsdk.promptToUseWorkspaceVersion": true,
   "editor.formatOnSave": true,
   "biome.lsp.bin": "./node_modules/.bin/biome",
   "[javascript]": {
