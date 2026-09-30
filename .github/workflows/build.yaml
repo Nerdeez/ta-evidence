@@ -20,4 +20,6 @@ jobs:
           require-lockfile: true
 
       - name: Build affected packages
+        env:
+          TURBO_SCM_BASE: ${{ github.event.pull_request.base.sha }}
         run: pnpm turbo run build --affected
