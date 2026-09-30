@@ -2,6 +2,8 @@
 
 Public Next.js site for publishing TA Evidence research conclusions.
 
+This is a public facing site that does not need to register
+
 ## Development
 
 From the repository root:
