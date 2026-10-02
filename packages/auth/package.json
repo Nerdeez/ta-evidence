@@ -1,0 +1,20 @@
+{
+  "name": "@ta/auth",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@better-auth/drizzle-adapter": "1.7.7",
+    "@ta/db": "workspace:*",
+    "better-auth": "1.7.7"
+  },
+  "devDependencies": {
+    "@ta/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
+    "typescript": "catalog:"
+  },
+  "scripts": {
+    "build": "tsc",
+    "check-types": "tsc --noEmit"
+  }
+}
