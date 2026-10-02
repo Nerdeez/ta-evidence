@@ -27,6 +27,7 @@ Set these in the repository root `.env` (see `.env.example` as we add auth-relat
 | `DATABASE_URL` | PostgreSQL (required by `@ta/db` and the Drizzle adapter) |
 | `BETTER_AUTH_SECRET` | Signing / encryption secret (≥ 32 chars, high entropy) |
 | `BETTER_AUTH_URL` | Public origin of `@ta/iam-web` (e.g. `http://localhost:3001`) |
+| `NEXT_PUBLIC_RESEARCH_WEB_URL` | Public origin of `@ta/research-web`; included in Better Auth `trustedOrigins` (e.g. `http://localhost:3000`) |
 
 ## Generating auth tables in `@ta/db`
 
