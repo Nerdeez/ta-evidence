@@ -1,6 +1,14 @@
 # @ta/iam-web
 
-Next.js app for registering users and providing authentication for the TA Evidence API. It will include login, register, forgot password, verify email, and a dashboard for creating API keys.
+Next.js app for user signup, sign-in, and authentication for the TA Evidence API. It will include login, signup, forgot password, verify email, and a dashboard for creating API keys.
+
+## Routes
+
+Route groups organize layouts without changing URLs:
+
+- **`(auth)/`** — sign-in flows (`/login`, `/signup`, `/forgot-password`, `/reset-password`, `/verify-email`); shared centered layout
+- **`/dashboard`** — developer portal (logged-in; API tokens); outside `(auth)` so it can use a different layout and guards later
+- **`/`** — account landing
 
 ## Development
 
