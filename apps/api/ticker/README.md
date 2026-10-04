@@ -35,7 +35,7 @@ From the repository root:
 pnpm exec turbo dev --filter=./apps/api/ticker
 ```
 
-The dev server listens on port 3000.
+The dev server listens on port **3003** (so it does not clash with `@ta/web-strategies` on 3000). Health check: `GET /health` → `{ "status": "ok" }` (same as `@ta/api-strategies`).
 
 ## License
 

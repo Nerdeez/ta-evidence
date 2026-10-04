@@ -12,26 +12,27 @@ This repository publishes research focused on financial markets—especially equ
 
 ## Products
 
-### market-data
+Deployable apps are grouped under `apps/web` (Next.js) and `apps/api` (Fastify). Package names follow `@ta/web-*` and `@ta/api-*`.
 
-The first API product in this repository. `market-data` provides **historical** US stock market data—not live or real-time quotes.
+### Web
 
-Data is sourced from providers whose terms allow redistribution through a free, open API. Our goal is to make high-quality historical market data accessible to researchers, students, and developers without paywalls or proprietary lock-in.
+- **`@ta/web-strategies`** — Public site for strategy research and published conclusions (not a real-time trading product).
+- **`@ta/web-iam`** — Sign-up, sign-in, and API key management; hosts Better Auth at `/api/auth/*`.
 
-**Planned capabilities:**
+### API
 
-- Historical prices and related market data for US equities
-- REST API with API key authentication
-- Free tier with rate limits for registered developers
-- Open documentation and client examples
+Data is sourced from providers whose terms allow redistribution through free, open APIs. Our goal is to make high-quality market and strategy data accessible to researchers, students, and developers without paywalls or proprietary lock-in.
+
+- **`@ta/api-ticker`** — Securities reference data and **historical** US equity bars—not live or real-time quotes. Planned: REST endpoints backed by `@ta/db`, API key authentication, and rate limits for registered developers.
+- **`@ta/api-strategies`** — Strategy analytics (e.g. filling-the-gap). Endpoints are added incrementally; see `apps/api/strategies`.
 
 ## API access
 
-1. Register for a developer account
+1. Register for a developer account via `@ta/web-iam`
 2. Create an API key
-3. Call the API within your rate limit
+3. Call `@ta/api-ticker` or `@ta/api-strategies` within your rate limit
 
-API documentation and registration will be available as `market-data` launches. All API code and data pipelines in this repository are MIT licensed.
+Open documentation and client examples will grow alongside each API. All API code and data pipelines in this repository are MIT licensed.
 
 ## Repository structure
 
@@ -76,6 +77,15 @@ pnpm db:setup   # start Postgres (run db:migrate after db:generate)
 ```
 
 See [`packages/db/README.md`](packages/db/README.md) for schema and migration workflows.
+
+Local dev ports (fixed in each app’s `package.json` or `src/main.ts`):
+
+| App | Port |
+| --- | --- |
+| `@ta/web-strategies` | 3000 |
+| `@ta/web-iam` | 3001 |
+| `@ta/api-strategies` | 3002 |
+| `@ta/api-ticker` | 3003 |
 
 Run all apps in development:
 

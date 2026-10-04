@@ -8,4 +8,4 @@ REST API for trading strategy analytics (e.g. filling-the-gap). Endpoints will b
 pnpm exec turbo dev --filter=./apps/api/strategies
 ```
 
-The dev server listens on port 3002.
+The dev server listens on port 3002. Health check: `GET /health` → `{ "status": "ok" }`.

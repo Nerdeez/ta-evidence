@@ -24,7 +24,7 @@ Or from this directory:
 pnpm dev
 ```
 
-The dev server uses Turbopack (`next dev --turbopack`) and serves at [http://localhost:3001](http://localhost:3001) so it does not clash with `@ta/web-strategies` or `@ta/api-ticker` on port 3000.
+The dev server uses Turbopack (`next dev --turbopack`) and serves at [http://localhost:3001](http://localhost:3001). Local ports: `@ta/web-strategies` 3000, `@ta/web-iam` 3001, `@ta/api-strategies` 3002, `@ta/api-ticker` 3003.
 
 ## Build
 

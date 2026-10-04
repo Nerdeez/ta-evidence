@@ -4,9 +4,9 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev --turbopack -p 3000",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3000",
     "check-types": "next typegen && tsc --noEmit",
     "test": "vitest run",
     "test:browser": "vitest --browser.headless=false"
