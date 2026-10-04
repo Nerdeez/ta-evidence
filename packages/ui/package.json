@@ -23,6 +23,18 @@
       "types": "./dist/lib/button/button.d.ts",
       "import": "./dist/lib/button/button.js"
     },
+    "./field": {
+      "types": "./dist/lib/field/field.d.ts",
+      "import": "./dist/lib/field/field.js"
+    },
+    "./label": {
+      "types": "./dist/lib/label/label.d.ts",
+      "import": "./dist/lib/label/label.js"
+    },
+    "./separator": {
+      "types": "./dist/lib/separator/separator.d.ts",
+      "import": "./dist/lib/separator/separator.js"
+    },
     "./lib/*": {
       "types": "./dist/lib/*.d.ts",
       "import": "./dist/lib/*.js"
