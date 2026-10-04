@@ -1,28 +1,34 @@
 {
-  "name": "@ta/iam-web",
+  "name": "@ta/web-strategies",
   "version": "0.0.1",
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack -p 3001",
+    "dev": "next dev --turbopack -p 3000",
     "build": "next build",
-    "start": "next start -p 3001",
-    "check-types": "next typegen && tsc --noEmit"
+    "start": "next start -p 3000",
+    "check-types": "next typegen && tsc --noEmit",
+    "test": "vitest run",
+    "test:browser": "vitest --browser.headless=false"
   },
   "dependencies": {
     "@ta/theme": "workspace:*",
     "@ta/ui": "workspace:*",
+    "lucide-react": "catalog:",
     "next": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:"
   },
   "devDependencies": {
+    "@ta/test": "workspace:*",
     "@ta/tsconfig": "workspace:*",
     "@tailwindcss/postcss": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "tailwindcss": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "vitest-browser-react": "catalog:"
   }
 }
