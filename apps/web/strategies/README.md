@@ -1,6 +1,6 @@
-# @ta/research-web
+# @ta/web-strategies
 
-Public Next.js site for publishing TA Evidence research conclusions.
+Public Next.js site for strategy research and published conclusions.
 
 This is a public facing site that does not need to register
 
@@ -9,7 +9,7 @@ This is a public facing site that does not need to register
 From the repository root:
 
 ```sh
-pnpm exec turbo dev --filter=./apps/research/web
+pnpm exec turbo dev --filter=./apps/web/strategies
 ```
 
 Or from this directory:

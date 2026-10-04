@@ -1,5 +1,5 @@
 {
-  "name": "@ta/market-data-api",
+  "name": "@ta/api-strategies",
   "version": "0.0.1",
   "type": "module",
   "scripts": {

@@ -12,26 +12,27 @@ This repository publishes research focused on financial markets—especially equ
 
 ## Products
 
-### market-data
+Deployable apps are grouped under `apps/web` (Next.js) and `apps/api` (Fastify). Package names follow `@ta/web-*` and `@ta/api-*`.
 
-The first API product in this repository. `market-data` provides **historical** US stock market data—not live or real-time quotes.
+### Web
 
-Data is sourced from providers whose terms allow redistribution through a free, open API. Our goal is to make high-quality historical market data accessible to researchers, students, and developers without paywalls or proprietary lock-in.
+- **`@ta/web-strategies`** — Public site for strategy research and published conclusions (not a real-time trading product).
+- **`@ta/web-iam`** — Sign-up, sign-in, and API key management; hosts Better Auth at `/api/auth/*`.
 
-**Planned capabilities:**
+### API
 
-- Historical prices and related market data for US equities
-- REST API with API key authentication
-- Free tier with rate limits for registered developers
-- Open documentation and client examples
+Data is sourced from providers whose terms allow redistribution through free, open APIs. Our goal is to make high-quality market and strategy data accessible to researchers, students, and developers without paywalls or proprietary lock-in.
+
+- **`@ta/api-ticker`** — Securities reference data and **historical** US equity bars—not live or real-time quotes. Planned: REST endpoints backed by `@ta/db`, API key authentication, and rate limits for registered developers.
+- **`@ta/api-strategies`** — Strategy analytics (e.g. filling-the-gap). Endpoints are added incrementally; see `apps/api/strategies`.
 
 ## API access
 
-1. Register for a developer account
+1. Register for a developer account via `@ta/web-iam`
 2. Create an API key
-3. Call the API within your rate limit
+3. Call `@ta/api-ticker` or `@ta/api-strategies` within your rate limit
 
-API documentation and registration will be available as `market-data` launches. All API code and data pipelines in this repository are MIT licensed.
+Open documentation and client examples will grow alongside each API. All API code and data pipelines in this repository are MIT licensed.
 
 ## Repository structure
 
@@ -39,25 +40,25 @@ API documentation and registration will be available as `market-data` launches. 
 
 | Path | Description |
 | --- | --- |
-| `apps/research/web` | Public research site — publish conclusions and findings |
-| `apps/market-data/api` | REST API for historical US stock market data |
-| `apps/market-data/docs` | API documentation site |
-| `apps/market-data/portal` | Developer portal — register, manage API keys, and access data |
+| `apps/web/strategies` (`@ta/web-strategies`) | Public site — strategy research and published conclusions |
+| `apps/web/iam` (`@ta/web-iam`) | Sign-in, account, and API key management |
+| `apps/api/ticker` (`@ta/api-ticker`) | REST API for securities and company reference data |
+| `apps/api/strategies` (`@ta/api-strategies`) | REST API for strategy analytics (e.g. filling-the-gap) |
 | `packages/db` (`@ta/db`) | Database schema, migrations, and client |
 | `packages/mocks` (`@ta/mocks`) | Fixture market data for dev and E2E |
 | `packages/theme` (`@ta/theme`) | Shared design tokens and Tailwind theme CSS |
 | `packages/tsconfig` (`@ta/tsconfig`) | Shared TypeScript configuration |
 
-Each product under `apps/` groups related deployable apps:
+Deployable apps live under `apps/web` (Next.js) and `apps/api` (Fastify):
 
 ```
 apps/
-├── research/
-│   └── web/  # Research conclusions site (Next.js)
-└── market-data/
-    ├── api/      # REST API
-    ├── docs/     # API documentation
-    └── portal/   # Developer portal
+├── web/
+│   ├── strategies/  # @ta/web-strategies
+│   └── iam/         # @ta/web-iam
+└── api/
+    ├── ticker/      # @ta/api-ticker
+    └── strategies/  # @ta/api-strategies
 ```
 
 ## Development
@@ -76,6 +77,15 @@ pnpm db:setup   # start Postgres (run db:migrate after db:generate)
 ```
 
 See [`packages/db/README.md`](packages/db/README.md) for schema and migration workflows.
+
+Local dev ports (fixed in each app’s `package.json` or `src/main.ts`):
+
+| App | Port |
+| --- | --- |
+| `@ta/web-strategies` | 3000 |
+| `@ta/web-iam` | 3001 |
+| `@ta/api-strategies` | 3002 |
+| `@ta/api-ticker` | 3003 |
 
 Run all apps in development:
 
@@ -99,10 +109,10 @@ pnpm format
 Run a specific app:
 
 ```sh
-pnpm exec turbo dev --filter=./apps/research/web
-pnpm exec turbo dev --filter=./apps/market-data/api
-pnpm exec turbo dev --filter=./apps/market-data/docs
-pnpm exec turbo dev --filter=./apps/market-data/portal
+pnpm exec turbo dev --filter=./apps/web/strategies
+pnpm exec turbo dev --filter=./apps/web/iam
+pnpm exec turbo dev --filter=./apps/api/ticker
+pnpm exec turbo dev --filter=./apps/api/strategies
 ```
 
 ## Data origin

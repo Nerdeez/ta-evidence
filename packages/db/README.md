@@ -9,7 +9,7 @@ Shared database package for the TA Evidence monorepo. Defines the database schem
 - **Schema** — tables, columns, relations, and indexes
 - **Migrations** — versioned changes applied to PostgreSQL
 - **Client** — a configured Drizzle instance for queries
-- **Repositories / helpers** — reusable data-access functions used by apps such as `market-data/api`
+- **Repositories / helpers** — reusable data-access functions used by apps such as `api/ticker`
 
 Apps should not define their own schema or open ad hoc database connections. They depend on `@ta/db` instead.
 

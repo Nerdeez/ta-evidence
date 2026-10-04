@@ -10,12 +10,12 @@ function requireEnv(name: string): string {
   return value;
 }
 
-/** Public origin of `@ta/iam-web` (Better Auth handler at `/api/auth/*`). */
+/** Public origin of `@ta/web-iam` (Better Auth handler at `/api/auth/*`). */
 function getAuthBaseUrl(): string {
   return process.env['BETTER_AUTH_URL'] ?? 'http://localhost:3001';
 }
 
-const researchWebUrl = process.env['NEXT_PUBLIC_RESEARCH_WEB_URL'] ?? 'http://localhost:3000';
+const webStrategiesUrl = process.env['NEXT_PUBLIC_WEB_STRATEGIES_URL'] ?? 'http://localhost:3000';
 
 export const auth = betterAuth({
   secret: requireEnv('BETTER_AUTH_SECRET'),
@@ -26,7 +26,7 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
-  trustedOrigins: [researchWebUrl, getAuthBaseUrl()],
+  trustedOrigins: [webStrategiesUrl, getAuthBaseUrl()],
 });
 
 export type AuthSession = typeof auth.$Infer.Session;
