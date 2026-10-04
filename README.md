@@ -39,25 +39,25 @@ API documentation and registration will be available as `market-data` launches. 
 
 | Path | Description |
 | --- | --- |
-| `apps/research/web` | Public research site — publish conclusions and findings |
-| `apps/market-data/api` | REST API for historical US stock market data |
-| `apps/market-data/docs` | API documentation site |
-| `apps/market-data/portal` | Developer portal — register, manage API keys, and access data |
+| `apps/web/strategies` (`@ta/web-strategies`) | Public site — strategy research and published conclusions |
+| `apps/web/iam` (`@ta/web-iam`) | Sign-in, account, and API key management |
+| `apps/api/ticker` (`@ta/api-ticker`) | REST API for securities and company reference data |
+| `apps/api/strategies` (`@ta/api-strategies`) | REST API for strategy analytics (e.g. filling-the-gap) |
 | `packages/db` (`@ta/db`) | Database schema, migrations, and client |
 | `packages/mocks` (`@ta/mocks`) | Fixture market data for dev and E2E |
 | `packages/theme` (`@ta/theme`) | Shared design tokens and Tailwind theme CSS |
 | `packages/tsconfig` (`@ta/tsconfig`) | Shared TypeScript configuration |
 
-Each product under `apps/` groups related deployable apps:
+Deployable apps live under `apps/web` (Next.js) and `apps/api` (Fastify):
 
 ```
 apps/
-├── research/
-│   └── web/  # Research conclusions site (Next.js)
-└── market-data/
-    ├── api/      # REST API
-    ├── docs/     # API documentation
-    └── portal/   # Developer portal
+├── web/
+│   ├── strategies/  # @ta/web-strategies
+│   └── iam/         # @ta/web-iam
+└── api/
+    ├── ticker/      # @ta/api-ticker
+    └── strategies/  # @ta/api-strategies
 ```
 
 ## Development
@@ -99,10 +99,10 @@ pnpm format
 Run a specific app:
 
 ```sh
-pnpm exec turbo dev --filter=./apps/research/web
-pnpm exec turbo dev --filter=./apps/market-data/api
-pnpm exec turbo dev --filter=./apps/market-data/docs
-pnpm exec turbo dev --filter=./apps/market-data/portal
+pnpm exec turbo dev --filter=./apps/web/strategies
+pnpm exec turbo dev --filter=./apps/web/iam
+pnpm exec turbo dev --filter=./apps/api/ticker
+pnpm exec turbo dev --filter=./apps/api/strategies
 ```
 
 ## Data origin

@@ -10,7 +10,7 @@ function requireEnv(name: string): string {
   return value;
 }
 
-/** Public origin of `@ta/iam-web` (Better Auth handler at `/api/auth/*`). */
+/** Public origin of `@ta/web-iam` (Better Auth handler at `/api/auth/*`). */
 function getAuthBaseUrl(): string {
   return process.env['BETTER_AUTH_URL'] ?? 'http://localhost:3001';
 }

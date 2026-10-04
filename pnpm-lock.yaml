@@ -78,7 +78,45 @@ importers:
         specifier: 'catalog:'
         version: 7.0.2
 
-  apps/iam/web:
+  apps/api/strategies:
+    dependencies:
+      fastify:
+        specifier: 'catalog:'
+        version: 5.11.2
+    devDependencies:
+      '@ta/tsconfig':
+        specifier: workspace:*
+        version: link:../../../packages/tsconfig
+      '@types/node':
+        specifier: 'catalog:'
+        version: 26.2.0
+      tsx:
+        specifier: 'catalog:'
+        version: 4.23.12
+      typescript:
+        specifier: 'catalog:'
+        version: 7.0.2
+
+  apps/api/ticker:
+    dependencies:
+      fastify:
+        specifier: 'catalog:'
+        version: 5.11.2
+    devDependencies:
+      '@ta/tsconfig':
+        specifier: workspace:*
+        version: link:../../../packages/tsconfig
+      '@types/node':
+        specifier: 'catalog:'
+        version: 26.2.0
+      tsx:
+        specifier: 'catalog:'
+        version: 4.23.12
+      typescript:
+        specifier: 'catalog:'
+        version: 7.0.2
+
+  apps/web/iam:
     dependencies:
       '@ta/theme':
         specifier: workspace:*
@@ -118,26 +156,7 @@ importers:
         specifier: 'catalog:'
         version: 7.0.2
 
-  apps/market-data/api:
-    dependencies:
-      fastify:
-        specifier: 'catalog:'
-        version: 5.11.2
-    devDependencies:
-      '@ta/tsconfig':
-        specifier: workspace:*
-        version: link:../../../packages/tsconfig
-      '@types/node':
-        specifier: 'catalog:'
-        version: 26.2.0
-      tsx:
-        specifier: 'catalog:'
-        version: 4.23.12
-      typescript:
-        specifier: 'catalog:'
-        version: 7.0.2
-
-  apps/research/web:
+  apps/web/strategies:
     dependencies:
       '@ta/theme':
         specifier: workspace:*

@@ -1,8 +1,7 @@
 packages:
   - 'apps/*'
-  - 'apps/market-data/*'
-  - 'apps/research/*'
-  - 'apps/iam/*'
+  - 'apps/web/*'
+  - 'apps/api/*'
   - 'packages/*'
 catalog:
   typescript: 7.0.2

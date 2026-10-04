@@ -10,7 +10,7 @@ Shared [Better Auth](https://better-auth.com) configuration for the TA Evidence 
 - **Server helpers** (as we add them) — session lookup, Next.js route handlers, typed `AuthUser` / `AuthSession`
 - **Auth CLI input** — the config file Better Auth reads when generating Drizzle tables
 
-The **IAM web app** (`@ta/iam-web`) is the auth **server**: it mounts Better Auth at `/api/auth/*`. Research and other apps consume sessions through this package; they should not define their own Better Auth instances.
+The **IAM web app** (`@ta/web-iam`) is the auth **server**: it mounts Better Auth at `/api/auth/*`. Other web apps consume sessions through this package; they should not define their own Better Auth instances.
 
 ## Stack
 
@@ -26,8 +26,8 @@ Set these in the repository root `.env` (see `.env.example` as we add auth-relat
 |----------|---------|
 | `DATABASE_URL` | PostgreSQL (required by `@ta/db` and the Drizzle adapter) |
 | `BETTER_AUTH_SECRET` | Signing / encryption secret (≥ 32 chars, high entropy) |
-| `BETTER_AUTH_URL` | Public origin of `@ta/iam-web` (e.g. `http://localhost:3001`) |
-| `NEXT_PUBLIC_RESEARCH_WEB_URL` | Public origin of `@ta/research-web`; included in Better Auth `trustedOrigins` (e.g. `http://localhost:3000`) |
+| `BETTER_AUTH_URL` | Public origin of `@ta/web-iam` (e.g. `http://localhost:3001`) |
+| `NEXT_PUBLIC_RESEARCH_WEB_URL` | Public origin of `@ta/web-strategies`; included in Better Auth `trustedOrigins` (e.g. `http://localhost:3000`) |
 
 ## Generating auth tables in `@ta/db`
 
