@@ -23,6 +23,10 @@
       "types": "./dist/lib/button/button.d.ts",
       "import": "./dist/lib/button/button.js"
     },
+    "./input": {
+      "types": "./dist/lib/input/input.d.ts",
+      "import": "./dist/lib/input/input.js"
+    },
     "./field": {
       "types": "./dist/lib/field/field.d.ts",
       "import": "./dist/lib/field/field.js"
