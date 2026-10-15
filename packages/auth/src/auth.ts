@@ -5,10 +5,14 @@ import { nextCookies } from 'better-auth/next-js';
 
 function requireEnv(name: string): string {
   const value = process.env[name];
-  if (!value) {
-    throw new Error(`${name} is not set. See .env.example at the repository root.`);
+  if (value) {
+    return value;
   }
-  return value;
+  // `next build` loads API route modules when collecting page data; secrets are runtime-only.
+  if (process.env['NEXT_PHASE'] === 'phase-production-build') {
+    return 'build-time-placeholder-not-used-at-runtime-32';
+  }
+  throw new Error(`${name} is not set. See .env.example at the repository root.`);
 }
 
 /** Public origin of `@ta/web-iam` (Better Auth handler at `/api/auth/*`). */
