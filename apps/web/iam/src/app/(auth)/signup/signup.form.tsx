@@ -32,9 +32,7 @@ export function SignUpForm() {
       setFormError(null);
       startTransition(async () => {
         const result = await signUpAction(value);
-        if (!result.ok) {
-          setFormError(result.error);
-        }
+        setFormError(result.error);
       });
     },
   });
@@ -160,7 +158,11 @@ export function SignUpForm() {
               className="w-full"
               disabled={!canSubmit || isPending}
             >
-              {isPending ? <Loader2 className="size-4 animate-spin" aria-hidden /> : 'Create account'}
+              {isPending ? (
+                <Loader2 className="size-4 animate-spin" aria-hidden />
+              ) : (
+                'Create account'
+              )}
             </Button>
           )}
         </form.Subscribe>

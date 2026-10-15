@@ -1,6 +1,5 @@
+import type { SignUpActionResult } from './signup.action';
 import type { SignUpValues } from './signup.schema';
-
-export type SignUpActionResult = { ok: true } | { ok: false; error: string };
 
 /** Stub used when Vite redirects `./signup.action` here during browser tests. */
 export async function signUpAction(_values: SignUpValues): Promise<SignUpActionResult> {

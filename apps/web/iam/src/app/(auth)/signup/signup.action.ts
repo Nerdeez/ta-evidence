@@ -7,7 +7,8 @@ import { redirect } from 'next/navigation';
 
 import { type SignUpValues, signUpSchema } from './signup.schema';
 
-export type SignUpActionResult = { ok: true } | { ok: false; error: string };
+/** Returned only on validation or API failure; success navigates via `redirect()`. */
+export type SignUpActionResult = { ok: false; error: string };
 
 export async function signUpAction(values: SignUpValues): Promise<SignUpActionResult> {
   const parsed = signUpSchema.safeParse(values);
