@@ -3,10 +3,20 @@
   "version": "0.0.1",
   "private": true,
   "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/auth.d.ts",
+      "import": "./dist/auth.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
   "dependencies": {
-    "@better-auth/drizzle-adapter": "1.7.7",
+    "@better-auth/drizzle-adapter": "catalog:",
     "@ta/db": "workspace:*",
-    "better-auth": "1.7.7"
+    "better-auth": "catalog:",
+    "next": "catalog:"
   },
   "devDependencies": {
     "@ta/tsconfig": "workspace:*",
