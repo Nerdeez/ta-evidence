@@ -1,6 +1,7 @@
 import { drizzleAdapter } from '@better-auth/drizzle-adapter';
 import { db } from '@ta/db';
 import { betterAuth } from 'better-auth';
+import { nextCookies } from 'better-auth/next-js';
 
 function requireEnv(name: string): string {
   const value = process.env[name];
@@ -23,10 +24,21 @@ export const auth = betterAuth({
   database: drizzleAdapter(db, {
     provider: 'pg',
   }),
+  emailVerification: {
+    sendOnSignUp: true,
+    autoSignInAfterVerification: true,
+    sendVerificationEmail: async ({ user, url }) => {
+      // Replace with a transactional provider in production (see Better Auth email docs).
+      console.log(`[better-auth] Verify email for ${user.email}: ${url}`);
+    },
+  },
   emailAndPassword: {
     enabled: true,
+    requireEmailVerification: true,
+    autoSignIn: false,
   },
   trustedOrigins: [webStrategiesUrl, getAuthBaseUrl()],
+  plugins: [nextCookies()],
 });
 
 export type AuthSession = typeof auth.$Infer.Session;
