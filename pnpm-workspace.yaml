@@ -27,4 +27,13 @@ catalog:
   '@tanstack/react-form': 1.33.5
   zod: 4.6.5
 allowBuilds:
+  '@alibaba-group/open-code-review': true
   esbuild: true
+minimumReleaseAgeExclude:
+  - '@alibaba-group/ocr-darwin-arm64@1.13.1'
+  - '@alibaba-group/ocr-darwin-x64@1.13.1'
+  - '@alibaba-group/ocr-linux-arm64@1.13.1'
+  - '@alibaba-group/ocr-linux-x64@1.13.1'
+  - '@alibaba-group/ocr-win32-arm64@1.13.1'
+  - '@alibaba-group/ocr-win32-x64@1.13.1'
+  - '@alibaba-group/open-code-review@1.13.1'
