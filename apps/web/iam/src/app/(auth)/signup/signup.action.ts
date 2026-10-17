@@ -1,24 +1,16 @@
 'use server';
 
+import { type ErrorResponse, errorResponse } from '@ta/api';
 import { auth } from '@ta/auth';
-import { APIError } from 'better-auth/api';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import { type SignUpValues, signUpSchema } from './signup.schema';
 
-/** Returned only on validation or API failure; success navigates via `redirect()`. */
-export type SignUpActionResult = { ok: false; error: string };
-
-export async function signUpAction(values: SignUpValues): Promise<SignUpActionResult> {
-  const parsed = signUpSchema.safeParse(values);
-  if (!parsed.success) {
-    return { ok: false, error: 'Please fix the errors in the form.' };
-  }
-
-  const { name, email, password } = parsed.data;
-
+export async function signUpAction(values: SignUpValues): Promise<ErrorResponse> {
   try {
+    const { name, email, password } = signUpSchema.parse(values);
+
     await auth.api.signUpEmail({
       body: {
         name,
@@ -29,8 +21,8 @@ export async function signUpAction(values: SignUpValues): Promise<SignUpActionRe
       headers: await headers(),
     });
   } catch (error) {
-    if (error instanceof APIError) {
-      return { ok: false, error: error.message || 'Sign up failed.' };
+    if (error instanceof Error) {
+      return errorResponse([error]);
     }
     throw error;
   }
