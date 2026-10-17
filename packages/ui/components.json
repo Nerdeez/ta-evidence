@@ -11,9 +11,8 @@
   },
   "iconLibrary": "lucide",
   "aliases": {
-    "components": "#lib",
-    "ui": "#lib",
-    "lib": "#lib",
-    "utils": "#lib/utils"
+    "components": "#/*",
+    "ui": "#/*",
+    "utils": "#utils"
   }
 }

@@ -32,7 +32,7 @@ export function SignUpForm() {
       setFormError(null);
       startTransition(async () => {
         const result = await signUpAction(value);
-        setFormError(result.error);
+        setFormError(result.message);
       });
     },
   });

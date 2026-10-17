@@ -12,6 +12,7 @@
     "test:browser": "vitest --browser.headless=false"
   },
   "dependencies": {
+    "@ta/api": "workspace:*",
     "@ta/auth": "workspace:*",
     "@ta/theme": "workspace:*",
     "@ta/ui": "workspace:*",

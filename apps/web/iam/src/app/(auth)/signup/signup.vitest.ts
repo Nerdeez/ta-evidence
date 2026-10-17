@@ -1,9 +1,12 @@
-import type { SignUpActionResult } from './signup.action';
+import { type ErrorResponse, errorResponse } from '@ta/api';
+
 import type { SignUpValues } from './signup.schema';
 
 /** Stub used when Vite redirects `./signup.action` here during browser tests. */
-export async function signUpAction(_values: SignUpValues): Promise<SignUpActionResult> {
-  return { ok: false, error: 'Sign up is not available in component tests.' };
+export async function signUpAction(_values: SignUpValues): Promise<ErrorResponse> {
+  return errorResponse([new Error('Sign up is not available in component tests.')], {
+    code: 'unavailable',
+  });
 }
 
 /**
