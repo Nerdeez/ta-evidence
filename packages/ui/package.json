@@ -4,48 +4,48 @@
   "private": true,
   "type": "module",
   "imports": {
-    "#lib/utils": "./src/lib/utils.ts",
-    "#lib/*": "./src/lib/*",
-    "#lib/*/*": "./src/lib/*/*"
+    "#utils": "./src/utils.ts",
+    "#/*": "./src/*",
+    "#/*/*": "./src/*/*"
   },
   "exports": {
     "./globals.css": "./dist/styles/globals.css",
     "./css": "./dist/styles/css.css",
     "./breadcrumb": {
-      "types": "./dist/lib/breadcrumb/breadcrumb.d.ts",
-      "import": "./dist/lib/breadcrumb/breadcrumb.js"
+      "types": "./dist/breadcrumb/breadcrumb.d.ts",
+      "import": "./dist/breadcrumb/breadcrumb.js"
     },
     "./card": {
-      "types": "./dist/lib/card/card.d.ts",
-      "import": "./dist/lib/card/card.js"
+      "types": "./dist/card/card.d.ts",
+      "import": "./dist/card/card.js"
     },
     "./button": {
-      "types": "./dist/lib/button/button.d.ts",
-      "import": "./dist/lib/button/button.js"
+      "types": "./dist/button/button.d.ts",
+      "import": "./dist/button/button.js"
     },
     "./input": {
-      "types": "./dist/lib/input/input.d.ts",
-      "import": "./dist/lib/input/input.js"
+      "types": "./dist/input/input.d.ts",
+      "import": "./dist/input/input.js"
     },
     "./field": {
-      "types": "./dist/lib/field/field.d.ts",
-      "import": "./dist/lib/field/field.js"
+      "types": "./dist/field/field.d.ts",
+      "import": "./dist/field/field.js"
     },
     "./label": {
-      "types": "./dist/lib/label/label.d.ts",
-      "import": "./dist/lib/label/label.js"
+      "types": "./dist/label/label.d.ts",
+      "import": "./dist/label/label.js"
     },
     "./separator": {
-      "types": "./dist/lib/separator/separator.d.ts",
-      "import": "./dist/lib/separator/separator.js"
+      "types": "./dist/separator/separator.d.ts",
+      "import": "./dist/separator/separator.js"
     },
-    "./lib/*": {
-      "types": "./dist/lib/*.d.ts",
-      "import": "./dist/lib/*.js"
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "import": "./dist/*.js"
     },
-    "./lib/*/*": {
-      "types": "./dist/lib/*/*.d.ts",
-      "import": "./dist/lib/*/*.js"
+    "./*/*": {
+      "types": "./dist/*/*.d.ts",
+      "import": "./dist/*/*.js"
     }
   },
   "files": [
