@@ -38,14 +38,6 @@
     "./separator": {
       "types": "./dist/separator/separator.d.ts",
       "import": "./dist/separator/separator.js"
-    },
-    "./*": {
-      "types": "./dist/*.d.ts",
-      "import": "./dist/*.js"
-    },
-    "./*/*": {
-      "types": "./dist/*/*.d.ts",
-      "import": "./dist/*/*.js"
     }
   },
   "files": [

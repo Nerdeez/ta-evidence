@@ -62,9 +62,20 @@ function zodIssueToDetail(issue: ZodError['issues'][number]): ErrorDetail {
     : { code: issue.code, message: issue.message, field };
 }
 
+function errorCodeFromError(error: Error): string {
+  const code = (error as Error & { code?: unknown }).code;
+  if (typeof code === 'string' && code.length > 0) {
+    return code;
+  }
+  if (error.name !== 'Error') {
+    return error.name;
+  }
+  return ErrorCode.UnknownError;
+}
+
 function errorToDetail(error: Error): ErrorDetail {
   return {
-    code: error.name !== 'Error' ? error.name : defaultSummary.code,
+    code: errorCodeFromError(error),
     message: error.message || defaultSummary.message,
   };
 }
@@ -73,6 +84,13 @@ function errorsToDetails(errors: NonEmptyErrors): ErrorDetail[] {
   const details: ErrorDetail[] = [];
   for (const error of errors) {
     if (error instanceof ZodError) {
+      if (error.issues.length === 0) {
+        details.push({
+          code: ErrorCode.ValidationFailed,
+          message: error.message || validationFallbackMessage,
+        });
+        continue;
+      }
       for (const issue of error.issues) {
         details.push(zodIssueToDetail(issue));
       }
@@ -86,24 +104,37 @@ function errorsToDetails(errors: NonEmptyErrors): ErrorDetail[] {
 /**
  * Build `{ code, message, errors }` from one or more {@link Error} values.
  *
- * {@link ZodError} issues are mapped to {@link ErrorDetail} entries with `validation_failed`
- * as the default top-level code unless `summary` overrides it.
+ * {@link ZodError} issues are mapped to {@link ErrorDetail} entries. If any input is a
+ * {@link ZodError}, the default top-level code is `validation_failed` and the message is the
+ * form-level fallback (not the first issue text). Non-Zod errors use `error.code` when present,
+ * otherwise `error.name`, otherwise `unknown_error`.
  */
+function defaultSummaryFromErrors(errors: NonEmptyErrors): Required<ErrorResponseSummary> {
+  const hasValidation = errors.some((error) => error instanceof ZodError);
+  if (hasValidation) {
+    return {
+      code: ErrorCode.ValidationFailed,
+      message: validationFallbackMessage,
+    };
+  }
+
+  const first = errors[0];
+  return {
+    code: errorCodeFromError(first),
+    message: first.message || defaultSummary.message,
+  };
+}
+
 export function errorResponse(
   errors: NonEmptyErrors,
   summary?: ErrorResponseSummary,
 ): ErrorResponse {
-  const [first] = errors;
   const details = errorsToDetails(errors);
-  const isValidation = first instanceof ZodError;
+  const derived = defaultSummaryFromErrors(errors);
 
   return {
-    code: summary?.code ?? (isValidation ? ErrorCode.ValidationFailed : defaultSummary.code),
-    message:
-      summary?.message ??
-      (isValidation
-        ? (details[0]?.message ?? validationFallbackMessage)
-        : (first.message ?? defaultSummary.message)),
+    code: summary?.code ?? derived.code,
+    message: summary?.message ?? derived.message,
     errors: details,
   };
 }
