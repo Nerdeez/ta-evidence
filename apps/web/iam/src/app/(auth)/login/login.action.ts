@@ -21,7 +21,8 @@ export async function loginAction(values: LoginValues): Promise<ErrorResponse> {
     });
   } catch (error) {
     if (error instanceof Error) {
-      return errorResponse([error]);
+      console.error('Login failed:', error);
+      return errorResponse([new Error('Invalid email or password.')]);
     }
     throw error;
   }

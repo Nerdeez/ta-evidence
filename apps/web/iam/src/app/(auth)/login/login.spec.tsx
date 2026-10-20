@@ -31,4 +31,17 @@ describe('LoginForm', () => {
 
     await expect.element(submit).toBeEnabled();
   });
+
+  it('shows a form error when sign in fails', async () => {
+    const screen = await render(<LoginForm />);
+    const submit = screen.getByRole('button', { name: 'Sign in' });
+
+    await screen.getByRole('textbox', { name: 'Email' }).fill('jane@example.com');
+    await screen.getByLabelText('Password').fill('password123');
+    await submit.click();
+
+    await expect
+      .element(screen.getByRole('alert'))
+      .toHaveTextContent('Sign in is not available in component tests.');
+  });
 });
