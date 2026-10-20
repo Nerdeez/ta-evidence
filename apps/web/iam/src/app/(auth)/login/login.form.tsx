@@ -112,11 +112,7 @@ export function LoginForm() {
               className="w-full"
               disabled={!canSubmit || isPending}
             >
-              {isPending ? (
-                <Loader2 className="size-4 animate-spin" aria-hidden />
-              ) : (
-                'Sign in'
-              )}
+              {isPending ? <Loader2 className="size-4 animate-spin" aria-hidden /> : 'Sign in'}
             </Button>
           )}
         </form.Subscribe>
