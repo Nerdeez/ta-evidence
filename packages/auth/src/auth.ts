@@ -27,6 +27,7 @@ export const auth = betterAuth({
   baseURL: getAuthBaseUrl(),
   database: drizzleAdapter(db, {
     provider: 'pg',
+    transaction: true,
   }),
   emailVerification: {
     sendOnSignUp: true,
@@ -40,6 +41,13 @@ export const auth = betterAuth({
     enabled: true,
     requireEmailVerification: true,
     autoSignIn: false,
+    revokeSessionsOnPasswordReset: true,
+    sendResetPassword: async ({ user, url, token }) => {
+      // TODO: Send reset email when transactional email is connected (see Better Auth email docs).
+      void user;
+      void url;
+      void token;
+    },
   },
   trustedOrigins: [webStrategiesUrl, getAuthBaseUrl()],
   plugins: [nextCookies()],
