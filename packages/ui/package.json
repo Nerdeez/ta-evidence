@@ -10,6 +10,8 @@
   },
   "exports": {
     "./globals.css": "./dist/styles/globals.css",
+    "./tailwind.css": "./src/styles/tailwind.css",
+    "./theme.css": "./src/styles/theme.css",
     "./css": "./dist/styles/css.css",
     "./breadcrumb": {
       "types": "./dist/breadcrumb/breadcrumb.d.ts",
@@ -44,14 +46,15 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.build.json && mkdir -p dist/styles && cp src/styles/globals.css dist/styles/globals.css && cp src/styles/css.css dist/styles/css.css",
+    "prebuild": "pnpm run build:styles",
+    "build:styles": "mkdir -p dist/styles && tailwindcss -i ./src/styles/globals.css -o ./dist/styles/globals.compiled.css",
+    "build": "tsc -p tsconfig.build.json && mkdir -p dist/styles && cp src/styles/globals.css src/styles/tailwind.css src/styles/theme.css src/styles/css.css dist/styles/",
     "check-types": "tsc --noEmit",
     "test": "vitest run",
     "test:browser": "vitest --browser.headless=false"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",
-    "@ta/theme": "workspace:*",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
     "lucide-react": "catalog:",
@@ -62,6 +65,7 @@
     "react-dom": "catalog:"
   },
   "devDependencies": {
+    "@tailwindcss/cli": "catalog:",
     "@ta/test": "workspace:*",
     "@ta/tsconfig": "workspace:*",
     "@types/react": "catalog:",

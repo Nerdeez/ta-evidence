@@ -14,7 +14,6 @@
   "dependencies": {
     "@ta/api": "workspace:*",
     "@ta/auth": "workspace:*",
-    "@ta/theme": "workspace:*",
     "@ta/ui": "workspace:*",
     "@tanstack/react-form": "catalog:",
     "better-auth": "catalog:",
