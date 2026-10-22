@@ -1,3 +1,5 @@
+import { ForgotPasswordForm } from './forgot-password.form';
+
 export default function ForgotPasswordPage() {
-  return <h1>hello forgot password page</h1>;
+  return <ForgotPasswordForm />;
 }
