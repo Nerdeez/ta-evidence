@@ -42,11 +42,9 @@ export const auth = betterAuth({
     requireEmailVerification: true,
     autoSignIn: false,
     revokeSessionsOnPasswordReset: true,
-    sendResetPassword: async ({ user, url, token }) => {
+    sendResetPassword: async ({ user, url }) => {
       // TODO: Send reset email when transactional email is connected (see Better Auth email docs).
-      void user;
-      void url;
-      void token;
+      console.log(`[better-auth] Reset password for ${user.email}: ${url}`);
     },
   },
   trustedOrigins: [webStrategiesUrl, getAuthBaseUrl()],
