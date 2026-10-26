@@ -30,10 +30,10 @@ export async function resetPasswordAction(values: ResetPasswordValues): Promise<
       },
     });
   } catch (error) {
+    if (isInvalidTokenError(error)) {
+      return errorResponse([new Error('This reset link is invalid or has expired.')]);
+    }
     if (error instanceof Error) {
-      if (isInvalidTokenError(error)) {
-        return errorResponse([new Error('This reset link is invalid or has expired.')]);
-      }
       console.error('Password reset failed:', error);
       return errorResponse([new Error('Unable to reset your password. Please try again later.')]);
     }
