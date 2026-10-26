@@ -53,7 +53,7 @@ function createBaseVitestConfig(appRoot: string) {
       },
     },
     ssr: {
-      noExternal: ['@ta/ui', '@ta/theme'],
+      noExternal: ['@ta/ui'],
     },
     plugins: [react(), tailwindcss()],
     test: {
@@ -64,7 +64,7 @@ function createBaseVitestConfig(appRoot: string) {
         headless: true,
         screenshotFailures: false,
         instances: [{ browser: 'chromium' }],
-        isolate: false,
+        isolate: true,
       },
     },
   });

@@ -95,6 +95,14 @@ export function LoginForm() {
                 );
               }}
             />
+            <p className="text-right text-sm">
+              <Link
+                href="/forgot-password"
+                className="text-muted-foreground underline underline-offset-4"
+              >
+                Forgot your password?
+              </Link>
+            </p>
           </FieldGroup>
           {formError && (
             <p className="mt-4 text-sm text-destructive" role="alert">

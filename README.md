@@ -46,7 +46,7 @@ Open documentation and client examples will grow alongside each API. All API cod
 | `apps/api/strategies` (`@ta/api-strategies`) | REST API for strategy analytics (e.g. filling-the-gap) |
 | `packages/db` (`@ta/db`) | Database schema, migrations, and client |
 | `packages/mocks` (`@ta/mocks`) | Fixture market data for dev and E2E |
-| `packages/theme` (`@ta/theme`) | Shared design tokens and Tailwind theme CSS |
+| `packages/ui` (`@ta/ui`) | Shared UI components, design tokens, and Tailwind entry (`@ta/ui/tailwind.css`) |
 | `packages/tsconfig` (`@ta/tsconfig`) | Shared TypeScript configuration |
 
 Deployable apps live under `apps/web` (Next.js) and `apps/api` (Fastify):
