@@ -16,8 +16,9 @@ function requireEnv(name: string): string {
 }
 
 /** Public origin of `@ta/web-iam` (Better Auth handler at `/api/auth/*`). */
-function getAuthBaseUrl(): string {
-  return process.env['BETTER_AUTH_URL'] ?? 'http://localhost:3001';
+export function getAuthBaseUrl(): string {
+  const baseUrl = process.env['BETTER_AUTH_URL'] ?? 'http://localhost:3001';
+  return baseUrl.replace(/\/$/, '');
 }
 
 const webStrategiesUrl = process.env['NEXT_PUBLIC_WEB_STRATEGIES_URL'] ?? 'http://localhost:3000';
@@ -27,6 +28,7 @@ export const auth = betterAuth({
   baseURL: getAuthBaseUrl(),
   database: drizzleAdapter(db, {
     provider: 'pg',
+    transaction: true,
   }),
   emailVerification: {
     sendOnSignUp: true,
@@ -40,6 +42,11 @@ export const auth = betterAuth({
     enabled: true,
     requireEmailVerification: true,
     autoSignIn: false,
+    revokeSessionsOnPasswordReset: true,
+    sendResetPassword: async ({ user }) => {
+      // TODO: Send reset email when transactional email is connected (see Better Auth email docs).
+      console.log(`[better-auth] Reset password requested for ${user.email}`);
+    },
   },
   trustedOrigins: [webStrategiesUrl, getAuthBaseUrl()],
   plugins: [nextCookies()],

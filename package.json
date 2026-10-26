@@ -2,6 +2,7 @@
   "name": "ta-evidence",
   "private": true,
   "scripts": {
+    "prebuild": "pnpm --filter @ta/ui run build:styles",
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "biome check .",
