@@ -3,9 +3,7 @@ import { type ErrorResponse, errorResponse } from '@ta/api';
 import type { ForgotPasswordValues } from './forgot-password.schema';
 
 /** Stub used when Vite redirects `./forgot-password.action` here during browser tests. */
-export async function forgotPasswordAction(
-  _values: ForgotPasswordValues,
-): Promise<ErrorResponse> {
+export async function forgotPasswordAction(_values: ForgotPasswordValues): Promise<ErrorResponse> {
   return errorResponse([new Error('Password reset is not available in component tests.')], {
     code: 'unavailable',
   });
