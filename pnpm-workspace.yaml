@@ -26,6 +26,7 @@ catalog:
   vitest-browser-react: 2.2.0
   lucide-react: 1.41.0
   '@tanstack/react-form': 1.33.5
+  drizzle-orm: 0.45.4
   zod: 4.6.5
 allowBuilds:
   '@alibaba-group/open-code-review': true
