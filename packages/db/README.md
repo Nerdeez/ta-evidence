@@ -30,6 +30,10 @@ Keep `@ta/db` limited to things that are actually about the database. That avoid
 
 See `packages/api/src/` for shared HTTP helpers (`parsePage`, `parseLimit`, and related paging types).
 
+### Testing
+
+Integration tests can run against in-memory Postgres via [PGlite](https://github.com/electric-sql/pglite). Add `@electric-sql/pglite` and `vitest` as dev dependencies in the test package. In a Vitest `describe` block, call `usePgLiteTestDb()` from `@ta/db/testing` to apply schema, inject `db`, and tear down after each test; use the returned `db` to seed rows. For manual control, use `createPgLiteTestDb`, `setDbForTesting`, and `resetDbForTesting` instead.
+
 ## Stack
 
 - [Drizzle ORM](https://orm.drizzle.team/) — schema-as-code and type-safe queries

@@ -19,6 +19,7 @@ catalog:
   '@tailwindcss/postcss': 4.3.3
   '@tailwindcss/vite': 4.3.3
   '@vitejs/plugin-react': 6.1.1
+  '@electric-sql/pglite': 0.5.14
   '@vitest/browser-playwright': 4.1.11
   playwright: 1.62.1
   tailwindcss: 4.3.3
@@ -40,3 +41,4 @@ minimumReleaseAgeExclude:
   - '@alibaba-group/ocr-win32-arm64@1.13.1'
   - '@alibaba-group/ocr-win32-x64@1.13.1'
   - '@alibaba-group/open-code-review@1.13.1'
+  - '@electric-sql/pglite@0.5.14'

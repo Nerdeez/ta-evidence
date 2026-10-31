@@ -14,6 +14,10 @@ config({ path: resolve(repoRoot, '.env') });
 let pool: pg.Pool | undefined;
 let drizzleInstance: NodePgDatabase<typeof schema> | undefined;
 
+/** @internal Test harness — inject a Drizzle instance (e.g. PGlite). Import from `@ta/db/testing`. */
+let testDb: NodePgDatabase<typeof schema> | undefined;
+let testDbClose: (() => Promise<void>) | undefined;
+
 function getDatabaseUrl(): string {
   const databaseUrl = process.env['DATABASE_URL'];
   if (!databaseUrl) {
@@ -23,11 +27,32 @@ function getDatabaseUrl(): string {
 }
 
 function getDbInstance(): NodePgDatabase<typeof schema> {
+  if (testDb) {
+    return testDb;
+  }
   if (!drizzleInstance) {
     pool = new pg.Pool({ connectionString: getDatabaseUrl() });
     drizzleInstance = drizzle(pool, { schema });
   }
   return drizzleInstance;
+}
+
+/** @internal */
+export function setDbForTesting(
+  instance: NodePgDatabase<typeof schema>,
+  close?: () => Promise<void>,
+): void {
+  testDb = instance;
+  testDbClose = close;
+}
+
+/** @internal */
+export async function resetDbForTesting(): Promise<void> {
+  if (testDbClose) {
+    await testDbClose();
+  }
+  testDb = undefined;
+  testDbClose = undefined;
 }
 
 /** Lazily connects on first use so Next.js can import routes during `next build` without `DATABASE_URL`. */
@@ -43,6 +68,12 @@ export const db = new Proxy({} as NodePgDatabase<typeof schema>, {
 });
 
 export async function closeDb(): Promise<void> {
+  if (testDbClose) {
+    await testDbClose();
+    testDb = undefined;
+    testDbClose = undefined;
+    return;
+  }
   if (pool) {
     await pool.end();
     pool = undefined;
