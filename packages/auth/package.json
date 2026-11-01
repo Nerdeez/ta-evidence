@@ -13,15 +13,21 @@
     "dist"
   ],
   "dependencies": {
+    "@better-auth/api-key": "1.7.7",
+    "@better-auth/core": "1.7.7",
     "@better-auth/drizzle-adapter": "catalog:",
     "@ta/db": "workspace:*",
-    "better-auth": "catalog:",
+    "better-auth": "catalog:"
+  },
+  "peerDependencies": {
     "next": "catalog:"
   },
   "devDependencies": {
     "@ta/tsconfig": "workspace:*",
     "@types/node": "catalog:",
-    "typescript": "catalog:"
+    "next": "catalog:",
+    "typescript": "catalog:",
+    "zod": "catalog:"
   },
   "scripts": {
     "build": "tsc",

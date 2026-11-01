@@ -15,6 +15,13 @@
       "when": 1790953434291,
       "tag": "0001_dazzling_jack_flag",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793529043782,
+      "tag": "0002_dashing_red_wolf",
+      "breakpoints": true
     }
   ]
 }
