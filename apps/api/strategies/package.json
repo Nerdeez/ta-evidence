@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@ta/api": "workspace:*",
+    "@ta/auth": "workspace:*",
     "@ta/db": "workspace:*",
     "drizzle-orm": "catalog:",
     "fastify": "catalog:"

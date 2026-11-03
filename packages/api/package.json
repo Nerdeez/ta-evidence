@@ -17,11 +17,13 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@ta/auth": "workspace:*",
     "zod": "catalog:"
   },
   "devDependencies": {
     "@ta/tsconfig": "workspace:*",
     "@types/node": "catalog:",
+    "fastify": "catalog:",
     "typescript": "catalog:"
   }
 }

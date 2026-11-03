@@ -10,7 +10,16 @@ Shared [Better Auth](https://better-auth.com) configuration for the TA Evidence 
 - **Server helpers** (as we add them) — session lookup, Next.js route handlers, typed `AuthUser` / `AuthSession`
 - **Auth CLI input** — the config file Better Auth reads when generating Drizzle tables
 
-The **IAM web app** (`@ta/web-iam`) is the auth **server**: it mounts Better Auth at `/api/auth/*`. Other web apps consume sessions through this package; they should not define their own Better Auth instances.
+The **IAM web app** (`@ta/web-iam`) is the auth **server**: it mounts Better Auth at `/api/auth/*` using **`@ta/auth/next`**. REST APIs use **`@ta/auth`** and **`@ta/auth/api-key`** (`verifyApiKeyFromHeaders`, `x-api-key`).
+
+## Exports
+
+| Import | Use |
+|--------|-----|
+| `@ta/auth` | Better Auth instance (`auth`, session types) |
+| `@ta/auth/api-key` | API key verification helpers (`verifyApiKeyFromHeaders`, …) |
+| `@ta/auth/next` | Next.js instance (`nextCookies`), `getAuthBaseUrl` — use in `@ta/web-iam` |
+| `@ta/auth/testing` | Test helpers: `createTestApiKey`, `apiKeyHeaders` (not for production) |
 
 ## Stack
 
@@ -33,12 +42,12 @@ Set these in the repository root `.env` (see `.env.example` as we add auth-relat
 
 Better Auth owns the shape of the `user`, `session`, `account`, and `verification` tables. Do **not** hand-write those Drizzle definitions.
 
-1. Implement `src/auth.ts` here (minimal config is enough to start).
+1. Edit `src/better-auth/config.ts` / `src/better-auth/api.auth.ts` as needed.
 2. From the **repository root**, regenerate Drizzle definitions (includes tables for enabled plugins such as API keys):
 
    ```bash
    pnpm dlx auth@1.7.7 generate \
-     --config packages/auth/src/auth.ts \
+     --config packages/auth/src/better-auth/api.auth.ts \
      --output packages/db/src/schema/auth.ts \
      --adapter drizzle \
      --dialect pg \
@@ -73,7 +82,14 @@ pnpm --filter @ta/auth build
 ```text
 packages/auth/
 ├── src/
-│   └── auth.ts       # betterAuth({ … }) — source for CLI generate and runtime
+│   ├── better-auth/
+│   │   ├── config.ts    # shared betterAuth options (CLI reads enabled plugins)
+│   │   ├── api.auth.ts  # Node API instance — `@ta/auth`, Better Auth CLI `--config`
+│   │   ├── next.auth.ts # Next.js instance — `@ta/auth/next`
+│   │   └── api-key.ts   # x-api-key verification helpers
+│   ├── testing.ts       # `@ta/auth/testing` entry
+│   └── testing/
+│       └── api-key.ts
 ├── package.json
 ├── tsconfig.json
 └── README.md

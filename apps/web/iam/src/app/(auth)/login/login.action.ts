@@ -1,7 +1,7 @@
 'use server';
 
 import { type ErrorResponse, errorResponse } from '@ta/api';
-import { auth } from '@ta/auth';
+import { auth } from '@ta/auth/next';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 

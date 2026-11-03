@@ -1,6 +1,8 @@
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vitest/config';
 
+import { loadMonorepoDotenv } from './load-monorepo-dotenv.js';
+
 const defaultNodeTestConfig = {
   environment: 'node' as const,
   include: ['src/**/*.test.ts'],
@@ -13,8 +15,6 @@ const defaultNodeTestConfig = {
 export type CreateNodeVitestConfigOptions = {
   /** Absolute path to the package root (directory containing `vitest.config.ts`). */
   packageRoot: string;
-  /** Merged into the `test` block (e.g. override `include` or `fileParallelism`). */
-  test?: Partial<typeof defaultNodeTestConfig>;
 };
 
 /**
@@ -22,6 +22,9 @@ export type CreateNodeVitestConfigOptions = {
  *
  * Applies `vite-tsconfig-paths` so `tsconfig.json` `paths` (e.g. `@/*`) work at runtime without
  * duplicating `resolve.alias` in each app.
+ *
+ * Loading this module via `createNodeVitestConfig` loads the repository root `.env`
+ * (same file as local dev; see `.env.example`).
  *
  * **Convention (per package)**
  * - `vitest.config.ts` at the package root calling `createNodeVitestConfig({ packageRoot })`
@@ -40,12 +43,11 @@ export type CreateNodeVitestConfigOptions = {
  * ```
  */
 export function createNodeVitestConfig(options: CreateNodeVitestConfigOptions) {
+  loadMonorepoDotenv(options.packageRoot);
+
   return defineConfig({
     plugins: [tsconfigPaths()],
     root: options.packageRoot,
-    test: {
-      ...defaultNodeTestConfig,
-      ...options.test,
-    },
+    test: defaultNodeTestConfig,
   });
 }

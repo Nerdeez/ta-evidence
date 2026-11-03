@@ -26,6 +26,7 @@
     "@tailwindcss/vite": "catalog:",
     "@vitejs/plugin-react": "catalog:",
     "@vitest/browser-playwright": "catalog:",
+    "dotenv": "catalog:",
     "playwright": "catalog:",
     "vite-tsconfig-paths": "6.1.1"
   },
