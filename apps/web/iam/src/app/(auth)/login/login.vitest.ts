@@ -1,4 +1,4 @@
-import { type ErrorResponse, errorResponse } from '@ta/api';
+import { type ErrorResponse, errorResponse } from '@ta/api/error';
 
 import type { LoginValues } from './login.schema';
 
