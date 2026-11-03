@@ -83,40 +83,46 @@ Closing a gap—or filling the gap—means that on one or more later days, the c
 
 ## Securities API
 
-Gap queries use a numeric **`securityId`**. To look up that id from a ticker and exchange—or to browse which S&P 500 and former constituent names we cover—use the Securities API. It reads from the same `securities` table that **`daily_bars.security_id`** references.
+The Securities API covers **S&P 500 and former constituent** names in our gap research. Use it to **list** the catalog or **fetch one** security by **`id`**. Gap queries always target a **single** security—see the [Gaps API](#gaps-api) (`GET /api/v1/security/{id}/gap`).
 
 **Authentication:** same free registration and Bearer token as the Gaps API.
 
-**Endpoint:** `GET /api/v1/security`  
-**Response:** JSON, **camelCase** property names (for example `assetType` maps to `asset_type` in the database).
+**Response:** JSON with **camelCase** property names.
 
-### Query parameters
+List responses use **`page`** (default `1`) and **`limit`** (default `50`, maximum `100`).
+
+### List securities
+
+**Endpoint:** `GET /api/v1/security`
 
 | Parameter | Description |
 |-----------|-------------|
-| `id` | Primary key (`securities.id`). Optional; use for a direct lookup when you already know the id. |
-| `ticker` | Ticker symbol (e.g. `AAPL`). Pair with `exchange` for a unique match. |
-| `exchange` | Exchange code (e.g. `NASDAQ`). Required when filtering by `ticker` alone would be ambiguous. |
-| `isActive` | `true` or `false` — whether the security is still treated as active in our catalog. |
-| `assetType` | Asset class (default listing is `equity`). |
-| `limit`, `cursor` | Pagination (exact limits documented at launch). |
+| `ticker` | Filter by ticker symbol (e.g. `AAPL`). May match more than one row if the symbol appears on multiple exchanges—use **`id`** from the response for gap requests. |
+| `page` | Page number (default `1`). |
+| `limit` | Page size (default `50`, maximum `100`). |
 
-The list is scoped to **S&P 500 constituents and former constituents** included in our gap research (same universe as the Gaps API).
+### Get one security
+
+**Endpoint:** `GET /api/v1/security/{id}`
+
+| Parameter | Description |
+|-----------|-------------|
+| `id` | **Required** path segment—the security’s primary key (use the same value in `GET /api/v1/security/{id}/gap`). |
+
+Requests for an unknown `id` return an error.
 
 ### Fields on each security object
 
-- **`id`** — use this value as **`securityId`** on `GET /api/v1/gap`.
+- **`id`** — use in the path for gap requests (`GET /api/v1/security/{id}/gap`).
 - **`ticker`**, **`exchange`** — unique together in our database.
 - **`name`** — company or instrument name when available.
 - **`currency`** — quote currency (typically `USD`).
 - **`assetType`** — e.g. `equity`.
-- **`isActive`** — catalog flag.
-- **`createdAt`** — ISO 8601 timestamp when the row was added.
 
-### Example: resolve ticker to id
+### Example: list
 
 ```http
-GET /api/v1/security?ticker=AAPL&exchange=NASDAQ
+GET /api/v1/security?page=1&limit=100
 Authorization: Bearer <token>
 ```
 
@@ -129,47 +135,70 @@ Authorization: Bearer <token>
       "exchange": "NASDAQ",
       "name": "Apple Inc.",
       "currency": "USD",
-      "assetType": "equity",
-      "isActive": true,
-      "createdAt": "2024-03-15T10:00:00.000Z"
+      "assetType": "equity"
     }
   ],
-  "meta": { "count": 1 }
+  "meta": {
+    "page": 1,
+    "limit": 100,
+    "total": 487,
+    "totalPages": 5
+  }
 }
 ```
 
-Pass `"id": 42` as **`securityId=42`** on gap requests.
-
-### Example: fetch by id
+### Example: detail
 
 ```http
-GET /api/v1/security?id=42
+GET /api/v1/security/42
 Authorization: Bearer <token>
 ```
 
-### Example: list active equities (paginated)
+```json
+{
+  "data": {
+    "id": 42,
+    "ticker": "AAPL",
+    "exchange": "NASDAQ",
+    "name": "Apple Inc.",
+    "currency": "USD",
+    "assetType": "equity"
+  }
+}
+```
+
+### Example: resolve ticker to id
 
 ```http
-GET /api/v1/security?isActive=true&assetType=equity&limit=100
+GET /api/v1/security?ticker=AAPL
 Authorization: Bearer <token>
 ```
+
+Use the returned **`id`** in **`GET /api/v1/security/42/gap`**.
 
 ---
 
 ## Gaps API
 
-The Gaps API exposes overnight gaps detected on **S&P 500 stocks and former S&P 500 constituents** in our database. Each gap is tied to a security the same way daily bars are: a **`security_id`** column in the database (foreign key to `securities`). Use the [Securities API](#securities-api) above to resolve **`securityId`**. Daily OHLC bars for that id are scanned so a gap is recorded only when the **high and low** of two adjacent **trading days** leave an empty band between sessions—the same definition used in this article, not a move from prior close to next open alone.
+The Gaps API returns overnight gaps for **one security per request**—the **`id`** in the path is required. Use the [Securities API](#securities-api) to list names or look up an **`id`** from ticker and exchange. Daily OHLC bars for that security are scanned so a gap is recorded only when the **high and low** of two adjacent **trading days** leave an empty band between sessions—the same definition used in this article, not a move from prior close to next open alone.
 
 **Authentication:** create a free account and use your API token on every request (`Authorization: Bearer <token>`).
 
-**Endpoint:** `GET /api/v1/gap`  
-**Response:** JSON. Property and query names use **camelCase** (for example `securityId` in the response maps to `security_id` in the database).
+**Endpoint:** `GET /api/v1/security/{id}/gap`  
+**Response:** JSON with **camelCase** property and query names.
+
+The **`id`** path segment is **required** (same value as **`id`** on `GET /api/v1/security/{id}`). Gap list responses are paginated: **`page`** (default `1`) and **`limit`** (default `50`, maximum `100`). Narrow further with dates or other filters, then page through the result.
+
+### Path parameters
+
+| Parameter | Description |
+|-----------|-------------|
+| `id` | **Required.** Numeric id of the security. |
 
 ### Query parameters
 
 | Parameter | Description |
 |-----------|-------------|
-| `securityId` | Numeric id of the security (same as `securities.id` and `daily_bars.security_id`). Optional; omit to search across the S&P universe. Resolve from ticker via `GET /api/v1/security`. |
 | `gapType` | One of `common`, `breakaway`, `runaway`, `exhaustion`, or `unknown`. |
 | `isClosed` | `true` or `false` — whether the skipped band has been fully overlapped by later sessions’ highs and lows. |
 | `minSize` | Minimum gap size in **price units** (width of the empty band). |
@@ -178,7 +207,8 @@ The Gaps API exposes overnight gaps detected on **S&P 500 stocks and former S&P 
 | `maxSizePct` | Maximum gap size as a percent of the prior session’s close. |
 | `gapFrom`, `gapTo` | Date range (ISO `YYYY-MM-DD`) on the **gap session** — the trading day where the gap appears. |
 | `closingFrom`, `closingTo` | Date range on **closing started on** — the first session whose range begins to overlap the gap zone. Omit gaps that never started to close by using filters that exclude nulls implicitly, or combine with `isClosed`. |
-| `limit`, `cursor` | Pagination (exact limits documented at launch). |
+| `page` | Page number (default `1`). |
+| `limit` | Page size (default `50`, maximum `100`). |
 
 ### Fields on each gap object
 
@@ -196,7 +226,7 @@ Every row includes **`securityId`** and may embed a **`security`** object (same 
 ### Example: gaps for one stock in a date range
 
 ```http
-GET /api/v1/gap?securityId=42&gapFrom=2024-01-01&gapTo=2024-12-31
+GET /api/v1/security/42/gap?gapFrom=2024-01-01&gapTo=2024-12-31
 Authorization: Bearer <token>
 ```
 
@@ -227,14 +257,19 @@ Authorization: Bearer <token>
       "closedOn": "2024-01-15"
     }
   ],
-  "meta": { "count": 1 }
+  "meta": {
+    "page": 1,
+    "limit": 50,
+    "total": 1,
+    "totalPages": 1
+  }
 }
 ```
 
 ### Example: only open common gaps above a minimum size
 
 ```http
-GET /api/v1/gap?gapType=common&isClosed=false&minSize=1.0&gapFrom=2020-01-01
+GET /api/v1/security/42/gap?gapType=common&isClosed=false&minSize=1.0&gapFrom=2020-01-01
 Authorization: Bearer <token>
 ```
 
@@ -243,7 +278,7 @@ Use this to list gaps that are still open as of our latest bar data and are at l
 ### Example: closed breakaway gaps that started filling in Q2 2024
 
 ```http
-GET /api/v1/gap?gapType=breakaway&isClosed=true&closingFrom=2024-04-01&closingTo=2024-06-30
+GET /api/v1/security/42/gap?gapType=breakaway&isClosed=true&closingFrom=2024-04-01&closingTo=2024-06-30
 Authorization: Bearer <token>
 ```
 
@@ -252,11 +287,11 @@ Authorization: Bearer <token>
 ### Example: small gaps as a percentage of price
 
 ```http
-GET /api/v1/gap?maxSizePct=0.5&isClosed=true
+GET /api/v1/security/42/gap?maxSizePct=0.5&isClosed=true
 Authorization: Bearer <token>
 ```
 
 Returns gaps whose empty band is at most 0.5% of the prior session’s close and that have fully closed.
 
-Field names and pagination details may change slightly before the APIs go live; the behavior above matches what we intend to ship.
+Field names may change slightly before the APIs go live; the behavior above matches what we intend to ship.
 
