@@ -3,6 +3,8 @@ import { drizzleAdapter } from '@better-auth/drizzle-adapter';
 import { db } from '@ta/db';
 import type { User } from 'better-auth';
 
+const nonRuntimeAuthSecret = 'build-time-placeholder-not-used-at-runtime-32';
+
 function requireEnv(name: string): string {
   const value = process.env[name];
   if (value) {
@@ -10,7 +12,15 @@ function requireEnv(name: string): string {
   }
   // `next build` loads API route modules when collecting page data; secrets are runtime-only.
   if (process.env['NEXT_PHASE'] === 'phase-production-build') {
-    return 'build-time-placeholder-not-used-at-runtime-32';
+    return nonRuntimeAuthSecret;
+  }
+  // Vitest (and CI) may import `@ta/auth` before `.env` is loaded; tests use PGlite / stubs, not real sessions.
+  if (
+    process.env['CI'] === 'true' ||
+    process.env['VITEST'] === 'true' ||
+    process.env['NODE_ENV'] === 'test'
+  ) {
+    return nonRuntimeAuthSecret;
   }
   throw new Error(`${name} is not set. See .env.example at the repository root.`);
 }
