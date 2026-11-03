@@ -26,7 +26,7 @@ export function usePgLiteTestDb(): PgLiteTestDbFixture {
   beforeEach(async () => {
     const { db, close } = await createPgLiteTestDb();
     state.db = db;
-    setDbForTesting(db, close);
+    await setDbForTesting(db, close);
   });
 
   afterEach(async () => {

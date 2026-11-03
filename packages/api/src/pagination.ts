@@ -43,8 +43,12 @@ export function parsePage(value: unknown): number {
   if (value === undefined || value === '') {
     return DEFAULT_PAGE;
   }
-  const page = Number.parseInt(String(value), 10);
-  if (!Number.isFinite(page) || page < 1) {
+  const raw = String(value);
+  if (!/^\d+$/.test(raw)) {
+    throw new Error('page must be a positive integer');
+  }
+  const page = Number.parseInt(raw, 10);
+  if (page < 1) {
     throw new Error('page must be a positive integer');
   }
   return page;
@@ -55,8 +59,12 @@ export function parseLimit(value: unknown): number {
   if (value === undefined || value === '') {
     return DEFAULT_LIMIT;
   }
-  const limit = Number.parseInt(String(value), 10);
-  if (!Number.isFinite(limit) || limit < 1 || limit > MAX_LIMIT) {
+  const raw = String(value);
+  if (!/^\d+$/.test(raw)) {
+    throw new Error(`limit must be between 1 and ${MAX_LIMIT}`);
+  }
+  const limit = Number.parseInt(raw, 10);
+  if (limit < 1 || limit > MAX_LIMIT) {
     throw new Error(`limit must be between 1 and ${MAX_LIMIT}`);
   }
   return limit;

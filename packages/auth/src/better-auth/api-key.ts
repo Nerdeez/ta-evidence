@@ -9,7 +9,9 @@ export function readApiKeyFromHeaders(
   headers: Record<string, string | string[] | undefined>,
   headerName: string = API_KEY_HEADER,
 ): string | undefined {
-  const raw = headers[headerName];
+  const target = headerName.toLowerCase();
+  const matchedKey = Object.keys(headers).find((name) => name.toLowerCase() === target);
+  const raw = matchedKey === undefined ? undefined : headers[matchedKey];
   if (raw === undefined) {
     return undefined;
   }

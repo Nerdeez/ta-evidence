@@ -38,10 +38,13 @@ function getDbInstance(): NodePgDatabase<typeof schema> {
 }
 
 /** @internal */
-export function setDbForTesting(
+export async function setDbForTesting(
   instance: NodePgDatabase<typeof schema>,
   close?: () => Promise<void>,
-): void {
+): Promise<void> {
+  if (testDbClose) {
+    await testDbClose();
+  }
   testDb = instance;
   testDbClose = close;
 }

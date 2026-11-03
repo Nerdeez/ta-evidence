@@ -4,13 +4,15 @@ import { getSecurityById, listSecurities } from './security.service.js';
 
 export async function registerSecurityRoutes(fastify: FastifyInstance): Promise<void> {
   fastify.get('/api/v1/security', async (request, reply) => {
+    let query: ReturnType<typeof parseListSecuritiesQuery>;
     try {
-      const query = parseListSecuritiesQuery(request.query as Record<string, unknown>);
-      return await listSecurities(query);
+      query = parseListSecuritiesQuery(request.query as Record<string, unknown>);
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Invalid query';
       return reply.code(400).send({ error: { message } });
     }
+
+    return await listSecurities(query);
   });
 
   fastify.get<{ Params: { id: string } }>('/api/v1/security/:id(^\\d+)', async (request, reply) => {
