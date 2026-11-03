@@ -4,7 +4,8 @@ import { and, asc, count, eq, getTableColumns, type SQL } from 'drizzle-orm';
 import type { ListSecuritiesQuery } from './security.query.js';
 
 /** Internal-only securities columns — omitted from GET /api/v1/security JSON. */
-const SECURITY_API_EXCLUDED_COLUMNS = [] as const satisfies readonly (keyof typeof securities.$inferSelect)[];
+const SECURITY_API_EXCLUDED_COLUMNS =
+  [] as const satisfies readonly (keyof typeof securities.$inferSelect)[];
 
 type SecurityDto = Omit<
   typeof securities.$inferSelect,

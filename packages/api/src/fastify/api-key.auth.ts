@@ -10,10 +10,7 @@ function unauthorized(reply: FastifyReply, message: string) {
   return reply.code(401).send({ error: { message } });
 }
 
-async function verifyApiKeyRequest(
-  request: FastifyRequest,
-  reply: FastifyReply,
-): Promise<boolean> {
+async function verifyApiKeyRequest(request: FastifyRequest, reply: FastifyReply): Promise<boolean> {
   const result = await verifyApiKeyFromHeaders(request.headers);
   if (!result.ok) {
     await unauthorized(reply, result.message);
