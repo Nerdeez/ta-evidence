@@ -25,4 +25,8 @@ jobs:
       - name: Test affected packages
         env:
           TURBO_SCM_BASE: ${{ github.event.pull_request.base.sha }}
+          # Better Auth is initialized when Vitest loads `@ta/api` / `@ta/auth` (no repo `.env` in CI).
+          BETTER_AUTH_SECRET: ci-test-only-placeholder-not-used-at-runtime-32
+          BETTER_AUTH_URL: http://localhost:3001
+          NEXT_PUBLIC_WEB_STRATEGIES_URL: http://localhost:3000
         run: pnpm turbo run test --affected
