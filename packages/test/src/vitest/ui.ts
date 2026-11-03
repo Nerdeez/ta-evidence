@@ -5,8 +5,8 @@ import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import { playwright } from '@vitest/browser-playwright';
 import { defineConfig, mergeConfig } from 'vitest/config';
-
 import { loadFeatureVitestPlugins } from './feature-plugins.js';
+import { loadMonorepoDotenv } from './load-monorepo-dotenv.js';
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 const nextImageStubPath = path.resolve(dirname, 'next-image.js');
@@ -95,6 +95,8 @@ function createBaseVitestConfig(appRoot: string) {
  * ```
  */
 export async function createVitestConfig(options: CreateVitestConfigOptions) {
+  loadMonorepoDotenv(options.appRoot);
+
   const srcDir = path.join(options.appRoot, 'src');
   const base = createBaseVitestConfig(options.appRoot);
 

@@ -1,7 +1,7 @@
 'use server';
 
 import { type ErrorResponse, errorResponse } from '@ta/api';
-import { auth, getAuthBaseUrl } from '@ta/auth';
+import { auth, getAuthBaseUrl } from '@ta/auth/next';
 import { redirect } from 'next/navigation';
 
 import { type ForgotPasswordValues, forgotPasswordSchema } from './forgot-password.schema';

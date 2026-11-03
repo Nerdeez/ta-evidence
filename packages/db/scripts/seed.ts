@@ -25,7 +25,6 @@ async function upsertSecurity(security: {
       name: security.name,
       currency: security.currency,
       assetType: security.assetType,
-      isActive: true,
     })
     .onConflictDoNothing();
 

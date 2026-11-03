@@ -4,14 +4,35 @@ Shared database package for the TA Evidence monorepo. Defines the database schem
 
 ## Purpose
 
-`@ta/db` is the single source of truth for:
+`@ta/db` is the single source of truth for **persistence**:
 
 - **Schema** — tables, columns, relations, and indexes
 - **Migrations** — versioned changes applied to PostgreSQL
 - **Client** — a configured Drizzle instance for queries
-- **Repositories / helpers** — reusable data-access functions used by apps such as `api/ticker`
+- **Seed** — dev fixtures (see `scripts/seed.ts`)
 
-Apps should not define their own schema or open ad hoc database connections. They depend on `@ta/db` instead.
+Apps should not define their own schema or open ad hoc database connections. They depend on `@ta/db` for the client and table definitions.
+
+Domain-specific queries (e.g. a securities list for `@ta/api-strategies`) live in the **app or API package** that owns the route, not in `@ta/db`, unless the same query is reused by multiple apps and is still purely about reading/writing rows.
+
+### Package boundaries
+
+Keep `@ta/db` limited to things that are actually about the database. That avoids placing HTTP or API-layer logic here by mistake.
+
+| Belongs in `@ta/db` | Put elsewhere |
+|---------------------|---------------|
+| Drizzle schema, relations, indexes | Route handlers, Fastify plugins → **apps** (`apps/api/*`) |
+| Generated SQL under `drizzle/` | Query param parsing, error response shape → **`@ta/api`** |
+| `db` / `closeDb` | List **`meta`**, default/max page size, `page`/`limit` parsing → **`@ta/api`** |
+| Seed scripts and migration tooling | Filters and DTO mapping for one REST resource → **that API’s service layer** |
+
+**Composing a paginated HTTP list:** import `db` and tables from `@ta/db`, run `.limit()` and `.offset()` in the service, and take page size from values parsed with `@ta/api` (e.g. `parsePage`, `parseLimit`, and shared paging helpers). Do not add new exports to `@ta/db` for API contracts or query-string rules.
+
+See `packages/api/src/` for shared HTTP helpers (`parsePage`, `parseLimit`, and related paging types).
+
+### Testing
+
+Integration tests can run against in-memory Postgres via [PGlite](https://github.com/electric-sql/pglite). Add `@electric-sql/pglite` and `vitest` as dev dependencies in the test package. In a Vitest `describe` block, call `usePgLiteTestDb()` from `@ta/db/testing` to apply schema, inject `db`, and tear down after each test; use the returned `db` to seed rows. For manual control, use `createPgLiteTestDb`, `setDbForTesting`, and `resetDbForTesting` instead.
 
 ## Stack
 
@@ -23,10 +44,21 @@ Apps should not define their own schema or open ad hoc database connections. The
 Import schema and the database client from `@ta/db` in any workspace app:
 
 ```typescript
-import { db, dailyBars, securities } from '@ta/db';
+import { buildPaginationMeta, pageToOffset, parseLimit, parsePage } from '@ta/api';
+import { db, securities } from '@ta/db';
 import { eq } from 'drizzle-orm';
 
-const rows = await db.select().from(securities).where(eq(securities.ticker, 'AAPL'));
+// In an API service: persistence from @ta/db, paging policy from @ta/api.
+const page = parsePage(query.page);
+const limit = parseLimit(query.limit);
+const offset = pageToOffset(page, limit);
+
+const rows = await db
+  .select()
+  .from(securities)
+  .where(eq(securities.ticker, 'AAPL'))
+  .limit(limit)
+  .offset(offset);
 ```
 
 ## Development

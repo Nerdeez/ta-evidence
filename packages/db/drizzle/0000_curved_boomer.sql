@@ -16,9 +16,7 @@ CREATE TABLE "securities" (
 	"exchange" varchar(16) NOT NULL,
 	"name" text,
 	"currency" varchar(3) DEFAULT 'USD' NOT NULL,
-	"asset_type" varchar(16) DEFAULT 'equity' NOT NULL,
-	"is_active" boolean DEFAULT true NOT NULL,
-	"created_at" timestamp with time zone DEFAULT now() NOT NULL
+	"asset_type" varchar(16) DEFAULT 'equity' NOT NULL
 );
 --> statement-breakpoint
 ALTER TABLE "daily_bars" ADD CONSTRAINT "daily_bars_security_id_securities_id_fk" FOREIGN KEY ("security_id") REFERENCES "public"."securities"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint

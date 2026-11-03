@@ -1,7 +1,7 @@
 'use server';
 
 import { type ErrorResponse, errorResponse } from '@ta/api';
-import { auth } from '@ta/auth';
+import { auth } from '@ta/auth/next';
 import { redirect } from 'next/navigation';
 
 import { type ResetPasswordValues, resetPasswordSchema } from './reset-password.schema';

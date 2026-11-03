@@ -4,6 +4,10 @@
   "private": true,
   "type": "module",
   "exports": {
+    "./vitest/node": {
+      "types": "./dist/vitest/node.d.ts",
+      "import": "./dist/vitest/node.js"
+    },
     "./vitest/ui": {
       "types": "./dist/vitest/ui.d.ts",
       "import": "./dist/vitest/ui.js"
@@ -22,7 +26,9 @@
     "@tailwindcss/vite": "catalog:",
     "@vitejs/plugin-react": "catalog:",
     "@vitest/browser-playwright": "catalog:",
-    "playwright": "catalog:"
+    "dotenv": "catalog:",
+    "playwright": "catalog:",
+    "vite-tsconfig-paths": "6.1.1"
   },
   "peerDependencies": {
     "vitest": "catalog:"
