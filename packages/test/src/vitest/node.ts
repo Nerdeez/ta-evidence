@@ -1,7 +1,7 @@
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vitest/config';
 
-import { loadMonorepoDotenv } from './load-monorepo-dotenv.js';
+import { loadMonorepoDotenv } from '../dotenv.js';
 
 const defaultNodeTestConfig = {
   environment: 'node' as const,

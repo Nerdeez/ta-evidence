@@ -5,8 +5,8 @@ import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import { playwright } from '@vitest/browser-playwright';
 import { defineConfig, mergeConfig } from 'vitest/config';
+import { loadMonorepoDotenv } from '../dotenv.js';
 import { loadFeatureVitestPlugins } from './feature-plugins.js';
-import { loadMonorepoDotenv } from './load-monorepo-dotenv.js';
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 const nextImageStubPath = path.resolve(dirname, 'next-image.js');

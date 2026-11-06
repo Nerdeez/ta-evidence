@@ -9,7 +9,12 @@
     "start": "next start -p 3001",
     "check-types": "next typegen && tsc --noEmit",
     "test": "vitest run",
-    "test:browser": "vitest --browser.headless=false"
+    "test:browser": "vitest --browser.headless=false",
+    "e2e": "playwright test",
+    "e2e:browser": "playwright test --headed",
+    "e2e:ui": "playwright test --ui",
+    "e2e:debug": "playwright test --debug",
+    "e2e:install": "playwright install chromium"
   },
   "dependencies": {
     "@ta/api": "workspace:*",
@@ -24,6 +29,7 @@
     "zod": "catalog:"
   },
   "devDependencies": {
+    "@playwright/test": "catalog:",
     "@ta/test": "workspace:*",
     "@ta/tsconfig": "workspace:*",
     "@tailwindcss/postcss": "catalog:",
