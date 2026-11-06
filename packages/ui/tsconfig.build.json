@@ -3,7 +3,8 @@
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "src",
-    "resolvePackageJsonImports": true
+    "resolvePackageJsonImports": true,
+    "incremental": false
   },
   "include": ["src"],
   "exclude": [

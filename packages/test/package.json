@@ -11,6 +11,10 @@
     "./vitest/ui": {
       "types": "./dist/vitest/ui.d.ts",
       "import": "./dist/vitest/ui.js"
+    },
+    "./playwright": {
+      "types": "./dist/playwright/index.d.ts",
+      "import": "./dist/playwright/index.js"
     }
   },
   "files": [
@@ -31,9 +35,16 @@
     "vite-tsconfig-paths": "6.1.1"
   },
   "peerDependencies": {
+    "@playwright/test": "catalog:",
     "vitest": "catalog:"
   },
+  "peerDependenciesMeta": {
+    "@playwright/test": {
+      "optional": true
+    }
+  },
   "devDependencies": {
+    "@playwright/test": "catalog:",
     "@ta/tsconfig": "workspace:*",
     "@types/react": "catalog:",
     "react": "catalog:",
