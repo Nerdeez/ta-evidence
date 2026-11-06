@@ -12,10 +12,19 @@ node_modules
 .env.test.local
 .env.production.local
 
+# E2E overrides per app (committed defaults use `.env.e2e`)
+.env.e2e.local
+
 # Testing
 coverage
 __screenshots__
 .vitest-attachments
+
+# Playwright e2e (`@ta/test/playwright` → per-app `test-results/`, `playwright-report/`)
+# Unanchored: matches under any directory (e.g. apps/web/iam/test-results).
+test-results
+playwright-report
+blob-report
 
 # Turbo
 .turbo
