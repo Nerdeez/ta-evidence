@@ -1,5 +1,8 @@
-import Image from 'next/image';
-import Link from 'next/link';
+import logoImport from './logo.svg';
+
+function logoUrl(value: typeof logoImport): string {
+  return typeof value === 'string' ? value : value.src;
+}
 
 const GITHUB_REPO_URL = 'https://github.com/Nerdeez/ta-evidence';
 
@@ -21,16 +24,15 @@ export function Header() {
   return (
     <header className="border-b border-border bg-card">
       <div className="mx-auto flex h-12 max-w-7xl items-center justify-between px-6">
-        <Link href="/" className="inline-flex shrink-0 leading-none">
-          <Image
-            src="/logo.svg"
+        <a href="/" className="inline-flex shrink-0 leading-none">
+          <img
+            src={logoUrl(logoImport)}
             alt="TA Evidence"
             width={124}
             height={26}
             className="block h-[26px] w-auto"
-            priority
           />
-        </Link>
+        </a>
 
         <a
           href={GITHUB_REPO_URL}
