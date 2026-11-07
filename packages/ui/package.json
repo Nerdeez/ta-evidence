@@ -40,6 +40,10 @@
     "./separator": {
       "types": "./dist/separator/separator.d.ts",
       "import": "./dist/separator/separator.js"
+    },
+    "./header": {
+      "types": "./dist/header/header.d.ts",
+      "import": "./dist/header/header.js"
     }
   },
   "files": [
@@ -47,7 +51,7 @@
   ],
   "scripts": {
     "build:styles": "mkdir -p dist/styles && tailwindcss -i ./src/styles/globals.css -o ./dist/styles/globals.compiled.css",
-    "build": "tsc -p tsconfig.build.json && pnpm run build:styles && cp src/styles/globals.css src/styles/tailwind.css src/styles/theme.css src/styles/css.css dist/styles/",
+    "build": "tsc -p tsconfig.build.json && cp src/header/logo.svg dist/header/logo.svg && pnpm run build:styles && cp src/styles/globals.css src/styles/tailwind.css src/styles/theme.css src/styles/css.css dist/styles/",
     "check-types": "tsc --noEmit",
     "test": "vitest run",
     "test:browser": "vitest --browser.headless=false"

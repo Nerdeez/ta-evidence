@@ -1,7 +1,7 @@
+import { Header } from '@ta/ui/header';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import type { ReactNode } from 'react';
-import { Header } from './header';
 import './globals.css';
 
 const geistSans = Geist({
