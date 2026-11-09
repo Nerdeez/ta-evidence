@@ -27,6 +27,7 @@
     "setup-browsers:ci": "playwright install --with-deps chromium"
   },
   "dependencies": {
+    "@ta/workspace": "workspace:*",
     "@tailwindcss/vite": "catalog:",
     "@vitejs/plugin-react": "catalog:",
     "@vitest/browser-playwright": "catalog:",
