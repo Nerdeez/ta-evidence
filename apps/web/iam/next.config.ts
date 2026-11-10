@@ -1,7 +1,3 @@
-import type { NextConfig } from 'next';
+import { createNextConfig } from '@ta/next';
 
-const nextConfig: NextConfig = {
-  transpilePackages: ['@ta/ui'],
-};
-
-export default nextConfig;
+export default createNextConfig();

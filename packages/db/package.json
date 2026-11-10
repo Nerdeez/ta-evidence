@@ -30,6 +30,7 @@
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
+    "@ta/workspace": "workspace:*",
     "drizzle-orm": "catalog:",
     "dotenv": "catalog:",
     "pg": "8.23.0"

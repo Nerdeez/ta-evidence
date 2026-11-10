@@ -13,6 +13,28 @@
       "autoAttachChildProcesses": true,
       "smartStep": true,
       "skipFiles": ["<node_internals>/**", "**/node_modules/**"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug @ta/web-iam e2e",
+      "cwd": "${workspaceFolder}/apps/web/iam",
+      "runtimeExecutable": "${env:HOME}/.local/bin/mise",
+      "runtimeArgs": [
+        "exec",
+        "--",
+        "pnpm",
+        "exec",
+        "playwright",
+        "test",
+        "--workers=1",
+        "--headed"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "autoAttachChildProcesses": true,
+      "smartStep": true,
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"]
     }
   ]
 }
