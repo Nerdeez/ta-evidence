@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { test } from '@playwright/test';
-import { closeDb, db, user } from '@ta/db';
+import { db, user } from '@ta/db';
 import { eq } from 'drizzle-orm';
 import { type AuthUser, auth } from '../better-auth/api.auth.js';
 
@@ -14,9 +14,10 @@ const defaultTestPassword = 'E2eTestPassword1!';
  * so sign-in works with `requireEmailVerification` enabled.
  */
 async function createTestEmailPasswordUser(): Promise<TestEmailPasswordUser> {
-  const email = `e2e+${randomUUID()}@example.com`;
+  const id = randomUUID();
+  const email = `e2e+${id}@example.com`;
   const password = defaultTestPassword;
-  const name = 'E2E Test User';
+  const name = `E2E User ${id.slice(0, 8)}`;
 
   const signedUp = await auth.api.signUpEmail({
     body: {
@@ -41,7 +42,7 @@ async function createTestEmailPasswordUser(): Promise<TestEmailPasswordUser> {
 
 /**
  * Registers Playwright `beforeAll` / `afterAll` on the current `test.describe` block:
- * creates a verified email/password user per worker, deletes it afterward, and closes the DB pool.
+ * creates a verified email/password user per worker and deletes it afterward.
  *
  * Call once at the top of `test.describe` (synchronously). `await` the returned promise inside tests.
  */
@@ -66,10 +67,9 @@ export function createTestUser(): Promise<TestEmailPasswordUser> {
 
   test.afterAll(async () => {
     if (testUser) {
-      await db.delete(user).where(eq(user.email, testUser.email));
+      await db.delete(user).where(eq(user.id, testUser.id));
       testUser = undefined;
     }
-    await closeDb();
   });
 
   return userPromise;

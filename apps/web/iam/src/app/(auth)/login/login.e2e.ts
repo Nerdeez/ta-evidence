@@ -33,8 +33,10 @@ test.describe('login', () => {
     await page.getByRole('button', { name: 'Sign in' }).click();
 
     await expect(page).toHaveURL(/\/dashboard$/);
-    await expect(banner.getByLabel(name)).toBeVisible();
-    await expect(banner.getByRole('link', { name: 'Sign in' })).toBeHidden();
-    await expect(banner.getByRole('link', { name: 'Sign up' })).toBeHidden();
+
+    const authenticatedBanner = page.getByRole('banner');
+    await expect(authenticatedBanner.getByLabel(name)).toBeVisible();
+    await expect(authenticatedBanner.getByRole('link', { name: 'Sign in' })).toBeHidden();
+    await expect(authenticatedBanner.getByRole('link', { name: 'Sign up' })).toBeHidden();
   });
 });

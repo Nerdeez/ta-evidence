@@ -6,8 +6,8 @@ import { parse } from 'dotenv';
 
 /** Loads the repository root `.env` (does not override variables already in `process.env`). */
 export function loadMonorepoDotenv(packageRoot: string): void {
-  requireMonorepoRoot(packageRoot);
-  loadRepoDotenv(packageRoot);
+  const repoRoot = requireMonorepoRoot(packageRoot);
+  loadRepoDotenv(repoRoot);
 }
 
 /**

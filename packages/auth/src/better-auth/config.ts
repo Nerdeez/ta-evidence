@@ -1,7 +1,7 @@
 import { apiKey } from '@better-auth/api-key';
 import { drizzleAdapter } from '@better-auth/drizzle-adapter';
 import { db } from '@ta/db';
-import { loadRepoDotenv } from '@ta/workspace';
+import { loadRepoDotenvFromModule } from '@ta/workspace';
 import type { User } from 'better-auth';
 
 const nonRuntimeAuthSecret = 'build-time-placeholder-not-used-at-runtime-32';
@@ -14,7 +14,7 @@ function loadRepoDotenvIfNeeded(): void {
     return;
   }
   repoDotenvLoaded = true;
-  loadRepoDotenv(process.cwd());
+  loadRepoDotenvFromModule(import.meta.url);
 }
 
 function requireEnv(name: string): string {

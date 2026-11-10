@@ -51,8 +51,10 @@ function GitHubIcon({ className }: { className?: string }) {
 
 function HeaderAuthActions({ user }: { user: AuthUser | null }) {
   if (user) {
-    const label = user.name.trim() || user.email.trim() || 'Account';
-    const initials = userInitials(user.name, user.email);
+    const name = user.name?.trim() ?? '';
+    const email = user.email?.trim() ?? '';
+    const label = name || email || 'Account';
+    const initials = userInitials(name, email);
 
     return (
       <Avatar className="size-8" title={label} aria-label={label}>
@@ -83,10 +85,16 @@ function HeaderAuthActions({ user }: { user: AuthUser | null }) {
 
 /** Site header (Next.js server component). Session comes from Better Auth on the request. */
 export async function Header() {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-  const user = session?.user ?? null;
+  let user: AuthUser | null = null;
+
+  try {
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
+    user = session?.user ?? null;
+  } catch {
+    user = null;
+  }
 
   return (
     <header className="border-b border-border bg-card">

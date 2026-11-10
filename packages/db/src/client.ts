@@ -1,4 +1,4 @@
-import { loadRepoDotenv } from '@ta/workspace';
+import { loadRepoDotenvFromModule } from '@ta/workspace';
 import type { NodePgDatabase } from 'drizzle-orm/node-postgres';
 import { drizzle } from 'drizzle-orm/node-postgres';
 import pg from 'pg';
@@ -12,7 +12,7 @@ function loadRepoDotenvIfNeeded(): void {
     return;
   }
   repoDotenvLoaded = true;
-  loadRepoDotenv(process.cwd());
+  loadRepoDotenvFromModule(import.meta.url);
 }
 
 let pool: pg.Pool | undefined;

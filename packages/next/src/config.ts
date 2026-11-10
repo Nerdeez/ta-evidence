@@ -20,9 +20,14 @@ function loadMonorepoEnv(): void {
 
 const defaultTranspilePackages = ['@ta/ui'] as const;
 
+let monorepoEnvLoaded = false;
+
 /** Loads repo-root env when present, then returns your `NextConfig`. */
 export function createNextConfig(options: CreateNextConfigOptions = {}): NextConfig {
-  loadMonorepoEnv();
+  if (!monorepoEnvLoaded) {
+    loadMonorepoEnv();
+    monorepoEnvLoaded = true;
+  }
 
   const { transpilePackages, ...rest } = options;
 

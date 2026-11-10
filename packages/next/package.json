@@ -21,8 +21,7 @@
   },
   "dependencies": {
     "@next/env": "16.3.1",
-    "@ta/workspace": "workspace:*",
-    "next": "catalog:"
+    "@ta/workspace": "workspace:*"
   },
   "peerDependencies": {
     "next": "catalog:"
