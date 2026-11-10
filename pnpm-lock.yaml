@@ -178,6 +178,9 @@ importers:
       '@ta/auth':
         specifier: workspace:*
         version: link:../../../packages/auth
+      '@ta/next':
+        specifier: workspace:*
+        version: link:../../../packages/next
       '@ta/ui':
         specifier: workspace:*
         version: link:../../../packages/ui
@@ -239,6 +242,12 @@ importers:
 
   apps/web/strategies:
     dependencies:
+      '@ta/auth':
+        specifier: workspace:*
+        version: link:../../../packages/auth
+      '@ta/next':
+        specifier: workspace:*
+        version: link:../../../packages/next
       '@ta/ui':
         specifier: workspace:*
         version: link:../../../packages/ui
@@ -322,10 +331,19 @@ importers:
       '@ta/db':
         specifier: workspace:*
         version: link:../db
+      '@ta/workspace':
+        specifier: workspace:*
+        version: link:../workspace
       better-auth:
         specifier: 'catalog:'
         version: 1.7.7(drizzle-kit@0.31.10)(drizzle-orm@0.45.4(@electric-sql/pglite@0.5.14)(@types/pg@8.21.0)(kysely@0.29.6)(pg@8.23.0))(next@16.3.1(@babel/core@7.29.7)(@playwright/test@1.65.0)(@types/node@26.2.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(pg@8.23.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(vitest@4.1.11)
+      drizzle-orm:
+        specifier: 'catalog:'
+        version: 0.45.4(@electric-sql/pglite@0.5.14)(@types/pg@8.21.0)(kysely@0.29.6)(pg@8.23.0)
     devDependencies:
+      '@playwright/test':
+        specifier: 'catalog:'
+        version: 1.65.0
       '@ta/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
@@ -344,6 +362,9 @@ importers:
 
   packages/db:
     dependencies:
+      '@ta/workspace':
+        specifier: workspace:*
+        version: link:../workspace
       dotenv:
         specifier: 'catalog:'
         version: 18.0.9
@@ -397,8 +418,33 @@ importers:
         specifier: 'catalog:'
         version: 7.0.2
 
+  packages/next:
+    dependencies:
+      '@next/env':
+        specifier: 16.3.1
+        version: 16.3.1
+      '@ta/workspace':
+        specifier: workspace:*
+        version: link:../workspace
+    devDependencies:
+      '@ta/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
+      '@types/node':
+        specifier: 'catalog:'
+        version: 26.2.0
+      next:
+        specifier: 'catalog:'
+        version: 16.3.1(@babel/core@7.29.7)(@playwright/test@1.65.0)(@types/node@26.2.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      typescript:
+        specifier: 'catalog:'
+        version: 7.0.2
+
   packages/test:
     dependencies:
+      '@ta/workspace':
+        specifier: workspace:*
+        version: link:../workspace
       '@tailwindcss/vite':
         specifier: 'catalog:'
         version: 4.3.3(vite@8.2.2(@types/node@26.2.0)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.12))
@@ -457,6 +503,9 @@ importers:
         specifier: 3.6.0
         version: 3.6.0
     devDependencies:
+      '@ta/auth':
+        specifier: workspace:*
+        version: link:../auth
       '@ta/test':
         specifier: workspace:*
         version: link:../test
@@ -472,6 +521,9 @@ importers:
       '@types/react-dom':
         specifier: 'catalog:'
         version: 19.2.4(@types/react@19.2.18)
+      next:
+        specifier: 'catalog:'
+        version: 16.3.1(@babel/core@7.29.7)(@playwright/test@1.65.0)(@types/node@26.2.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       react:
         specifier: 'catalog:'
         version: 19.2.8
@@ -490,6 +542,22 @@ importers:
       vitest-browser-react:
         specifier: 'catalog:'
         version: 2.2.0(@types/react-dom@19.2.4(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(vitest@4.1.11)
+
+  packages/workspace:
+    dependencies:
+      dotenv:
+        specifier: 'catalog:'
+        version: 18.0.9
+    devDependencies:
+      '@ta/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
+      '@types/node':
+        specifier: 'catalog:'
+        version: 26.2.0
+      typescript:
+        specifier: 'catalog:'
+        version: 7.0.2
 
 packages:
 

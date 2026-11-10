@@ -1,11 +1,24 @@
 import { apiKey } from '@better-auth/api-key';
 import { drizzleAdapter } from '@better-auth/drizzle-adapter';
 import { db } from '@ta/db';
+import { loadRepoDotenvFromModule } from '@ta/workspace';
 import type { User } from 'better-auth';
 
 const nonRuntimeAuthSecret = 'build-time-placeholder-not-used-at-runtime-32';
 
+let repoDotenvLoaded = false;
+
+/** Root `.env` for local dev when Better Auth reads secrets outside Next's config phase (e.g. Turbopack). */
+function loadRepoDotenvIfNeeded(): void {
+  if (repoDotenvLoaded) {
+    return;
+  }
+  repoDotenvLoaded = true;
+  loadRepoDotenvFromModule(import.meta.url);
+}
+
 function requireEnv(name: string): string {
+  loadRepoDotenvIfNeeded();
   const value = process.env[name];
   if (value) {
     return value;

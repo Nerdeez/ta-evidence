@@ -1,3 +1,9 @@
+import { type AuthUser, auth } from '@ta/auth/next';
+import { headers } from 'next/headers.js';
+
+import { cn } from '#utils';
+import { Avatar, AvatarFallback } from '../avatar/avatar.js';
+import { buttonVariants } from '../button/button.js';
 import logoImport from './logo.svg';
 
 function logoUrl(value: typeof logoImport): string {
@@ -5,6 +11,29 @@ function logoUrl(value: typeof logoImport): string {
 }
 
 const GITHUB_REPO_URL = 'https://github.com/Nerdeez/ta-evidence';
+const SIGN_IN_PATH = '/login';
+const SIGN_UP_PATH = '/signup';
+
+function userInitials(name?: string | null, email?: string | null): string {
+  const fromName = name?.trim();
+  if (fromName) {
+    const parts = fromName.split(/\s+/).filter(Boolean);
+    if (parts.length >= 2) {
+      const first = parts[0]?.[0] ?? '';
+      const last = parts.at(-1)?.[0] ?? '';
+      return `${first}${last}`.toUpperCase();
+    }
+    return fromName.slice(0, 2).toUpperCase();
+  }
+
+  const fromEmail = email?.trim();
+  if (fromEmail) {
+    const local = fromEmail.split('@')[0] ?? fromEmail;
+    return local.slice(0, 2).toUpperCase();
+  }
+
+  return '?';
+}
 
 function GitHubIcon({ className }: { className?: string }) {
   return (
@@ -20,10 +49,56 @@ function GitHubIcon({ className }: { className?: string }) {
   );
 }
 
-export function Header() {
+function HeaderAuthActions({ user }: { user: AuthUser | null }) {
+  if (user) {
+    const name = user.name?.trim() ?? '';
+    const email = user.email?.trim() ?? '';
+    const label = name || email || 'Account';
+    const initials = userInitials(name, email);
+
+    return (
+      <Avatar className="size-8" title={label} aria-label={label}>
+        <AvatarFallback className="text-[0.65rem] font-semibold tracking-wide">
+          {initials}
+        </AvatarFallback>
+      </Avatar>
+    );
+  }
+
+  return (
+    <div className="flex items-center gap-1 sm:gap-2">
+      <a
+        href={SIGN_IN_PATH}
+        className={cn(
+          buttonVariants({ variant: 'ghost', size: 'sm' }),
+          'text-muted-foreground hover:text-foreground',
+        )}
+      >
+        Sign in
+      </a>
+      <a href={SIGN_UP_PATH} className={buttonVariants({ size: 'sm' })}>
+        Sign up
+      </a>
+    </div>
+  );
+}
+
+/** Site header (Next.js server component). Session comes from Better Auth on the request. */
+export async function Header() {
+  let user: AuthUser | null = null;
+
+  try {
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
+    user = session?.user ?? null;
+  } catch {
+    user = null;
+  }
+
   return (
     <header className="border-b border-border bg-card">
-      <div className="mx-auto flex h-12 max-w-7xl items-center justify-between px-6">
+      <div className="mx-auto flex h-12 max-w-7xl items-center justify-between gap-4 px-6">
         <a href="/" className="inline-flex shrink-0 leading-none">
           <img
             src={logoUrl(logoImport)}
@@ -34,15 +109,18 @@ export function Header() {
           />
         </a>
 
-        <a
-          href={GITHUB_REPO_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="View TA Evidence on GitHub"
-          className="inline-flex items-center justify-center rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
-        >
-          <GitHubIcon className="size-5" />
-        </a>
+        <div className="flex items-center gap-2 sm:gap-3">
+          <HeaderAuthActions user={user} />
+          <a
+            href={GITHUB_REPO_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="View TA Evidence on GitHub"
+            className="inline-flex items-center justify-center rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+          >
+            <GitHubIcon className="size-5" />
+          </a>
+        </div>
       </div>
     </header>
   );

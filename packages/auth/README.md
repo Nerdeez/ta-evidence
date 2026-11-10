@@ -14,12 +14,12 @@ The **IAM web app** (`@ta/web-iam`) is the auth **server**: it mounts Better Aut
 
 ## Exports
 
-| Import | Use |
-|--------|-----|
-| `@ta/auth` | Better Auth instance (`auth`, session types) |
-| `@ta/auth/api-key` | API key verification helpers (`verifyApiKeyFromHeaders`, …) |
-| `@ta/auth/next` | Next.js instance (`nextCookies`), `getAuthBaseUrl` — use in `@ta/web-iam` |
-| `@ta/auth/testing` | Test helpers: `createTestApiKey`, `apiKeyHeaders` (not for production) |
+| Import             | Use                                                                                      |
+| ------------------ | ---------------------------------------------------------------------------------------- |
+| `@ta/auth`         | Better Auth instance (`auth`, session types)                                             |
+| `@ta/auth/api-key` | API key verification helpers (`verifyApiKeyFromHeaders`, …)                              |
+| `@ta/auth/next`    | Next.js instance (`nextCookies`), `getAuthBaseUrl` — use in `@ta/web-iam`                |
+| `@ta/auth/testing` | Test helpers: `createTestApiKey`, `createTestUser`, `apiKeyHeaders` (not for production) |
 
 ## Stack
 
@@ -32,7 +32,7 @@ The **IAM web app** (`@ta/web-iam`) is the auth **server**: it mounts Better Aut
 Set these in the repository root `.env` (see `.env.example` as we add auth-related vars):
 
 | Variable | Purpose |
-|----------|---------|
+| --- | --- |
 | `DATABASE_URL` | PostgreSQL (required by `@ta/db` and the Drizzle adapter) |
 | `BETTER_AUTH_SECRET` | Signing / encryption secret (≥ 32 chars, high entropy) |
 | `BETTER_AUTH_URL` | Public origin of `@ta/web-iam` (e.g. `http://localhost:3001`) |

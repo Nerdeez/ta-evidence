@@ -29,12 +29,21 @@
     "@better-auth/core": "1.7.7",
     "@better-auth/drizzle-adapter": "catalog:",
     "@ta/db": "workspace:*",
-    "better-auth": "catalog:"
+    "@ta/workspace": "workspace:*",
+    "better-auth": "catalog:",
+    "drizzle-orm": "catalog:"
   },
   "peerDependencies": {
+    "@playwright/test": "catalog:",
     "next": "catalog:"
   },
+  "peerDependenciesMeta": {
+    "@playwright/test": {
+      "optional": true
+    }
+  },
   "devDependencies": {
+    "@playwright/test": "catalog:",
     "@ta/tsconfig": "workspace:*",
     "@types/node": "catalog:",
     "next": "catalog:",
