@@ -44,6 +44,10 @@
     "./header": {
       "types": "./dist/header/header.d.ts",
       "import": "./dist/header/header.js"
+    },
+    "./avatar": {
+      "types": "./dist/avatar/avatar.d.ts",
+      "import": "./dist/avatar/avatar.js"
     }
   },
   "files": [
@@ -64,15 +68,19 @@
     "tailwind-merge": "3.6.0"
   },
   "peerDependencies": {
+    "@ta/auth": "workspace:*",
+    "next": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:"
   },
   "devDependencies": {
     "@tailwindcss/cli": "catalog:",
+    "@ta/auth": "workspace:*",
     "@ta/test": "workspace:*",
     "@ta/tsconfig": "workspace:*",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
+    "next": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
     "tailwindcss": "catalog:",

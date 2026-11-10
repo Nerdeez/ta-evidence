@@ -12,6 +12,8 @@
     "test:browser": "vitest --browser.headless=false"
   },
   "dependencies": {
+    "@ta/auth": "workspace:*",
+    "@ta/next": "workspace:*",
     "@ta/ui": "workspace:*",
     "lucide-react": "catalog:",
     "next": "catalog:",
