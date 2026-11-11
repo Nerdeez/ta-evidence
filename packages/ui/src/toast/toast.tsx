@@ -92,11 +92,13 @@ function ToastList() {
             className="text-sm text-muted-foreground"
           />
         </div>
-        <ToastPrimitive.Action
-          data-slot="toast-action"
-          render={<Button variant="outline" size="sm" />}
-          className="shrink-0"
-        />
+        {toastItem.actionProps ? (
+          <ToastPrimitive.Action
+            data-slot="toast-action"
+            render={<Button variant="outline" size="sm" />}
+            className="shrink-0"
+          />
+        ) : null}
         <ToastPrimitive.Close
           data-slot="toast-close"
           aria-label="Close toast"
@@ -112,9 +114,9 @@ function ToastList() {
   ));
 }
 
-function Toaster({ children, toastManager = toast, ...props }: ToastPrimitive.Provider.Props) {
+function Toaster({ children, ...props }: Omit<ToastPrimitive.Provider.Props, 'toastManager'>) {
   return (
-    <ToastPrimitive.Provider toastManager={toastManager} {...props}>
+    <ToastPrimitive.Provider toastManager={toast} {...props}>
       {children}
       <ToastPrimitive.Portal data-slot="toast-portal">
         <ToastPrimitive.Viewport
