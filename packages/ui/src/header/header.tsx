@@ -2,9 +2,9 @@ import { type AuthUser, auth } from '@ta/auth/next';
 import { headers } from 'next/headers.js';
 
 import { cn } from '#utils';
-import { Avatar, AvatarFallback } from '../avatar/avatar.js';
 import { buttonVariants } from '../button/button.js';
 import logoImport from './logo.svg';
+import { Menu } from './menu.js';
 
 function logoUrl(value: typeof logoImport): string {
   return typeof value === 'string' ? value : value.src;
@@ -56,13 +56,7 @@ function HeaderAuthActions({ user }: { user: AuthUser | null }) {
     const label = name || email || 'Account';
     const initials = userInitials(name, email);
 
-    return (
-      <Avatar className="size-8" title={label} aria-label={label}>
-        <AvatarFallback className="text-[0.65rem] font-semibold tracking-wide">
-          {initials}
-        </AvatarFallback>
-      </Avatar>
-    );
+    return <Menu label={label} initials={initials} {...(email ? { email } : {})} />;
   }
 
   return (

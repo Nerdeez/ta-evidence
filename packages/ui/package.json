@@ -48,6 +48,10 @@
     "./avatar": {
       "types": "./dist/avatar/avatar.d.ts",
       "import": "./dist/avatar/avatar.js"
+    },
+    "./dropdown-menu": {
+      "types": "./dist/dropdown-menu/dropdown-menu.d.ts",
+      "import": "./dist/dropdown-menu/dropdown-menu.js"
     }
   },
   "files": [
@@ -62,6 +66,7 @@
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",
+    "better-auth": "catalog:",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
     "lucide-react": "catalog:",
