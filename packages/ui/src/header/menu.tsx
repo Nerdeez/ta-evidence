@@ -3,7 +3,6 @@
 import { createAuthClient } from 'better-auth/react';
 import { LogOut } from 'lucide-react';
 import { useTransition } from 'react';
-
 import { Avatar, AvatarFallback } from '../avatar/avatar.js';
 import {
   DropdownMenu,
@@ -14,27 +13,49 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../dropdown-menu/dropdown-menu.js';
+import { toast } from '../toast/toast.js';
 
 const authClient = createAuthClient();
+
+const SIGN_OUT_ERROR_MESSAGE = 'Could not sign out. Please try again.';
+
+function notifySignOutError() {
+  toast.add({
+    type: 'error',
+    title: 'Sign-out failed',
+    description: SIGN_OUT_ERROR_MESSAGE,
+  });
+}
 
 export type MenuProps = {
   label: string;
   initials: string;
   email?: string | undefined;
+  /** Path to open after a successful sign-out. */
+  redirect?: string;
 };
 
-export function Menu({ label, initials, email }: MenuProps) {
+export function Menu({ label, initials, email, redirect = '/login' }: MenuProps) {
   const [isPending, startTransition] = useTransition();
 
   const handleSignOut = () => {
+    if (isPending) return;
+
     startTransition(async () => {
-      await authClient.signOut({
-        fetchOptions: {
-          onSuccess: () => {
-            window.location.assign('/login');
+      try {
+        await authClient.signOut({
+          fetchOptions: {
+            onSuccess: () => {
+              window.location.assign(redirect);
+            },
+            onError: () => {
+              notifySignOutError();
+            },
           },
-        },
-      });
+        });
+      } catch {
+        notifySignOutError();
+      }
     });
   };
 
@@ -44,7 +65,8 @@ export function Menu({ label, initials, email }: MenuProps) {
         type="button"
         aria-label={label}
         title={label}
-        className="rounded-full border-0 bg-transparent p-0 outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+        disabled={isPending}
+        className="rounded-full border-0 bg-transparent p-0 outline-none focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50"
       >
         <Avatar className="size-8">
           <AvatarFallback className="text-[0.65rem] font-semibold tracking-wide">
