@@ -79,10 +79,6 @@ export async function cleanupE2eSignup(email: string): Promise<void> {
   await db.delete(user).where(eq(user.id, dbUser.id));
 }
 
-export async function deleteUserByEmail(email: string): Promise<void> {
-  await cleanupE2eSignup(email);
-}
-
 /**
  * Creates a user with email/password via Better Auth, then marks the email verified
  * so sign-in works with `requireEmailVerification` enabled.
