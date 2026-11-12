@@ -10,12 +10,14 @@ import { loadFeatureVitestPlugins } from './feature-plugins.js';
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 const nextImageStubPath = path.resolve(dirname, 'next-image.js');
+const nextNavigationStubPath = path.resolve(dirname, 'router.js');
 
 const defaultOptimizeDepsInclude = [
   'vitest-browser-react',
   'react',
   'react-dom',
   'next/link',
+  'next/navigation',
   '@tanstack/react-form',
   'zod',
   'lucide-react',
@@ -49,6 +51,8 @@ function createBaseVitestConfig(appRoot: string) {
       dedupe: ['react', 'react-dom'],
       alias: {
         'next/image': nextImageStubPath,
+        'next/navigation': nextNavigationStubPath,
+        'next/navigation.js': nextNavigationStubPath,
         '@': srcDir,
       },
     },
