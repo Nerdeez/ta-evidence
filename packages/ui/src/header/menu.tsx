@@ -1,7 +1,8 @@
 'use client';
 
 import { createAuthClient } from 'better-auth/react';
-import { LogOut } from 'lucide-react';
+import { KeyRound, LogOut } from 'lucide-react';
+import { useRouter } from 'next/navigation.js';
 import { useTransition } from 'react';
 import { Avatar, AvatarFallback } from '../avatar/avatar.js';
 import {
@@ -33,9 +34,18 @@ export type MenuProps = {
   email?: string | undefined;
   /** Path to open after a successful sign-out. */
   redirect?: string;
+  /** Path for the change-password menu item (web-iam). */
+  changePasswordPath?: string;
 };
 
-export function Menu({ label, initials, email, redirect = '/login' }: MenuProps) {
+export function Menu({
+  label,
+  initials,
+  email,
+  redirect = '/login',
+  changePasswordPath = '/change-password',
+}: MenuProps) {
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
   const handleSignOut = () => {
@@ -86,6 +96,15 @@ export function Menu({ label, initials, email, redirect = '/login' }: MenuProps)
           </DropdownMenuLabel>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
+        <DropdownMenuItem
+          disabled={isPending}
+          onClick={() => {
+            router.push(changePasswordPath);
+          }}
+        >
+          <KeyRound className="size-4" aria-hidden />
+          Change password
+        </DropdownMenuItem>
         <DropdownMenuItem variant="destructive" disabled={isPending} onClick={handleSignOut}>
           <LogOut className="size-4" aria-hidden />
           Log out
