@@ -209,6 +209,9 @@ importers:
       '@playwright/test':
         specifier: 'catalog:'
         version: 1.65.0
+      '@ta/db':
+        specifier: workspace:*
+        version: link:../../../packages/db
       '@ta/test':
         specifier: workspace:*
         version: link:../../../packages/test
@@ -227,6 +230,9 @@ importers:
       '@types/react-dom':
         specifier: 'catalog:'
         version: 19.2.4(@types/react@19.2.18)
+      drizzle-orm:
+        specifier: 'catalog:'
+        version: 0.45.4(@electric-sql/pglite@0.5.14)(@types/pg@8.21.0)(kysely@0.29.6)(pg@8.23.0)
       tailwindcss:
         specifier: 'catalog:'
         version: 4.3.3

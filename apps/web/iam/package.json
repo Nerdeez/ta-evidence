@@ -31,8 +31,10 @@
   },
   "devDependencies": {
     "@playwright/test": "catalog:",
+    "@ta/db": "workspace:*",
     "@ta/test": "workspace:*",
     "@ta/tsconfig": "workspace:*",
+    "drizzle-orm": "catalog:",
     "@tailwindcss/postcss": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
