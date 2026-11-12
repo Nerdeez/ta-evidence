@@ -3,9 +3,7 @@ import { type ErrorResponse, errorResponse } from '@ta/api/error';
 import type { ChangePasswordValues } from './change-password.schema';
 
 /** Stub used when Vite redirects `./change-password.action` here during browser tests. */
-export async function changePasswordAction(
-  _values: ChangePasswordValues,
-): Promise<ErrorResponse> {
+export async function changePasswordAction(_values: ChangePasswordValues): Promise<ErrorResponse> {
   return errorResponse([new Error('Change password is not available in component tests.')], {
     code: 'unavailable',
   });

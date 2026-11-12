@@ -16,8 +16,7 @@ import { changePasswordSchema } from './change-password.schema';
 
 const PASSWORD_UPDATED_TITLE = 'Password updated';
 const PASSWORD_UPDATED_DESCRIPTION = 'Your password has been changed successfully.';
-const CHANGE_PASSWORD_SUBMIT_ERROR =
-  'Unable to change your password. Please try again later.';
+const CHANGE_PASSWORD_SUBMIT_ERROR = 'Unable to change your password. Please try again later.';
 
 export function ChangePasswordForm() {
   const router = useRouter();
@@ -122,7 +121,9 @@ export function ChangePasswordForm() {
                 const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
                 return (
                   <Field data-invalid={isInvalid}>
-                    <FieldLabel htmlFor="change-password-confirmation">Confirm new password</FieldLabel>
+                    <FieldLabel htmlFor="change-password-confirmation">
+                      Confirm new password
+                    </FieldLabel>
                     <Input
                       id="change-password-confirmation"
                       name={field.name}
