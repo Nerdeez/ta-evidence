@@ -13,13 +13,9 @@ function isInvalidPasswordError(error: unknown): boolean {
   if (!error || typeof error !== 'object') {
     return false;
   }
-  const candidate = error as { body?: { code?: string }; code?: string; message?: string };
+  const candidate = error as { body?: { code?: string }; code?: string };
   const code = candidate.body?.code ?? candidate.code;
-  if (code === 'INVALID_PASSWORD') {
-    return true;
-  }
-  const message = candidate.message?.toLowerCase() ?? '';
-  return message.includes('invalid') && message.includes('password');
+  return code === 'INVALID_PASSWORD';
 }
 
 export async function changePasswordAction(
@@ -32,9 +28,14 @@ export async function changePasswordAction(
     redirect('/login');
   }
 
-  try {
-    const { currentPassword, password } = changePasswordSchema.parse(values);
+  const parsed = changePasswordSchema.safeParse(values);
+  if (!parsed.success) {
+    return errorResponse([parsed.error]);
+  }
 
+  const { currentPassword, password } = parsed.data;
+
+  try {
     await auth.api.changePassword({
       body: {
         currentPassword,

@@ -16,6 +16,8 @@ import { changePasswordSchema } from './change-password.schema';
 
 const PASSWORD_UPDATED_TITLE = 'Password updated';
 const PASSWORD_UPDATED_DESCRIPTION = 'Your password has been changed successfully.';
+const CHANGE_PASSWORD_SUBMIT_ERROR =
+  'Unable to change your password. Please try again later.';
 
 export function ChangePasswordForm() {
   const router = useRouter();
@@ -36,17 +38,21 @@ export function ChangePasswordForm() {
     onSubmit: ({ value }) => {
       setFormError(null);
       startTransition(async () => {
-        const result = await changePasswordAction(value);
-        if ('success' in result) {
-          toast.add({
-            type: 'success',
-            title: PASSWORD_UPDATED_TITLE,
-            description: PASSWORD_UPDATED_DESCRIPTION,
-          });
-          router.push('/dashboard');
-          return;
+        try {
+          const result = await changePasswordAction(value);
+          if ('success' in result) {
+            toast.add({
+              type: 'success',
+              title: PASSWORD_UPDATED_TITLE,
+              description: PASSWORD_UPDATED_DESCRIPTION,
+            });
+            router.push('/dashboard');
+            return;
+          }
+          setFormError(result.message);
+        } catch {
+          setFormError(CHANGE_PASSWORD_SUBMIT_ERROR);
         }
-        setFormError(result.message);
       });
     },
   });
