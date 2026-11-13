@@ -7,7 +7,7 @@ Next.js app for user signup, sign-in, and authentication for the TA Evidence API
 Route groups organize layouts without changing URLs:
 
 - **`(auth)/`** — sign-in flows (`/login`, `/signup`, `/forgot-password`, `/reset-password`, `/verify-email`); shared centered layout
-- **`/dashboard`** — developer portal (logged-in; API tokens); outside `(auth)` so it can use a different layout and guards later
+- **`(account)/`** — signed-in area (`/dashboard`, `/change-password`, …); layout runs `requireSession()` from `@ta/auth/next`
 - **`/`** — account landing
 
 ## Development

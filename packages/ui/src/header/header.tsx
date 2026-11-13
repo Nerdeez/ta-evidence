@@ -1,5 +1,4 @@
-import { type AuthUser, auth } from '@ta/auth/next';
-import { headers } from 'next/headers.js';
+import { type AuthUser, getServerSession } from '@ta/auth/next';
 
 import { cn } from '#utils';
 import { buttonVariants } from '../button/button.js';
@@ -111,16 +110,8 @@ export async function Header({
 }: HeaderProps = {}) {
   const afterSignOut = signOutRedirect ?? signInPath;
 
-  let user: AuthUser | null = null;
-
-  try {
-    const session = await auth.api.getSession({
-      headers: await headers(),
-    });
-    user = session?.user ?? null;
-  } catch {
-    user = null;
-  }
+  const session = await getServerSession();
+  const user: AuthUser | null = session?.user ?? null;
 
   return (
     <>
