@@ -5,7 +5,7 @@ import {
   passwordConfirmationRefine,
   passwordFieldSchema,
   passwordsMatch,
-} from '../password.schema';
+} from '../../password.schema';
 
 export const changePasswordSchema = z
   .object({

@@ -13,8 +13,8 @@
       "import": "./dist/better-auth/api-key.js"
     },
     "./next": {
-      "types": "./dist/better-auth/next.auth.d.ts",
-      "import": "./dist/better-auth/next.auth.js"
+      "types": "./dist/next.d.ts",
+      "import": "./dist/next.js"
     },
     "./testing": {
       "types": "./dist/testing.d.ts",

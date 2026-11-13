@@ -1,9 +1,8 @@
 'use server';
 
 import { type ErrorResponse, errorResponse } from '@ta/api';
-import { auth } from '@ta/auth/next';
+import { auth, requireSession } from '@ta/auth/next';
 import { headers } from 'next/headers';
-import { redirect } from 'next/navigation';
 
 import { type ChangePasswordValues, changePasswordSchema } from './change-password.schema';
 
@@ -21,12 +20,7 @@ function isInvalidPasswordError(error: unknown): boolean {
 export async function changePasswordAction(
   values: ChangePasswordValues,
 ): Promise<ChangePasswordResult> {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-  if (!session) {
-    redirect('/login');
-  }
+  await requireSession();
 
   const parsed = changePasswordSchema.safeParse(values);
   if (!parsed.success) {

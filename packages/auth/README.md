@@ -18,7 +18,7 @@ The **IAM web app** (`@ta/web-iam`) is the auth **server**: it mounts Better Aut
 | ------------------ | ---------------------------------------------------------------------------------------- |
 | `@ta/auth`         | Better Auth instance (`auth`, session types)                                             |
 | `@ta/auth/api-key` | API key verification helpers (`verifyApiKeyFromHeaders`, …)                              |
-| `@ta/auth/next`    | Next.js instance (`nextCookies`), `getAuthBaseUrl` — use in `@ta/web-iam`                |
+| `@ta/auth/next`    | Next.js `auth`, `getAuthBaseUrl`, `getServerSession`, `requireSession` — use in `@ta/web-iam` |
 | `@ta/auth/testing` | Test helpers: `createTestApiKey`, `createTestUser`, `apiKeyHeaders` (not for production) |
 
 ## Stack
@@ -82,10 +82,12 @@ pnpm --filter @ta/auth build
 ```text
 packages/auth/
 ├── src/
+│   ├── next.ts          # `@ta/auth/next` entry (Better Auth + future Next helpers)
 │   ├── better-auth/
 │   │   ├── config.ts    # shared betterAuth options (CLI reads enabled plugins)
 │   │   ├── api.auth.ts  # Node API instance — `@ta/auth`, Better Auth CLI `--config`
-│   │   ├── next.auth.ts # Next.js instance — `@ta/auth/next`
+│   │   ├── next.auth.ts # Better Auth instance + session types
+│   │   ├── session.ts       # `getServerSession`, `requireSession` (App Router)
 │   │   └── api-key.ts   # x-api-key verification helpers
 │   ├── testing.ts       # `@ta/auth/testing` entry
 │   └── testing/
