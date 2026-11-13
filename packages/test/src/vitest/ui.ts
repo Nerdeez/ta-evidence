@@ -21,10 +21,18 @@ const defaultOptimizeDepsInclude = [
   '@tanstack/react-form',
   'zod',
   'lucide-react',
+  '@base-ui/react/button',
+  '@base-ui/react/input',
+  '@base-ui/react/separator',
+  '@base-ui/react/toast',
+  'class-variance-authority',
+  'clsx',
+  'tailwind-merge',
   '@ta/ui/button',
   '@ta/ui/input',
   '@ta/ui/field',
   '@ta/ui/card',
+  '@ta/ui/toast',
 ];
 
 /**
@@ -62,13 +70,13 @@ function createBaseVitestConfig(appRoot: string) {
     plugins: [react(), tailwindcss()],
     test: {
       setupFiles: ['./vitest.setup.ts'],
+      isolate: true,
       browser: {
         enabled: true,
         provider: playwright(),
         headless: true,
         screenshotFailures: false,
         instances: [{ browser: 'chromium' }],
-        isolate: true,
       },
     },
   });
