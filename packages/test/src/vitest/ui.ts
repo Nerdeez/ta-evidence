@@ -28,11 +28,10 @@ const defaultOptimizeDepsInclude = [
   'class-variance-authority',
   'clsx',
   'tailwind-merge',
-  '@ta/ui/button',
-  '@ta/ui/input',
-  '@ta/ui/field',
-  '@ta/ui/card',
-  '@ta/ui/toast',
+  '@ta/ui/*',
+  '@base-ui/react/dialog',
+  '@base-ui/react/alert-dialog',
+  '@base-ui/react/checkbox',
 ];
 
 /**
