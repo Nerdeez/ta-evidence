@@ -56,6 +56,26 @@
     "./toast": {
       "types": "./dist/toast/toast.d.ts",
       "import": "./dist/toast/toast.js"
+    },
+    "./dialog": {
+      "types": "./dist/dialog/dialog.d.ts",
+      "import": "./dist/dialog/dialog.js"
+    },
+    "./alert-dialog": {
+      "types": "./dist/alert-dialog/alert-dialog.d.ts",
+      "import": "./dist/alert-dialog/alert-dialog.js"
+    },
+    "./table": {
+      "types": "./dist/table/table.d.ts",
+      "import": "./dist/table/table.js"
+    },
+    "./badge": {
+      "types": "./dist/badge/badge.d.ts",
+      "import": "./dist/badge/badge.js"
+    },
+    "./checkbox": {
+      "types": "./dist/checkbox/checkbox.d.ts",
+      "import": "./dist/checkbox/checkbox.js"
     }
   },
   "files": [

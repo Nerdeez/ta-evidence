@@ -7,6 +7,7 @@ import { playwright } from '@vitest/browser-playwright';
 import { defineConfig, mergeConfig } from 'vitest/config';
 import { loadMonorepoDotenv } from '../dotenv.js';
 import { loadFeatureVitestPlugins } from './feature-plugins.js';
+import { findTaUiOptimizeDeps } from './ta-ui-deps.js';
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 const nextImageStubPath = path.resolve(dirname, 'next-image.js');
@@ -21,18 +22,10 @@ const defaultOptimizeDepsInclude = [
   '@tanstack/react-form',
   'zod',
   'lucide-react',
-  '@base-ui/react/button',
-  '@base-ui/react/input',
-  '@base-ui/react/separator',
-  '@base-ui/react/toast',
-  'class-variance-authority',
-  'clsx',
-  'tailwind-merge',
-  '@ta/ui/button',
-  '@ta/ui/input',
-  '@ta/ui/field',
-  '@ta/ui/card',
-  '@ta/ui/toast',
+  '@ta/ui > class-variance-authority',
+  '@ta/ui > clsx',
+  '@ta/ui > tailwind-merge',
+  ...findTaUiOptimizeDeps(),
 ];
 
 /**
