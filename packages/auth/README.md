@@ -17,8 +17,8 @@ The **IAM web app** (`@ta/web-iam`) is the auth **server**: it mounts Better Aut
 | Import             | Use                                                                                      |
 | ------------------ | ---------------------------------------------------------------------------------------- |
 | `@ta/auth`         | Better Auth instance (`auth`, session types)                                             |
-| `@ta/auth/api-key` | API key verification helpers (`verifyApiKeyFromHeaders`, …)                              |
-| `@ta/auth/next`    | Next.js `auth`, `getAuthBaseUrl`, `getServerSession`, `requireSession` — use in `@ta/web-iam` |
+| `@ta/auth/api-key` | `PublicApiKey`, `formatMaskedApiKeyDisplay`, verification (`verifyApiKeyFromHeaders`, …) |
+| `@ta/auth/next`    | Next.js `auth`, session helpers, re-exports `PublicApiKey` / `formatMaskedApiKeyDisplay`     |
 | `@ta/auth/testing` | Test helpers: `createTestApiKey`, `createTestUser`, `apiKeyHeaders` (not for production) |
 
 ## Stack
