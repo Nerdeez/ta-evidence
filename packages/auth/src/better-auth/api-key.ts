@@ -1,4 +1,29 @@
+import type { ApiKey } from '@better-auth/api-key/types';
+
 import { auth } from './api.auth.js';
+
+/** API key metadata from list/get endpoints (secret `key` field omitted). */
+export type PublicApiKey = Omit<ApiKey, 'key'>;
+
+const MASK_SUFFIX = '*****';
+
+/**
+ * Build a display-only fingerprint (e.g. `ta-gRf*****`) from Better Auth `start` / `prefix`.
+ * Call on the server when mapping `PublicApiKey` for the UI — never send the raw secret to the client.
+ */
+export function formatMaskedApiKeyDisplay(
+  start: string | null | undefined,
+  prefix: string | null | undefined,
+): string {
+  const visible = (start ?? prefix)?.trim();
+  if (!visible) {
+    return MASK_SUFFIX;
+  }
+  if (visible.includes('*')) {
+    return visible;
+  }
+  return `${visible}${MASK_SUFFIX}`;
+}
 
 /** Better Auth API Key plugin default (`apiKeyHeaders`). */
 export const API_KEY_HEADER = 'x-api-key';

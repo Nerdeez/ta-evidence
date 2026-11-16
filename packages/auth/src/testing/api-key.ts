@@ -10,6 +10,28 @@ type AuthTestDb = typeof db;
  * Insert a user and create an API key via Better Auth (server `userId` body).
  * Requires auth tables on `db` (e.g. PGlite with full Drizzle migrations).
  */
+export type CreateUserApiKeyInput = {
+  name: string;
+  expiresIn?: number;
+};
+
+/** Create an API key for an existing user (e2e / integration). Does not return the secret. */
+export async function createUserApiKey(userId: string, input: CreateUserApiKeyInput) {
+  const created = await auth.api.createApiKey({
+    body: {
+      userId,
+      name: input.name,
+      ...(input.expiresIn !== undefined ? { expiresIn: input.expiresIn } : {}),
+    },
+  });
+
+  if (!created.id) {
+    throw new Error('createApiKey did not return a key id');
+  }
+
+  return created;
+}
+
 export async function createTestApiKey(database: AuthTestDb): Promise<string> {
   const userId = 'test-user-api-key';
   await database.insert(user).values({

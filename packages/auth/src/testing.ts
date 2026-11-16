@@ -1,7 +1,12 @@
 /**
  * Test-only helpers for `@ta/auth`. Do not import from production app code.
  */
-export { apiKeyHeaders, createTestApiKey } from './testing/api-key.js';
+export {
+  apiKeyHeaders,
+  type CreateUserApiKeyInput,
+  createTestApiKey,
+  createUserApiKey,
+} from './testing/api-key.js';
 export {
   cleanupE2eSignup,
   createTestUser,
