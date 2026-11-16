@@ -39,25 +39,25 @@ export function formatApiKeyDate(date: Date): string {
   return dateTimeFormatter.format(date);
 }
 
-export function formatLastUsed(date: Date | null): string {
+const MAX_RELATIVE_DAYS = 30;
+
+function startOfLocalDay(date: Date): number {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
+}
+
+/**
+ * Day-resolution relative label ("today", "yesterday", "3 days ago") in the runtime's time zone.
+ * Depends on the viewer's time zone, so render it in the browser only.
+ */
+export function formatLastUsed(date: Date | null, now: Date = new Date()): string {
   if (!date) {
     return 'Never';
   }
-  const diffSeconds = Math.round((date.getTime() - Date.now()) / 1000);
-  const abs = Math.abs(diffSeconds);
-  if (abs < 60) {
-    return relativeTimeFormatter.format(diffSeconds, 'second');
+  const diffDays = Math.round((startOfLocalDay(date) - startOfLocalDay(now)) / 86_400_000);
+  if (Math.abs(diffDays) > MAX_RELATIVE_DAYS) {
+    return formatApiKeyDate(date);
   }
-  if (abs < 3600) {
-    return relativeTimeFormatter.format(Math.round(diffSeconds / 60), 'minute');
-  }
-  if (abs < 86_400) {
-    return relativeTimeFormatter.format(Math.round(diffSeconds / 3600), 'hour');
-  }
-  if (abs < 2_592_000) {
-    return relativeTimeFormatter.format(Math.round(diffSeconds / 86_400), 'day');
-  }
-  return formatApiKeyDate(date);
+  return relativeTimeFormatter.format(diffDays, 'day');
 }
 
 export function formatExpiry(date: Date | null): string {

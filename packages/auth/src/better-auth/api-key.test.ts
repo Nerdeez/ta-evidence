@@ -11,6 +11,11 @@ describe('formatMaskedApiKeyDisplay', () => {
     expect(formatMaskedApiKeyDisplay(null, 'ta_live')).toBe('ta_live*****');
   });
 
+  it('falls back to prefix when start is blank', () => {
+    expect(formatMaskedApiKeyDisplay('', 'ta_live')).toBe('ta_live*****');
+    expect(formatMaskedApiKeyDisplay('   ', 'ta_live')).toBe('ta_live*****');
+  });
+
   it('returns only asterisks when nothing is available', () => {
     expect(formatMaskedApiKeyDisplay(null, null)).toBe('*****');
   });

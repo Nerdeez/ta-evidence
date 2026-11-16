@@ -2,13 +2,13 @@
 
 import { Badge } from '@ta/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@ta/ui/table';
+import { useSyncExternalStore } from 'react';
 
 import {
   type DashboardApiKey,
   formatApiKeyDate,
   formatExpiry,
   formatLastUsed,
-  isExpired,
 } from '../api-keys.utils';
 
 export type ApiKeysListProps = {
@@ -16,8 +16,25 @@ export type ApiKeysListProps = {
   expiredKeys: DashboardApiKey[];
 };
 
-function StatusBadge({ expiresAt }: { expiresAt: Date | null }) {
-  if (isExpired(expiresAt)) {
+const subscribeNoop = () => () => {};
+
+/** False during SSR and hydration, true afterwards. */
+function useIsBrowser(): boolean {
+  return useSyncExternalStore(
+    subscribeNoop,
+    () => true,
+    () => false,
+  );
+}
+
+/** Dates depend on the viewer's locale and time zone, so they are rendered in the browser only. */
+function BrowserOnlyText({ format }: { format: () => string }) {
+  const isBrowser = useIsBrowser();
+  return isBrowser ? format() : null;
+}
+
+function StatusBadge({ expired }: { expired: boolean }) {
+  if (expired) {
     return (
       <Badge variant="outline" className="text-muted-foreground">
         Expired
@@ -31,12 +48,12 @@ function ApiKeyListSection({
   title,
   description,
   keys,
-  muted,
+  expired = false,
 }: {
   title: string;
   description?: string;
   keys: DashboardApiKey[];
-  muted?: boolean;
+  expired?: boolean;
 }) {
   if (keys.length === 0) {
     return null;
@@ -67,7 +84,7 @@ function ApiKeyListSection({
           {keys.map((apiKey) => (
             <TableRow
               key={apiKey.id}
-              className={muted ? 'text-muted-foreground opacity-80' : undefined}
+              className={expired ? 'text-muted-foreground opacity-80' : undefined}
             >
               <TableCell className="font-medium text-foreground">{apiKey.name}</TableCell>
               <TableCell>
@@ -76,11 +93,17 @@ function ApiKeyListSection({
                 </code>
               </TableCell>
               <TableCell>
-                <StatusBadge expiresAt={apiKey.expiresAt} />
+                <StatusBadge expired={expired} />
               </TableCell>
-              <TableCell>{formatApiKeyDate(apiKey.createdAt)}</TableCell>
-              <TableCell>{formatLastUsed(apiKey.lastUsedAt)}</TableCell>
-              <TableCell>{formatExpiry(apiKey.expiresAt)}</TableCell>
+              <TableCell>
+                <BrowserOnlyText format={() => formatApiKeyDate(apiKey.createdAt)} />
+              </TableCell>
+              <TableCell>
+                <BrowserOnlyText format={() => formatLastUsed(apiKey.lastUsedAt)} />
+              </TableCell>
+              <TableCell>
+                <BrowserOnlyText format={() => formatExpiry(apiKey.expiresAt)} />
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -107,7 +130,7 @@ export function ApiKeysList({ activeKeys, expiredKeys }: ApiKeysListProps) {
         title="Expired keys"
         description="Expired keys are kept for your records. They no longer authenticate API requests."
         keys={expiredKeys}
-        muted
+        expired
       />
     </div>
   );

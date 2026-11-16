@@ -15,7 +15,7 @@ export function formatMaskedApiKeyDisplay(
   start: string | null | undefined,
   prefix: string | null | undefined,
 ): string {
-  const visible = (start ?? prefix)?.trim();
+  const visible = start?.trim() || prefix?.trim();
   if (!visible) {
     return MASK_SUFFIX;
   }

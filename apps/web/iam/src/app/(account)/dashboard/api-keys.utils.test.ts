@@ -1,6 +1,12 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { getMaxActiveApiKeys, isExpired, partitionDashboardApiKeys } from './api-keys.utils';
+import {
+  formatApiKeyDate,
+  formatLastUsed,
+  getMaxActiveApiKeys,
+  isExpired,
+  partitionDashboardApiKeys,
+} from './api-keys.utils';
 
 const envKey = 'IAM_MAX_ACTIVE_API_KEYS';
 
@@ -42,6 +48,26 @@ describe('isExpired', () => {
     vi.setSystemTime(new Date('2025-01-01'));
     expect(isExpired(null)).toBe(false);
     expect(isExpired(new Date('2030-01-01'))).toBe(false);
+  });
+});
+
+describe('formatLastUsed', () => {
+  const now = new Date(2025, 5, 10, 9, 0);
+  const relativeDays = new Intl.RelativeTimeFormat(undefined, { numeric: 'auto' });
+
+  it('returns Never when the key was never used', () => {
+    expect(formatLastUsed(null, now)).toBe('Never');
+  });
+
+  it('uses calendar days rather than elapsed hours', () => {
+    expect(formatLastUsed(new Date(2025, 5, 10, 0, 5), now)).toBe(relativeDays.format(0, 'day'));
+    expect(formatLastUsed(new Date(2025, 5, 9, 23, 55), now)).toBe(relativeDays.format(-1, 'day'));
+    expect(formatLastUsed(new Date(2025, 5, 3, 12, 0), now)).toBe(relativeDays.format(-7, 'day'));
+  });
+
+  it('falls back to an absolute date after 30 days', () => {
+    const date = new Date(2025, 3, 1, 12, 0);
+    expect(formatLastUsed(date, now)).toBe(formatApiKeyDate(date));
   });
 });
 
