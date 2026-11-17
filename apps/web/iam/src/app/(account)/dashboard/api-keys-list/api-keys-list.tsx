@@ -1,8 +1,21 @@
 'use client';
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@ta/ui/alert-dialog';
 import { Badge } from '@ta/ui/badge';
+import { Button } from '@ta/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@ta/ui/table';
-import { useSyncExternalStore } from 'react';
+import { toast } from '@ta/ui/toast';
+import { Loader2, Trash2 } from 'lucide-react';
+import { useEffect, useState, useSyncExternalStore, useTransition } from 'react';
 
 import {
   type DashboardApiKey,
@@ -10,6 +23,14 @@ import {
   formatExpiry,
   formatLastUsed,
 } from '../api-keys.utils';
+import { type DeleteApiKeyResult, deleteApiKeyAction } from './delete-api-key.action';
+
+const DELETE_API_KEY_SUCCESS_TITLE = 'API key deleted';
+const DELETE_API_KEY_SUCCESS_DESCRIPTION =
+  'Integrations using this key will no longer authenticate.';
+const DELETE_API_KEY_FALLBACK_ERROR = 'Something went wrong.';
+
+export { DELETE_API_KEY_SUCCESS_TITLE };
 
 export type ApiKeysListProps = {
   activeKeys: DashboardApiKey[];
@@ -49,11 +70,13 @@ function ApiKeyListSection({
   description,
   keys,
   expired = false,
+  onDeleteRequest,
 }: {
   title: string;
   description?: string;
   keys: DashboardApiKey[];
   expired?: boolean;
+  onDeleteRequest: (key: DashboardApiKey) => void;
 }) {
   if (keys.length === 0) {
     return null;
@@ -78,6 +101,9 @@ function ApiKeyListSection({
             <TableHead>Created</TableHead>
             <TableHead>Last used</TableHead>
             <TableHead>Expires</TableHead>
+            <TableHead className="w-12 text-right">
+              <span className="sr-only">Actions</span>
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -104,6 +130,18 @@ function ApiKeyListSection({
               <TableCell>
                 <BrowserOnlyText format={() => formatExpiry(apiKey.expiresAt)} />
               </TableCell>
+              <TableCell className="text-right">
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon-sm"
+                  className="text-muted-foreground hover:text-destructive"
+                  aria-label={`Delete ${apiKey.name}`}
+                  onClick={() => onDeleteRequest(apiKey)}
+                >
+                  <Trash2 aria-hidden className="size-4" />
+                </Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -112,7 +150,51 @@ function ApiKeyListSection({
   );
 }
 
-export function ApiKeysList({ activeKeys, expiredKeys }: ApiKeysListProps) {
+export function ApiKeysList({
+  activeKeys: initialActiveKeys,
+  expiredKeys: initialExpiredKeys,
+}: ApiKeysListProps) {
+  const [activeKeys, setActiveKeys] = useState(initialActiveKeys);
+  const [expiredKeys, setExpiredKeys] = useState(initialExpiredKeys);
+  const [pendingDelete, setPendingDelete] = useState<DashboardApiKey | null>(null);
+  const [isPending, startTransition] = useTransition();
+
+  useEffect(() => {
+    setActiveKeys(initialActiveKeys);
+    setExpiredKeys(initialExpiredKeys);
+  }, [initialActiveKeys, initialExpiredKeys]);
+
+  const removeKeyFromLists = (keyId: string) => {
+    setActiveKeys((keys) => keys.filter((key) => key.id !== keyId));
+    setExpiredKeys((keys) => keys.filter((key) => key.id !== keyId));
+  };
+
+  const handleConfirmDelete = () => {
+    if (!pendingDelete) {
+      return;
+    }
+    const { id } = pendingDelete;
+    startTransition(async () => {
+      let result: DeleteApiKeyResult;
+      try {
+        result = await deleteApiKeyAction(id);
+      } catch {
+        result = { ok: false, error: DELETE_API_KEY_FALLBACK_ERROR };
+      }
+      setPendingDelete(null);
+      if (!result.ok) {
+        toast.add({ type: 'error', title: result.error });
+        return;
+      }
+      removeKeyFromLists(id);
+      toast.add({
+        type: 'success',
+        title: DELETE_API_KEY_SUCCESS_TITLE,
+        description: DELETE_API_KEY_SUCCESS_DESCRIPTION,
+      });
+    });
+  };
+
   const isEmpty = activeKeys.length === 0 && expiredKeys.length === 0;
 
   if (isEmpty) {
@@ -124,14 +206,87 @@ export function ApiKeysList({ activeKeys, expiredKeys }: ApiKeysListProps) {
   }
 
   return (
-    <div className="space-y-10">
-      <ApiKeyListSection title="Active keys" keys={activeKeys} />
-      <ApiKeyListSection
-        title="Expired keys"
-        description="Expired keys are kept for your records. They no longer authenticate API requests."
-        keys={expiredKeys}
-        expired
+    <>
+      <DeleteApiKeyDialog
+        pendingDelete={pendingDelete}
+        isPending={isPending}
+        onOpenChange={(open) => {
+          if (!open && !isPending) {
+            setPendingDelete(null);
+          }
+        }}
+        onConfirm={handleConfirmDelete}
       />
-    </div>
+      <div className="space-y-10">
+        <ApiKeyListSection
+          title="Active keys"
+          keys={activeKeys}
+          onDeleteRequest={setPendingDelete}
+        />
+        <ApiKeyListSection
+          title="Expired keys"
+          description="Expired keys are kept for your records. They no longer authenticate API requests."
+          keys={expiredKeys}
+          expired
+          onDeleteRequest={setPendingDelete}
+        />
+      </div>
+    </>
+  );
+}
+
+function DeleteApiKeyDialog({
+  pendingDelete,
+  isPending,
+  onOpenChange,
+  onConfirm,
+}: {
+  pendingDelete: DashboardApiKey | null;
+  isPending: boolean;
+  onOpenChange: (open: boolean) => void;
+  onConfirm: () => void;
+}) {
+  const open = pendingDelete !== null;
+
+  return (
+    <AlertDialog open={open} onOpenChange={onOpenChange}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Delete API key?</AlertDialogTitle>
+          <AlertDialogDescription>
+            {pendingDelete ? (
+              <>
+                <span className="font-medium text-foreground">{pendingDelete.name}</span>
+                {` (`}
+                <code className="rounded bg-muted px-1 py-0.5 font-mono text-xs">
+                  {pendingDelete.maskedKey}
+                </code>
+                {`) will stop working immediately.`}
+              </>
+            ) : null}
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel disabled={isPending}>Cancel</AlertDialogCancel>
+          <AlertDialogAction
+            variant="destructive"
+            disabled={isPending}
+            onClick={(event) => {
+              event.preventDefault();
+              onConfirm();
+            }}
+          >
+            {isPending ? (
+              <>
+                <Loader2 aria-hidden className="size-4 animate-spin" />
+                Deleting…
+              </>
+            ) : (
+              'Delete'
+            )}
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 }

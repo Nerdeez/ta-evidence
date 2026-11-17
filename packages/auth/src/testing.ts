@@ -6,6 +6,7 @@ export {
   type CreateUserApiKeyInput,
   createTestApiKey,
   createUserApiKey,
+  expireUserApiKeyForE2e,
 } from './testing/api-key.js';
 export {
   cleanupE2eSignup,

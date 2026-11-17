@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import {
+  asApiKeyDate,
   formatApiKeyDate,
   formatLastUsed,
   getMaxActiveApiKeys,
@@ -32,6 +33,21 @@ describe('getMaxActiveApiKeys', () => {
   });
 });
 
+describe('asApiKeyDate', () => {
+  it('parses ISO strings and passes dates through', () => {
+    const date = new Date('2025-01-01T00:00:00.000Z');
+    expect(asApiKeyDate(date)).toBe(date);
+    expect(asApiKeyDate('2025-01-01T00:00:00.000Z')?.getTime()).toBe(date.getTime());
+  });
+
+  it('returns null for missing or malformed values', () => {
+    expect(asApiKeyDate(null)).toBeNull();
+    expect(asApiKeyDate(undefined)).toBeNull();
+    expect(asApiKeyDate('not-a-date')).toBeNull();
+    expect(asApiKeyDate(new Date(Number.NaN))).toBeNull();
+  });
+});
+
 describe('isExpired', () => {
   afterEach(() => {
     vi.useRealTimers();
@@ -41,6 +57,7 @@ describe('isExpired', () => {
     vi.useFakeTimers();
     vi.setSystemTime(new Date('2025-01-01'));
     expect(isExpired(new Date('2020-01-01'))).toBe(true);
+    expect(isExpired('2020-01-01T00:00:00.000Z')).toBe(true);
   });
 
   it('is false when expiry is missing or in the future', () => {
