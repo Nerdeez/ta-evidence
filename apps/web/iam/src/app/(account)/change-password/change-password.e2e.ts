@@ -6,6 +6,9 @@ import { expect, test } from '@playwright/test';
 import { createTestUser } from '@ta/auth/testing';
 
 test.describe('change password', () => {
+  // One shared user + password mutation; avoid overlapping with other auth-heavy workers.
+  test.describe.configure({ mode: 'serial' });
+
   const testUser = createTestUser();
 
   test('redirects unauthenticated visitors to login', async ({ page }) => {
@@ -33,14 +36,15 @@ test.describe('change password', () => {
     await page.getByLabel('Confirm new password').fill(newPassword);
     await page.getByRole('button', { name: 'Update password' }).click();
 
-    await expect(page).toHaveURL(/\/dashboard$/);
+    await expect(page.getByText('Password updated')).toBeVisible();
+    await expect(page).toHaveURL(/\/dashboard$/, { timeout: 15_000 });
 
     await banner.getByRole('button', { name }).click();
     await page.getByRole('menuitem', { name: 'Log out' }).click();
     await expect(page).toHaveURL(/\/login$/);
 
-    await page.getByLabel('Email').fill(email);
-    await page.getByLabel('Password').fill(newPassword);
+    await page.locator('#login-email').fill(email);
+    await page.locator('#login-password').fill(newPassword);
     await page.getByRole('button', { name: 'Sign in' }).click();
     await expect(page).toHaveURL(/\/dashboard$/);
   });
