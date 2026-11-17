@@ -41,6 +41,7 @@ describe('isExpired', () => {
     vi.useFakeTimers();
     vi.setSystemTime(new Date('2025-01-01'));
     expect(isExpired(new Date('2020-01-01'))).toBe(true);
+    expect(isExpired('2020-01-01T00:00:00.000Z')).toBe(true);
   });
 
   it('is false when expiry is missing or in the future', () => {

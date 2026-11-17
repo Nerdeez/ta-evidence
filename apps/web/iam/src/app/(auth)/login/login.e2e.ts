@@ -6,6 +6,8 @@ import { expect, test } from '@playwright/test';
 import { createTestUser } from '@ta/auth/testing';
 
 test.describe('login', () => {
+  test.describe.configure({ mode: 'serial' });
+
   const testUser = createTestUser();
 
   test.beforeEach(async ({ page }) => {
@@ -28,8 +30,8 @@ test.describe('login', () => {
     await expect(banner.getByRole('link', { name: 'Sign in' })).toBeVisible();
     await expect(banner.getByRole('link', { name: 'Sign up' })).toBeVisible();
 
-    await page.getByLabel('Email').fill(email);
-    await page.getByLabel('Password').fill(password);
+    await page.locator('#login-email').fill(email);
+    await page.locator('#login-password').fill(password);
     await page.getByRole('button', { name: 'Sign in' }).click();
 
     await expect(page).toHaveURL(/\/dashboard$/);
@@ -42,8 +44,8 @@ test.describe('login', () => {
 
   test('signs out from the account menu', async ({ page }) => {
     const { email, password, name } = await testUser;
-    await page.getByLabel('Email').fill(email);
-    await page.getByLabel('Password').fill(password);
+    await page.locator('#login-email').fill(email);
+    await page.locator('#login-password').fill(password);
     await page.getByRole('button', { name: 'Sign in' }).click();
     await expect(page).toHaveURL(/\/dashboard$/);
     const authenticatedBanner = page.getByRole('banner');

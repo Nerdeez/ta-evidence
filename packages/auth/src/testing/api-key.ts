@@ -1,5 +1,5 @@
-import type { db } from '@ta/db';
-import { user } from '@ta/db';
+import { apikey, db, user } from '@ta/db';
+import { eq } from 'drizzle-orm';
 import { auth } from '../better-auth/api.auth.js';
 import { API_KEY_HEADER } from '../better-auth/api-key.js';
 
@@ -30,6 +30,14 @@ export async function createUserApiKey(userId: string, input: CreateUserApiKeyIn
   }
 
   return created;
+}
+
+/** Force a key into the expired state for dashboard e2e (Better Auth min `expiresIn` is one day). */
+export async function expireUserApiKeyForE2e(keyId: string): Promise<void> {
+  await db
+    .update(apikey)
+    .set({ expiresAt: new Date('2020-01-01T00:00:00.000Z') })
+    .where(eq(apikey.id, keyId));
 }
 
 export async function createTestApiKey(database: AuthTestDb): Promise<string> {

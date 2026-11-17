@@ -2,7 +2,7 @@ import { formatMaskedApiKeyDisplay, type PublicApiKey } from '@ta/auth/api-key';
 import { auth } from '@ta/auth/next';
 import { headers } from 'next/headers';
 
-import { type DashboardApiKey, partitionDashboardApiKeys } from '../api-keys.utils';
+import { asApiKeyDate, type DashboardApiKey, partitionDashboardApiKeys } from '../api-keys.utils';
 
 export type DashboardApiKeySections = {
   active: DashboardApiKey[];
@@ -14,9 +14,9 @@ function mapApiKeyFromBetterAuth(row: PublicApiKey): DashboardApiKey {
     id: row.id,
     name: row.name?.trim() || 'Unnamed key',
     maskedKey: formatMaskedApiKeyDisplay(row.start, row.prefix),
-    createdAt: row.createdAt,
-    lastUsedAt: row.lastRequest,
-    expiresAt: row.expiresAt,
+    createdAt: asApiKeyDate(row.createdAt) ?? new Date(0),
+    lastUsedAt: asApiKeyDate(row.lastRequest),
+    expiresAt: asApiKeyDate(row.expiresAt),
   };
 }
 

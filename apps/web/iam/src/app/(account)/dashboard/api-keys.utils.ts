@@ -67,8 +67,17 @@ export function formatExpiry(date: Date | null): string {
   return formatApiKeyDate(date);
 }
 
-export function isExpired(expiresAt: Date | null): boolean {
-  return expiresAt !== null && expiresAt.getTime() < Date.now();
+/** Normalize Better Auth / JSON date fields for comparisons and formatting. */
+export function asApiKeyDate(value: Date | string | null | undefined): Date | null {
+  if (value == null) {
+    return null;
+  }
+  return value instanceof Date ? value : new Date(value);
+}
+
+export function isExpired(expiresAt: Date | string | null): boolean {
+  const expiry = asApiKeyDate(expiresAt);
+  return expiry !== null && expiry.getTime() < Date.now();
 }
 
 export function partitionDashboardApiKeys(keys: DashboardApiKey[]): {
