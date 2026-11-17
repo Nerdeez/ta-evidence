@@ -54,6 +54,11 @@ test.describe('dashboard', () => {
 
     const testUser = createTestUser();
 
+    test.beforeEach(async () => {
+      const { id: userId } = await testUser;
+      await db.delete(apikey).where(eq(apikey.referenceId, userId));
+    });
+
     test('shows empty state when the user has no keys', async ({ page }) => {
       const { email, password } = await testUser;
       await signIn(page, email, password);

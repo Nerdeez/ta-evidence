@@ -82,7 +82,7 @@ describe('ApiKeysList', () => {
   });
 
   it('removes the row and shows a success toast when delete succeeds', async () => {
-    setDeleteApiKeyActionMock(async () => {});
+    setDeleteApiKeyActionMock(async () => ({ ok: true }));
 
     const screen = await renderList([sampleActiveKey]);
 
@@ -94,9 +94,7 @@ describe('ApiKeysList', () => {
   });
 
   it('keeps the row and shows an error toast when delete fails', async () => {
-    setDeleteApiKeyActionMock(async () => {
-      throw new Error(DELETE_API_KEY_ERROR_MESSAGE);
-    });
+    setDeleteApiKeyActionMock(async () => ({ ok: false, error: DELETE_API_KEY_ERROR_MESSAGE }));
 
     const screen = await renderList([sampleActiveKey]);
 
@@ -104,6 +102,20 @@ describe('ApiKeysList', () => {
     await screen.getByRole('button', { name: 'Delete', exact: true }).click();
 
     await expect.element(screen.getByText(DELETE_API_KEY_ERROR_MESSAGE)).toBeVisible();
+    await expect.element(screen.getByText('Production')).toBeVisible();
+  });
+
+  it('shows a generic error toast when the action request itself fails', async () => {
+    setDeleteApiKeyActionMock(async () => {
+      throw new Error('Network error');
+    });
+
+    const screen = await renderList([sampleActiveKey]);
+
+    await screen.getByRole('button', { name: 'Delete Production' }).click();
+    await screen.getByRole('button', { name: 'Delete', exact: true }).click();
+
+    await expect.element(screen.getByText('Something went wrong.')).toBeVisible();
     await expect.element(screen.getByText('Production')).toBeVisible();
   });
 });

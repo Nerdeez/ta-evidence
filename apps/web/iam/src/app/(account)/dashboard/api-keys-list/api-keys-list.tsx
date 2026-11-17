@@ -23,11 +23,12 @@ import {
   formatExpiry,
   formatLastUsed,
 } from '../api-keys.utils';
-import { deleteApiKeyAction } from './delete-api-key.action';
+import { type DeleteApiKeyResult, deleteApiKeyAction } from './delete-api-key.action';
 
 const DELETE_API_KEY_SUCCESS_TITLE = 'API key deleted';
 const DELETE_API_KEY_SUCCESS_DESCRIPTION =
   'Integrations using this key will no longer authenticate.';
+const DELETE_API_KEY_FALLBACK_ERROR = 'Something went wrong.';
 
 export { DELETE_API_KEY_SUCCESS_TITLE };
 
@@ -174,26 +175,23 @@ export function ApiKeysList({
     }
     const { id } = pendingDelete;
     startTransition(async () => {
+      let result: DeleteApiKeyResult;
       try {
-        await deleteApiKeyAction(id);
-        removeKeyFromLists(id);
-        setPendingDelete(null);
-        toast.add({
-          type: 'success',
-          title: DELETE_API_KEY_SUCCESS_TITLE,
-          description: DELETE_API_KEY_SUCCESS_DESCRIPTION,
-        });
-      } catch (error) {
-        setPendingDelete(null);
-        const message =
-          error instanceof Error && error.message.length > 0
-            ? error.message
-            : 'Something went wrong.';
-        toast.add({
-          type: 'error',
-          title: message,
-        });
+        result = await deleteApiKeyAction(id);
+      } catch {
+        result = { ok: false, error: DELETE_API_KEY_FALLBACK_ERROR };
       }
+      setPendingDelete(null);
+      if (!result.ok) {
+        toast.add({ type: 'error', title: result.error });
+        return;
+      }
+      removeKeyFromLists(id);
+      toast.add({
+        type: 'success',
+        title: DELETE_API_KEY_SUCCESS_TITLE,
+        description: DELETE_API_KEY_SUCCESS_DESCRIPTION,
+      });
     });
   };
 

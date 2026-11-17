@@ -72,7 +72,8 @@ export function asApiKeyDate(value: Date | string | null | undefined): Date | nu
   if (value == null) {
     return null;
   }
-  return value instanceof Date ? value : new Date(value);
+  const date = value instanceof Date ? value : new Date(value);
+  return Number.isNaN(date.getTime()) ? null : date;
 }
 
 export function isExpired(expiresAt: Date | string | null): boolean {

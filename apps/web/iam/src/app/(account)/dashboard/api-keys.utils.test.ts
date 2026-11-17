@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import {
+  asApiKeyDate,
   formatApiKeyDate,
   formatLastUsed,
   getMaxActiveApiKeys,
@@ -29,6 +30,21 @@ describe('getMaxActiveApiKeys', () => {
     expect(getMaxActiveApiKeys()).toBe(5);
     process.env[envKey] = 'not-a-number';
     expect(getMaxActiveApiKeys()).toBe(5);
+  });
+});
+
+describe('asApiKeyDate', () => {
+  it('parses ISO strings and passes dates through', () => {
+    const date = new Date('2025-01-01T00:00:00.000Z');
+    expect(asApiKeyDate(date)).toBe(date);
+    expect(asApiKeyDate('2025-01-01T00:00:00.000Z')?.getTime()).toBe(date.getTime());
+  });
+
+  it('returns null for missing or malformed values', () => {
+    expect(asApiKeyDate(null)).toBeNull();
+    expect(asApiKeyDate(undefined)).toBeNull();
+    expect(asApiKeyDate('not-a-date')).toBeNull();
+    expect(asApiKeyDate(new Date(Number.NaN))).toBeNull();
   });
 });
 

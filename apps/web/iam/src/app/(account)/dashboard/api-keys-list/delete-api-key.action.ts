@@ -1,19 +1,25 @@
 'use server';
 
 import { auth, requireSession } from '@ta/auth/next';
+import { revalidatePath } from 'next/cache';
 import { headers } from 'next/headers';
 
 import type { DashboardApiKey } from '../api-keys.utils';
 
 const DELETE_API_KEY_ERROR_MESSAGE = 'Unable to delete this API key. Please try again.';
 
-/** Deletes the caller's API key. Throws on failure; resolves with no value on success. */
-export async function deleteApiKeyAction(keyId: DashboardApiKey['id']): Promise<void> {
+/** Errors are returned rather than thrown: Next.js redacts thrown server action messages in production. */
+export type DeleteApiKeyResult = { ok: true } | { ok: false; error: string };
+
+/** Deletes the caller's API key. */
+export async function deleteApiKeyAction(
+  keyId: DashboardApiKey['id'],
+): Promise<DeleteApiKeyResult> {
   await requireSession();
 
   const trimmed = keyId.trim();
   if (!trimmed) {
-    throw new Error('Invalid API key.');
+    return { ok: false, error: 'Invalid API key.' };
   }
 
   try {
@@ -23,13 +29,13 @@ export async function deleteApiKeyAction(keyId: DashboardApiKey['id']): Promise<
     });
 
     if (!result.success) {
-      throw new Error(DELETE_API_KEY_ERROR_MESSAGE);
+      return { ok: false, error: DELETE_API_KEY_ERROR_MESSAGE };
     }
   } catch (error) {
-    if (error instanceof Error) {
-      console.error('Delete API key failed:', error);
-      throw error;
-    }
-    throw new Error(DELETE_API_KEY_ERROR_MESSAGE);
+    console.error('Delete API key failed:', error);
+    return { ok: false, error: DELETE_API_KEY_ERROR_MESSAGE };
   }
+
+  revalidatePath('/dashboard');
+  return { ok: true };
 }

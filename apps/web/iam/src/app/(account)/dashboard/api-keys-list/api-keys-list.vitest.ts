@@ -1,22 +1,26 @@
 import type { DashboardApiKey } from '../api-keys.utils';
+import type { DeleteApiKeyResult } from './delete-api-key.action';
 
-type DeleteMock = (keyId: DashboardApiKey['id']) => Promise<void>;
+type DeleteMock = (keyId: DashboardApiKey['id']) => Promise<DeleteApiKeyResult>;
 
-let deleteMock: DeleteMock = async () => {
-  throw new Error('Delete is not available in component tests.');
-};
+const defaultDeleteMock: DeleteMock = async () => ({
+  ok: false,
+  error: 'Delete is not available in component tests.',
+});
+
+let deleteMock: DeleteMock = defaultDeleteMock;
 
 export function setDeleteApiKeyActionMock(mock: DeleteMock): void {
   deleteMock = mock;
 }
 
 export function resetDeleteApiKeyActionMock(): void {
-  deleteMock = async () => {
-    throw new Error('Delete is not available in component tests.');
-  };
+  deleteMock = defaultDeleteMock;
 }
 
-export async function deleteApiKeyAction(keyId: DashboardApiKey['id']): Promise<void> {
+export async function deleteApiKeyAction(
+  keyId: DashboardApiKey['id'],
+): Promise<DeleteApiKeyResult> {
   return deleteMock(keyId);
 }
 
