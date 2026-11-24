@@ -2,12 +2,12 @@ import { Toaster } from '@ta/ui/toast';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { render } from 'vitest-browser-react';
 
-import type { DashboardApiKey } from '../api-keys.utils';
-import { ApiKeysList, DELETE_API_KEY_SUCCESS_TITLE } from './api-keys-list';
+import type { DashboardApiKey } from '../utils';
+import { ApiKeysList, DELETE_API_KEY_SUCCESS_TITLE } from './list';
 
 const DELETE_API_KEY_ERROR_MESSAGE = 'Unable to delete this API key. Please try again.';
 
-import { resetDeleteApiKeyActionMock, setDeleteApiKeyActionMock } from './api-keys-list.vitest';
+import { resetDeleteApiKeyActionMock, setDeleteApiKeyActionMock } from './list.vitest';
 
 const sampleActiveKey: DashboardApiKey = {
   id: 'key_active',

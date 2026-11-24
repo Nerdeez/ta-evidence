@@ -1,5 +1,4 @@
-import { listDashboardApiKeys } from './api-keys-list/api-keys.server';
-import { ApiKeysList } from './api-keys-list/api-keys-list';
+import { ApiKeysList, listDashboardApiKeys } from './api-keys/list';
 
 export default async function DashboardPage() {
   const { active, expired } = await listDashboardApiKeys();

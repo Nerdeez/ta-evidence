@@ -7,7 +7,7 @@ import {
   getMaxActiveApiKeys,
   isExpired,
   partitionDashboardApiKeys,
-} from './api-keys.utils';
+} from './utils';
 
 const envKey = 'IAM_MAX_ACTIVE_API_KEYS';
 

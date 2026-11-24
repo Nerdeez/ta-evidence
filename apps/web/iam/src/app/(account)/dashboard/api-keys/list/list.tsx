@@ -17,13 +17,8 @@ import { toast } from '@ta/ui/toast';
 import { Loader2, Trash2 } from 'lucide-react';
 import { useEffect, useState, useSyncExternalStore, useTransition } from 'react';
 
-import {
-  type DashboardApiKey,
-  formatApiKeyDate,
-  formatExpiry,
-  formatLastUsed,
-} from '../api-keys.utils';
-import { type DeleteApiKeyResult, deleteApiKeyAction } from './delete-api-key.action';
+import { type DashboardApiKey, formatApiKeyDate, formatExpiry, formatLastUsed } from '../utils';
+import { type DeleteApiKeyResult, deleteApiKeyAction } from './delete.action';
 
 const DELETE_API_KEY_SUCCESS_TITLE = 'API key deleted';
 const DELETE_API_KEY_SUCCESS_DESCRIPTION =
