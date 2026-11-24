@@ -22,8 +22,8 @@ import {
   formatApiKeyDate,
   formatExpiry,
   formatLastUsed,
-} from '../api-keys.utils';
-import { type DeleteApiKeyResult, deleteApiKeyAction } from './delete-api-key.action';
+} from '../utils';
+import { type DeleteApiKeyResult, deleteApiKeyAction } from './delete.action';
 
 const DELETE_API_KEY_SUCCESS_TITLE = 'API key deleted';
 const DELETE_API_KEY_SUCCESS_DESCRIPTION =

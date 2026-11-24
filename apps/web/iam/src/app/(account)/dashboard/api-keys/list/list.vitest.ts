@@ -1,5 +1,5 @@
-import type { DashboardApiKey } from '../api-keys.utils';
-import type { DeleteApiKeyResult } from './delete-api-key.action';
+import type { DashboardApiKey } from '../utils';
+import type { DeleteApiKeyResult } from './delete.action';
 
 type DeleteMock = (keyId: DashboardApiKey['id']) => Promise<DeleteApiKeyResult>;
 
@@ -30,18 +30,22 @@ export function vitestPlugins() {
       name: 'resolve-delete-api-key-action-mock',
       enforce: 'pre' as const,
       resolveId(source: string, importer?: string) {
-        if (!importer?.includes('api-keys-list')) {
+        if (!importer) {
+          return null;
+        }
+        const normalizedImporter = importer.replaceAll('\\', '/');
+        if (!normalizedImporter.includes('/api-keys/list/')) {
           return null;
         }
         if (
-          source !== './delete-api-key.action' &&
-          !source.endsWith('/api-keys-list/delete-api-key.action')
+          source !== './delete.action' &&
+          !source.replaceAll('\\', '/').endsWith('/api-keys/list/delete.action')
         ) {
           return null;
         }
         const separator = importer.includes('\\') ? '\\' : '/';
         const dir = importer.slice(0, importer.lastIndexOf(separator) + 1);
-        return `${dir}api-keys-list.vitest.ts`;
+        return `${dir}list.vitest.ts`;
       },
     },
   ];

@@ -4,7 +4,7 @@ import { auth, requireSession } from '@ta/auth/next';
 import { revalidatePath } from 'next/cache';
 import { headers } from 'next/headers';
 
-import type { DashboardApiKey } from '../api-keys.utils';
+import type { DashboardApiKey } from '../utils';
 
 const DELETE_API_KEY_ERROR_MESSAGE = 'Unable to delete this API key. Please try again.';
 

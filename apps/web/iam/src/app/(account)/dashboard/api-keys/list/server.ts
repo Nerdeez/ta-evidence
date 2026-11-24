@@ -2,7 +2,7 @@ import { formatMaskedApiKeyDisplay, type PublicApiKey } from '@ta/auth/api-key';
 import { auth } from '@ta/auth/next';
 import { headers } from 'next/headers';
 
-import { asApiKeyDate, type DashboardApiKey, partitionDashboardApiKeys } from '../api-keys.utils';
+import { asApiKeyDate, type DashboardApiKey, partitionDashboardApiKeys } from '../utils';
 
 export type DashboardApiKeySections = {
   active: DashboardApiKey[];
